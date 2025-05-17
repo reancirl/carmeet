@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
 
 class Event extends Model
 {
@@ -13,7 +14,12 @@ class Event extends Model
         'time',
         'description',
         'location',
-        'zip_code'
+        'zip_code',
+        'image'
+    ];
+
+    protected $casts = [
+        'date' => 'date',
     ];
 
     public function host()
@@ -24,5 +30,13 @@ class Event extends Model
     public function attendees()
     {
         return $this->belongsToMany(User::class, 'event_attendees', 'event_id', 'attendee_id');
+    }
+
+    public function getImageUrlAttribute()
+    {
+        if ($this->image) {
+            return Storage::url($this->image);
+        }
+        return null;
     }
 }

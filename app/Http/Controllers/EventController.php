@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Models\Event;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class EventController extends Controller
 {
@@ -31,17 +32,32 @@ class EventController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'name' => 'required',
-            'date' => 'required',
-            'time' => 'required',
-            'description' => 'required',
-            'location' => 'required',
-            'zip_code' => 'required',
+            'name' => 'required|string|max:255',
+            'date' => 'required|date',
+            'time' => 'required|date_format:H:i',
+            'description' => 'required|string',
+            'location' => 'required|string|max:255',
+            'zip_code' => 'required|string|max:10',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
-        Event::create($validated);
+        $event = new Event();
+        $event->host_id = auth()->id();
+        $event->name = $validated['name'];
+        $event->date = $validated['date'];
+        $event->time = $validated['time'];
+        $event->description = $validated['description'];
+        $event->location = $validated['location'];
+        $event->zip_code = $validated['zip_code'];
 
-        return redirect()->route('events.index');
+        if ($request->hasFile('image')) {
+            $imagePath = $request->file('image')->store('events', 'public');
+            $event->image = $imagePath;
+        }
+
+        $event->save();
+
+        return redirect()->route('events.index')->with('success', 'Event created successfully');
     }
 
     /**
@@ -65,31 +81,48 @@ class EventController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Event $event)
     {
         $validated = $request->validate([
-            'name' => 'required',
-            'date' => 'required',
-            'time' => 'required',
-            'description' => 'required',
-            'location' => 'required',
-            'zip_code' => 'required',
+            'name' => 'required|string|max:255',
+            'date' => 'required|date',
+            'time' => 'required|date_format:H:i',
+            'description' => 'required|string',
+            'location' => 'required|string|max:255',
+            'zip_code' => 'required|string|max:10',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
-        $event = Event::with('host')->findOrFail($id);
-        $event->update($validated);
+        $event->name = $validated['name'];
+        $event->date = $validated['date'];
+        $event->time = $validated['time'];
+        $event->description = $validated['description'];
+        $event->location = $validated['location'];
+        $event->zip_code = $validated['zip_code'];
 
-        return redirect()->route('events.index');
+        if ($request->hasFile('image')) {
+            if ($event->image) {
+                Storage::disk('public')->delete($event->image);
+            }
+            $imagePath = $request->file('image')->store('events', 'public');
+            $event->image = $imagePath;
+        }
+
+        $event->save();
+
+        return redirect()->route('events.index')->with('success', 'Event updated successfully');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Event $event)
     {
-        $event = Event::findOrFail($id);
+        if ($event->image) {
+            Storage::disk('public')->delete($event->image);
+        }
         $event->delete();
 
-        return redirect()->route('events.index');
+        return redirect()->route('events.index')->with('success', 'Event deleted successfully');
     }
 }

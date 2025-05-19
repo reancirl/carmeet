@@ -21,8 +21,10 @@
                                 <tr>
                                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">{{ __('Name') }}</th>
                                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">{{ __('Date & Time') }}</th>
-                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">{{ __('Location') }}</th>
-                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">{{ __('Host') }}</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">{{ __('Zip Code') }}</th>
+                                    @if(auth()->user()->role == 'admin')
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">{{ __('Host') }}</th>
+                                    @endif
                                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">{{ __('Attendees') }}</th>
                                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">{{ __('Actions') }}</th>
                                 </tr>
@@ -31,9 +33,11 @@
                                 @foreach($events as $event)
                                 <tr>
                                     <td class="px-6 py-4 whitespace-nowrap">{{ $event->name }}</td>
-                                    <td class="px-6 py-4 whitespace-nowrap">{{ $event->date }} {{ $event->time }}</td>
-                                    <td class="px-6 py-4 whitespace-nowrap">{{ $event->location }}</td>
-                                    <td class="px-6 py-4 whitespace-nowrap">{{ $event->host->name }}</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">{{ $event->formatted_date_time }}</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">{{ $event->zip_code }}</td>
+                                    @if(auth()->user()->role == 'admin')
+                                        <td class="px-6 py-4 whitespace-nowrap">{{ $event->host->name }}</td>
+                                    @endif
                                     <td class="px-6 py-4 whitespace-nowrap">{{ $event->attendees->count() }}</td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
                                         <a href="{{ route('events.show', $event) }}" class="text-blue-600 hover:text-blue-900 mr-2">{{ __('View') }}</a>

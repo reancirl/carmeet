@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Event;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use App\Rules\UsZipCode;
 
 class EventController extends Controller
 {
@@ -14,7 +15,14 @@ class EventController extends Controller
      */
     public function index()
     {
-        $events = Event::with('host')->get();
+        $events = [];
+
+        if (auth()->user()->role == 'admin') {
+            $events = Event::with('host')->get();
+        } else {
+            $events = Event::with('host')->where('host_id', auth()->id())->get();
+        }
+
         return view('events.index', compact('events'));
     }
 
@@ -37,7 +45,7 @@ class EventController extends Controller
             'time' => 'required|date_format:H:i',
             'description' => 'required|string',
             'location' => 'required|string|max:255',
-            'zip_code' => 'required|string|max:10',
+            'zip_code' => ['required', new UsZipCode()],
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
@@ -86,10 +94,9 @@ class EventController extends Controller
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'date' => 'required|date',
-            'time' => 'required|date_format:H:i',
             'description' => 'required|string',
             'location' => 'required|string|max:255',
-            'zip_code' => 'required|string|max:10',
+            'zip_code' => ['required', new UsZipCode()],
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
 
@@ -38,5 +39,13 @@ class Event extends Model
             return Storage::url($this->image);
         }
         return null;
+    }
+
+    public function getFormattedDateTimeAttribute(): string
+    {
+        $datePart = $this->date->format('Y-m-d');
+        $dt = Carbon::parse("{$datePart} {$this->time}");
+
+        return $dt->format('Y-m-d g:ia');
     }
 }

@@ -85,7 +85,7 @@
 
                 <div class="flex-1">
                     <h2 class="text-2xl font-semibold text-[#1b1b18] dark:text-[#EDEDEC] mb-1">
-                    <a href="{{ route('events.show', $event) }}" class="underline hover:no-underline">
+                    <a href="{{ route('public.events.show', $event) }}" class="underline hover:no-underline">
                         {{ $event->name }}
                     </a>
                     </h2>

@@ -14,10 +14,7 @@
         <meta name="theme-color" content="#4f46e5">
 
         <!-- Scripts -->
-        @if(file_exists(public_path('build/manifest.json')))
-            @vite('resources/js/app.js')
-        @endif
-
+        @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
     <body class="font-sans antialiased">
         <div class="min-h-screen bg-gray-100 dark:bg-gray-900">

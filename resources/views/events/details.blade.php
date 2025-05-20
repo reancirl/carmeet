@@ -49,73 +49,74 @@
                 </nav>
             @endif
         </header>
-        <main class="w-full lg:max-w-4xl mx-auto px-4 py-8 space-y-8">
+        <div class="py-12">
+            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+                <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
+                    <div class="p-6 text-gray-900 dark:text-gray-100">
+                        {{-- Image & Details Container --}}
+                        <div class="flex flex-col md:flex-row gap-6">
+                            {{-- Image Preview --}}
+                            @if($event->image_url)
+                                <div class="md:w-1/3">
+                                    <img
+                                        src="{{ $event->image_url }}"
+                                        alt="{{ $event->name }}"
+                                        class="w-full h-auto object-cover rounded-lg"
+                                    >
+                                </div>
+                            @endif
 
-            {{-- Search Filter --}}
-            <div>
-                <form method="GET" action="{{ url('/') }}" class="flex items-center space-x-2">
-                <input
-                    type="text"
-                    name="zip_code"
-                    value="{{ request('zip_code') }}"
-                    placeholder="Enter ZIP code"
-                    class="flex-1 border border-gray-300 rounded-md px-3 py-2 shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
-                />
-                <button
-                    type="submit"
-                    class="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 transition"
-                >
-                    Search
-                </button>
-                </form>
-            </div>
+                            {{-- Details --}}
+                            <div class="md:flex-1 space-y-6">
+                                {{-- Title & Host --}}
+                                <div>
+                                    <h2 class="text-2xl font-semibold mb-1">{{ $event->name }}</h2>
+                                    <p class="text-gray-600 dark:text-gray-400">
+                                        Hosted by <span class="font-medium">{{ $event->host->name }}</span>
+                                    </p>
+                                </div>
 
-            {{-- Event List --}}
-            @forelse($events as $event)
-                <article class="flex items-start space-x-6">
-                @if($event->image_url)
-                    <img
-                    src="{{ $event->image_url }}"
-                    alt="{{ $event->name }}"
-                    class="w-48 h-48 object-cover rounded-md flex-shrink-0"
-                    >
-                @endif
+                                {{-- Meta Grid --}}
+                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                    <div>
+                                        <p class="text-gray-600 dark:text-gray-400">Date</p>
+                                        <p class="font-medium">{{ \Carbon\Carbon::parse($event->date)->format('Y-m-d') }}</p>
+                                    </div>
+                                    <div>
+                                        <p class="text-gray-600 dark:text-gray-400">Time</p>
+                                        <p class="font-medium">{{ \Carbon\Carbon::parse($event->time)->format('g:ia') }}</p>
+                                    </div>
+                                    <div>
+                                        <p class="text-gray-600 dark:text-gray-400">Location</p>
+                                        <p class="font-medium">{{ $event->location }}</p>
+                                    </div>
+                                    <div>
+                                        <p class="text-gray-600 dark:text-gray-400">ZIP Code</p>
+                                        <p class="font-medium">{{ $event->zip_code }}</p>
+                                    </div>
+                                </div>
 
-                <div class="flex-1">
-                    <h2 class="text-2xl font-semibold text-[#1b1b18] dark:text-[#EDEDEC] mb-1">
-                    <a href="{{ route('events.show', $event) }}" class="underline hover:no-underline">
-                        {{ $event->name }}
-                    </a>
-                    </h2>
+                                {{-- Description --}}
+                                <div>
+                                    <h3 class="text-xl font-semibold mb-2">Description</h3>
+                                    <p class="text-gray-700 dark:text-gray-400">{{ $event->description }}</p>
+                                </div>
+                            </div>
+                        </div>
 
-                    <p class="text-sm text-[#62605b] dark:text-[#a1a09a] mb-2">
-                    Hosted by {{ $event->host->name }}
-                    </p>
-
-                    <p class="text-sm text-[#62605b] dark:text-[#a1a09a]">
-                    <time datetime="{{ $event->formatted_date_time }}">
-                        {{ $event->formatted_date_time }}
-                    </time><br>
-                    {{ $event->location }}, {{ $event->zip_code }}
-                    </p>
-
-                    {{-- View More button --}}
-                    <a
-                    href="{{ route('public.events.show', $event) }}"
-                    class="inline-block mt-4 px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 transition"
-                    >
-                    View More
-                    </a>
+                        {{-- Back Button in bottom right --}}
+                        <div class="mt-6 flex justify-end">
+                            <a
+                                href="{{ route('public.events.index') }}"
+                                class="text-indigo-600 hover:text-indigo-800 dark:text-indigo-400 dark:hover:text-indigo-200 font-medium"
+                            >
+                                &larr; Back
+                            </a>
+                        </div>
+                    </div>
                 </div>
-                </article>
-            @empty
-                <p class="text-center text-gray-600 dark:text-gray-400">
-                No events found for “{{ request('zip_code') }}”
-                </p>
-            @endforelse
-
-        </main>
-
+            </div>
+        </div>
         @if (Route::has('login'))
             <div class="h-14.5 hidden lg:block"></div>
         @endif

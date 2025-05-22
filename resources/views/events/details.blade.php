@@ -82,7 +82,7 @@
                                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                     <div>
                                         <p class="text-gray-600 dark:text-gray-400">Date</p>
-                                        <p class="font-medium">{{ \Carbon\Carbon::parse($event->date)->format('Y-m-d') }}</p>
+                                        <p class="font-medium">{{ \Carbon\Carbon::parse($event->date)->format('m/d/Y (D)') }}</p>
                                     </div>
                                     <div>
                                         <p class="text-gray-600 dark:text-gray-400">Time</p>

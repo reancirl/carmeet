@@ -97,7 +97,7 @@
 
                 <p class="text-sm text-[#62605b] dark:text-[#a1a09a]">
                   <time>
-                    {{ date('m/d/Y', strtotime($event->date)) }} {{ date('g:i A', strtotime($event->start_time)) }} - {{ date('g:i A', strtotime($event->end_time)) }}
+                    {{ date('m/d/Y (D), ', strtotime($event->date)) }} {{ date('g:i A', strtotime($event->start_time)) }} - {{ date('g:i A', strtotime($event->end_time)) }}
                   </time><br>
                   {{ $event->location }}, {{ $event->zip_code }}
                 </p>

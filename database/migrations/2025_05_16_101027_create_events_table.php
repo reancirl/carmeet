@@ -16,7 +16,8 @@ return new class extends Migration
             $table->foreignId('host_id')->constrained('users');
             $table->string('name');
             $table->date('date');
-            $table->time('time');
+            $table->time('start_time');
+            $table->time('end_time');
             $table->text('description');
             $table->string('location');
             $table->string('zip_code');

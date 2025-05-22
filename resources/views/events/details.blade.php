@@ -86,7 +86,7 @@
                                     </div>
                                     <div>
                                         <p class="text-gray-600 dark:text-gray-400">Time</p>
-                                        <p class="font-medium">{{ \Carbon\Carbon::parse($event->time)->format('g:ia') }}</p>
+                                        <p class="font-medium">{{ \Carbon\Carbon::parse($event->start_time)->format('g:ia') }} - {{ \Carbon\Carbon::parse($event->end_time)->format('g:ia') }}</p>
                                     </div>
                                     <div>
                                         <p class="text-gray-600 dark:text-gray-400">Location</p>

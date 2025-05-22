@@ -42,18 +42,21 @@ class EventController extends Controller
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'date' => 'required|date',
-            'time' => 'required|date_format:H:i',
+            'start_time' => 'required|date_format:H:i',
+            'end_time' => 'required|date_format:H:i|after_or_equal:18:00|before_or_equal:22:00',
             'description' => 'required|string',
             'location' => 'required|string|max:255',
             'zip_code' => ['required', new UsZipCode()],
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:5120',
         ]);
 
         $event = new Event();
         $event->host_id = auth()->id();
         $event->name = $validated['name'];
         $event->date = $validated['date'];
-        $event->time = $validated['time'];
+        $event->start_time = $validated['start_time'];
+        // Add end time to event (e.g., 6:00 PM – 10:00 PM)
+        $event->end_time = $validated['end_time'];
         $event->description = $validated['description'];
         $event->location = $validated['location'];
         $event->zip_code = $validated['zip_code'];
@@ -94,15 +97,18 @@ class EventController extends Controller
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'date' => 'required|date',
+            'start_time' => 'required|date_format:H:i',
+            'end_time' => 'required|date_format:H:i|after_or_equal:18:00|before_or_equal:22:00',
             'description' => 'required|string',
             'location' => 'required|string|max:255',
             'zip_code' => ['required', new UsZipCode()],
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:5120',
         ]);
 
         $event->name = $validated['name'];
         $event->date = $validated['date'];
-        $event->time = $validated['time'];
+        $event->start_time = $validated['start_time'];
+        $event->end_time = $validated['end_time'];
         $event->description = $validated['description'];
         $event->location = $validated['location'];
         $event->zip_code = $validated['zip_code'];

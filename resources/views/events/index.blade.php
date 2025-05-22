@@ -20,7 +20,7 @@
                             <thead class="bg-gray-50 dark:bg-gray-700">
                                 <tr>
                                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">{{ __('Name') }}</th>
-                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">{{ __('Date & Time') }}</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">{{ __('Date & Time Range') }}</th>
                                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">{{ __('Zip Code') }}</th>
                                     @if(auth()->user()->role == 'admin')
                                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">{{ __('Host') }}</th>
@@ -33,7 +33,7 @@
                                 @foreach($events as $event)
                                 <tr>
                                     <td class="px-6 py-4 whitespace-nowrap">{{ $event->name }}</td>
-                                    <td class="px-6 py-4 whitespace-nowrap">{{ $event->formatted_date_time }}</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">{{ date('m/d/Y', strtotime($event->date)) }} {{ date('g:i A', strtotime($event->start_time)) }} - {{ date('g:i A', strtotime($event->end_time)) }}</td>
                                     <td class="px-6 py-4 whitespace-nowrap">{{ $event->zip_code }}</td>
                                     @if(auth()->user()->role == 'admin')
                                         <td class="px-6 py-4 whitespace-nowrap">{{ $event->host->name }}</td>

@@ -64,22 +64,44 @@
                                 @enderror
                             </div>
 
-                            {{-- Time --}}
+                            {{-- Start Time --}}
                             <div>
-                                <label for="time" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
-                                    {{ __('Time') }}
+                                <label for="start_time" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                                    {{ __('Start Time') }}
                                 </label>
                                 <input
                                     type="time"
-                                    name="time"
-                                    id="time"
-                                    value="{{ old('time') }}"
+                                    name="start_time"
+                                    id="start_time"
+                                    value="{{ old('start_time') }}"
                                     class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-300
                                            focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 shadow-sm
-                                           @error('time') border-red-500 @enderror"
+                                           @error('start_time') border-red-500 @enderror"
                                     required
                                 >
-                                @error('time')
+                                @error('start_time')
+                                    <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
+                                @enderror
+                            </div>
+
+                            {{-- End Time --}}
+                            <div>
+                                <label for="end_time" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                                    {{ __('End Time') }} <span class="text-xs text-gray-500">(Between 6:00 PM - 10:00 PM)</span>
+                                </label>
+                                <input
+                                    type="time"
+                                    name="end_time"
+                                    id="end_time"
+                                    value="{{ old('end_time') }}"
+                                    min="18:00"
+                                    max="22:00"
+                                    class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-300
+                                           focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 shadow-sm
+                                           @error('end_time') border-red-500 @enderror"
+                                    required
+                                >
+                                @error('end_time')
                                     <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
                                 @enderror
                             </div>
@@ -146,7 +168,7 @@
                             {{-- Image --}}
                             <div class="md:col-span-2">
                                 <label for="image" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
-                                    {{ __('Event Image') }}
+                                    {{ __('Event Image') }} <span class="text-xs text-gray-500">(Max 5MB)</span>
                                 </label>
                                 <div id="image-preview-container" class="mt-2">
                                     <img

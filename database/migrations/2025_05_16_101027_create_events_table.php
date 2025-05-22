@@ -19,8 +19,11 @@ return new class extends Migration
             $table->time('start_time');
             $table->time('end_time');
             $table->text('description');
-            $table->string('location');
+            $table->string('street');
+            $table->string('city');
+            $table->string('state');
             $table->string('zip_code');
+            $table->string('location_name');
             $table->string('image')->nullable();
             $table->timestamps();
         });

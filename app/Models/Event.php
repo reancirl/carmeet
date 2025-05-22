@@ -12,10 +12,14 @@ class Event extends Model
         'host_id',
         'name',
         'date',
-        'time',
+        'start_time',
+        'end_time',
         'description',
-        'location',
+        'street',
+        'city',
+        'state',
         'zip_code',
+        'location_name',
         'image'
     ];
 
@@ -39,13 +43,5 @@ class Event extends Model
             return Storage::url($this->image);
         }
         return null;
-    }
-
-    public function getFormattedDateTimeAttribute(): string
-    {
-        $datePart = $this->date->format('Y-m-d');
-        $dt = Carbon::parse("{$datePart} {$this->time}");
-
-        return $dt->format('Y-m-d g:ia');
     }
 }

@@ -99,7 +99,7 @@
                   <time>
                     {{ date('m/d/Y (D), ', strtotime($event->date)) }} {{ date('g:i A', strtotime($event->start_time)) }} - {{ date('g:i A', strtotime($event->end_time)) }}
                   </time><br>
-                  {{ $event->location }}, {{ $event->zip_code }}
+                  {{ $event->street }}, {{ $event->city }}, {{ $event->state }} {{ $event->zip_code }}
                 </p>
 
                 <a

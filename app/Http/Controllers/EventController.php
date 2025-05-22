@@ -45,8 +45,11 @@ class EventController extends Controller
             'start_time' => 'required|date_format:H:i',
             'end_time' => 'required|date_format:H:i|after_or_equal:18:00|before_or_equal:22:00',
             'description' => 'required|string',
-            'location' => 'required|string|max:255',
+            'street' => 'required|string|max:255',
+            'city' => 'required|string|max:255',
+            'state' => 'required|string|max:255',
             'zip_code' => ['required', new UsZipCode()],
+            'location_name' => 'required|string|max:255',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:5120',
         ]);
 
@@ -58,8 +61,11 @@ class EventController extends Controller
         // Add end time to event (e.g., 6:00 PM – 10:00 PM)
         $event->end_time = $validated['end_time'];
         $event->description = $validated['description'];
-        $event->location = $validated['location'];
+        $event->street = $validated['street'];
+        $event->city = $validated['city'];
+        $event->state = $validated['state'];
         $event->zip_code = $validated['zip_code'];
+        $event->location_name = $validated['location_name'];
 
         if ($request->hasFile('image')) {
             $imagePath = $request->file('image')->store('events', 'public');
@@ -100,8 +106,11 @@ class EventController extends Controller
             'start_time' => 'required|date_format:H:i',
             'end_time' => 'required|date_format:H:i|after_or_equal:18:00|before_or_equal:22:00',
             'description' => 'required|string',
-            'location' => 'required|string|max:255',
+            'street' => 'required|string|max:255',
+            'city' => 'required|string|max:255',
+            'state' => 'required|string|max:255',
             'zip_code' => ['required', new UsZipCode()],
+            'location_name' => 'required|string|max:255',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:5120',
         ]);
 
@@ -110,8 +119,11 @@ class EventController extends Controller
         $event->start_time = $validated['start_time'];
         $event->end_time = $validated['end_time'];
         $event->description = $validated['description'];
-        $event->location = $validated['location'];
+        $event->street = $validated['street'];
+        $event->city = $validated['city'];
+        $event->state = $validated['state'];
         $event->zip_code = $validated['zip_code'];
+        $event->location_name = $validated['location_name'];
 
         if ($request->hasFile('image')) {
             if ($event->image) {

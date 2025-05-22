@@ -39,7 +39,7 @@
                                     </div>
                                     <div>
                                         <p class="text-gray-600 dark:text-gray-400">{{ __('Location') }}</p>
-                                        <p class="font-medium">{{ $event->location_name }}, {{ $event->city }}, {{ $event->state }} {{ $event->zip_code }}</p>
+                                        <p class="font-medium">{{ $event->location_name }} - {{ $event->street }}, {{ $event->city }}, {{ $event->state }}, {{ $event->zip_code }}</p>
                                     </div>
                                 </div>
                             </div>

@@ -127,42 +127,22 @@
                                 @enderror
                             </div>
 
-                            {{-- State --}}
+                            {{-- Location Name --}}
                             <div>
-                                <label for="state" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
-                                    {{ __('State') }}
+                                <label for="location_name" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                                    {{ __('Location Name') }}
                                 </label>
                                 <input
                                     type="text"
-                                    name="state"
-                                    id="state"
-                                    value="{{ old('state', $event->state) }}"
+                                    name="location_name"
+                                    id="location_name"
+                                    value="{{ old('location_name', $event->location_name) }}"
                                     class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-300
                                            focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 shadow-sm
-                                           @error('state') border-red-500 @enderror"
+                                           @error('location_name') border-red-500 @enderror"
                                     required
                                 >
-                                @error('state')
-                                    <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
-                                @enderror
-                            </div>
-
-                            {{-- City --}}
-                            <div>
-                                <label for="city" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
-                                    {{ __('City') }}
-                                </label>
-                                <input
-                                    type="text"
-                                    name="city"
-                                    id="city"
-                                    value="{{ old('city', $event->city) }}"
-                                    class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-300
-                                           focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 shadow-sm
-                                           @error('city') border-red-500 @enderror"
-                                    required
-                                >
-                                @error('city')
+                                @error('location_name')
                                     <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
                                 @enderror
                             </div>
@@ -187,6 +167,46 @@
                                 @enderror
                             </div>
 
+                            {{-- City --}}
+                            <div>
+                                <label for="city" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                                    {{ __('City') }}
+                                </label>
+                                <input
+                                    type="text"
+                                    name="city"
+                                    id="city"
+                                    value="{{ old('city', $event->city) }}"
+                                    class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-300
+                                           focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 shadow-sm
+                                           @error('city') border-red-500 @enderror"
+                                    required
+                                >
+                                @error('city')
+                                    <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
+                                @enderror
+                            </div>
+
+                            {{-- State --}}
+                            <div>
+                                <label for="state" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                                    {{ __('State') }}
+                                </label>
+                                <input
+                                    type="text"
+                                    name="state"
+                                    id="state"
+                                    value="{{ old('state', $event->state) }}"
+                                    class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-300
+                                           focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 shadow-sm
+                                           @error('state') border-red-500 @enderror"
+                                    required
+                                >
+                                @error('state')
+                                    <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
+                                @enderror
+                            </div>
+
                             {{-- Zip Code --}}
                             <div>
                                 <label for="zip_code" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
@@ -203,26 +223,6 @@
                                     required
                                 >
                                 @error('zip_code')
-                                    <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
-                                @enderror
-                            </div>
-
-                            {{-- Location Name --}}
-                            <div>
-                                <label for="location_name" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
-                                    {{ __('Location Name') }}
-                                </label>
-                                <input
-                                    type="text"
-                                    name="location_name"
-                                    id="location_name"
-                                    value="{{ old('location_name', $event->location_name) }}"
-                                    class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-300
-                                           focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 shadow-sm
-                                           @error('location_name') border-red-500 @enderror"
-                                    required
-                                >
-                                @error('location_name')
                                     <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
                                 @enderror
                             </div>

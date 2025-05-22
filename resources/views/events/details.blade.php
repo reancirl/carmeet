@@ -103,7 +103,9 @@
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                                         </svg>
                                         <div>
-                                            <p class="font-medium">{{ $event->location_name }} - {{ $event->street }}, {{ $event->city }}, {{ $event->state }}, {{ $event->zip_code }}</p>
+                                            <p class="font-medium">{{ $event->location_name }}</p>
+                                            <p class="text-gray-500 dark:text-gray-400">{{ $event->street }}</p>
+                                            <p class="text-gray-500 dark:text-gray-400">{{ $event->city }}, {{ $event->state }} {{ $event->zip_code }}</p>
                                         </div>
                                     </div>
                                 </div>

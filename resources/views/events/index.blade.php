@@ -39,12 +39,14 @@
                                     <td class="px-6 py-4 whitespace-nowrap">{{ $event->attendees->count() }}</td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
                                         <a href="{{ route('events.show', $event) }}" class="text-blue-600 hover:text-blue-900 mr-2">{{ __('View') }}</a>
-                                        <a href="{{ route('events.edit', $event) }}" class="text-green-600 hover:text-green-900 mr-2">{{ __('Edit') }}</a>
-                                        <form action="{{ route('events.destroy', $event) }}" method="POST" class="inline">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="text-red-600 hover:text-red-900" onclick="return confirm('Are you sure?')">{{ __('Delete') }}</button>
-                                        </form>
+                                        @if(auth()->user()->id == $event->host_id)
+                                            <a href="{{ route('events.edit', $event) }}" class="text-green-600 hover:text-green-900 mr-2">{{ __('Edit') }}</a>
+                                            <form action="{{ route('events.destroy', $event) }}" method="POST" class="inline">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="text-red-600 hover:text-red-900" onclick="return confirm('Are you sure?')">{{ __('Delete') }}</button>
+                                            </form>
+                                        @endif
                                     </td>
                                 </tr>
                                 @endforeach

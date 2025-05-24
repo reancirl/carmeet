@@ -1,6 +1,6 @@
 <x-guest-layout>
     <div class="mb-4 text-center">
-        <h2 class="text-xl font-medium">Join as an organizer or attendee</h2>
+        <h2 class="text-xl font-medium dark:text-white">Join as an organizer, attendee, or Car registrant</h2>
     </div>
 
     <form method="POST" action="{{ route('register') }}">
@@ -8,7 +8,7 @@
 
         <!-- Account Type Selection -->
         <div class="mb-4">
-            <div class="grid grid-cols-2 gap-4">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                 <div>
                     <input type="radio" id="organizer" name="role" value="organizer" class="hidden peer" {{ old('role') == 'organizer' ? 'checked' : '' }} required>
                     <label for="organizer" class="flex flex-col items-center justify-between p-5 text-gray-500 bg-white border border-gray-200 rounded-lg cursor-pointer dark:hover:text-gray-300 dark:border-gray-700 dark:peer-checked:text-blue-500 peer-checked:border-blue-600 peer-checked:text-blue-600 hover:text-gray-600 hover:bg-gray-100">
@@ -30,6 +30,18 @@
                             </svg>
                             <div class="font-semibold">I'm an Attendee</div>
                             <div class="text-sm">Join car meets and events</div>
+                        </div>
+                    </label>
+                </div>
+                <div>
+                    <input type="radio" id="registrant" name="role" value="registrant" class="hidden peer" {{ old('role') == 'registrant' ? 'checked' : '' }}>
+                    <label for="registrant" class="flex flex-col items-center justify-between p-5 text-gray-500 bg-white border border-gray-200 rounded-lg cursor-pointer dark:hover:text-gray-300 dark:border-gray-700 dark:peer-checked:text-blue-500 peer-checked:border-blue-600 peer-checked:text-blue-600 hover:text-gray-600 hover:bg-gray-100">
+                        <div class="w-full text-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-10 h-10 mx-auto mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" />
+                            </svg>
+                            <div class="font-semibold">I'm a Registrant</div>
+                            <div class="text-sm">Register for car meets and events</div>
                         </div>
                     </label>
                 </div>

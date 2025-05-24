@@ -66,7 +66,7 @@
                                     @foreach($event->attendees as $attendee)
                                         <div class="flex items-center">
                                             <p class="flex-1 font-medium">{{ $attendee->name }}</p>
-                                            @if($event->organizer_id === auth()->id())
+                                            @if($event->organizer_id === auth()->id() && auth()->user()->role == 'admin')
                                                 <form
                                                     action="{{ route('event.attendees.detach', ['event' => $event, 'attendee' => $attendee]) }}"
                                                     method="POST"
@@ -88,7 +88,7 @@
                                 </div>
                             </div>
 
-                            @if($event->organizer_id === auth()->id())
+                            @if($event->organizer_id === auth()->id() || auth()->user()->role == 'admin')
                                 <div class="mt-6 flex justify-end space-x-3">
                                     <a
                                         href="{{ route('events.edit', $event) }}"

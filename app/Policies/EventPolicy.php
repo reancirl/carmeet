@@ -10,17 +10,23 @@ class EventPolicy
 {
     public function viewAny(User $user)
     {
-        return $user->role !== 'attendee';
+        return $user->role === 'organizer' || $user->role === 'admin';
     }
 
     public function create(User $user)
     {
-        return $user->role !== 'attendee';
+        return $user->role === 'organizer' || $user->role === 'admin';
+    }
+
+    public function view(User $user, Event $event)
+    {
+        return $user->id === $event->organizer_id || $user->role === 'admin';
     }
 
     public function update(User $user, Event $event)
     {
-        return $user->id === $event->organizer_id;
+        // only organizer and admin can update events
+        return $user->id === $event->organizer_id || $user->role === 'admin';
     }
     public function delete(User $user, Event $event)
     {

@@ -33,7 +33,7 @@ class RegisteredUserController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
-            'role' => ['required', 'string', 'in:organizer,attendee'],
+            'role' => ['required', 'string', 'in:organizer,attendee,registrant'],
         ]);
 
         $user = User::create([
@@ -48,6 +48,8 @@ class RegisteredUserController extends Controller
         Auth::login($user);
 
         if ($user->role == 'attendee') {
+            return redirect('/');
+        } elseif ($user->role == 'registrant') {
             return redirect('/');
         }
         return redirect(route('events.index', absolute: false));

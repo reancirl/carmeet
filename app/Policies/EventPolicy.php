@@ -20,11 +20,11 @@ class EventPolicy
 
     public function update(User $user, Event $event)
     {
-        return $user->id === $event->host_id;
+        return $user->id === $event->organizer_id;
     }
     public function delete(User $user, Event $event)
     {
-        return $user->id === $event->host_id;
+        return $user->id === $event->organizer_id;
     }
 
 }

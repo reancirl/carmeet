@@ -92,7 +92,7 @@
                 </h2>
 
                 <p class="text-sm text-[#62605b] dark:text-[#a1a09a] mb-2">
-                  Organizer: {{ $event->host->name }}
+                  Organizer: {{ $event->organizer->name }}
                 </p>
 
                 <p class="text-sm text-[#62605b] dark:text-[#a1a09a]">

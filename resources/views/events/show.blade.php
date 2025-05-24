@@ -54,8 +54,8 @@
                             </div>
 
                             <div>
-                                <h2 class="text-xl font-semibold mb-2">{{ __('Host') }}</h2>
-                                <p class="font-medium">{{ $event->host->name }}</p>
+                                <h2 class="text-xl font-semibold mb-2">{{ __('Organizer') }}</h2>
+                                <p class="font-medium">{{ $event->organizer->name }}</p>
                             </div>
 
                             <div>
@@ -66,7 +66,7 @@
                                     @foreach($event->attendees as $attendee)
                                         <div class="flex items-center">
                                             <p class="flex-1 font-medium">{{ $attendee->name }}</p>
-                                            @if($event->host_id === auth()->id())
+                                            @if($event->organizer_id === auth()->id())
                                                 <form
                                                     action="{{ route('event.attendees.detach', ['event' => $event, 'attendee' => $attendee]) }}"
                                                     method="POST"
@@ -88,7 +88,7 @@
                                 </div>
                             </div>
 
-                            @if($event->host_id === auth()->id())
+                            @if($event->organizer_id === auth()->id())
                                 <div class="mt-6 flex justify-end space-x-3">
                                     <a
                                         href="{{ route('events.edit', $event) }}"

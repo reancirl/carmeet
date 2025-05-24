@@ -24,10 +24,10 @@ class EventController extends Controller
     public function index()
     {
         if (auth()->user()->role === 'admin') {
-            $events = Event::with('host')->get();
+            $events = Event::with('organizer')->get();
         } else {
-            $events = Event::with('host')
-                           ->where('host_id', auth()->id())
+            $events = Event::with('organizer')
+                           ->where('organizer_id', auth()->id())
                            ->get();
         }
 
@@ -41,7 +41,7 @@ class EventController extends Controller
 
     public function store(StoreEventRequest $request)
     {
-        $data = $request->validated() + ['host_id' => auth()->id()];
+        $data = $request->validated() + ['organizer_id' => auth()->id()];
         $event = Event::create($data);
 
         $this->images->upload($event, $request->file('image'));

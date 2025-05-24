@@ -22,7 +22,7 @@
                                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">{{ __('Name') }}</th>
                                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">{{ __('Date & Time') }}</th>
                                     @if(auth()->user()->role == 'admin')
-                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">{{ __('Host') }}</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">{{ __('Organizer') }}</th>
                                     @endif
                                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">{{ __('Attendees') }}</th>
                                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">{{ __('Actions') }}</th>
@@ -34,12 +34,12 @@
                                     <td class="px-6 py-4 whitespace-nowrap">{{ $event->name }}</td>
                                     <td class="px-6 py-4 whitespace-nowrap">{{ date('m/d/Y (D), ', strtotime($event->date)) }} {{ date('g:i A', strtotime($event->start_time)) }} - {{ date('g:i A', strtotime($event->end_time)) }}</td>
                                     @if(auth()->user()->role == 'admin')
-                                        <td class="px-6 py-4 whitespace-nowrap">{{ $event->host->name }}</td>
+                                        <td class="px-6 py-4 whitespace-nowrap">{{ $event->organizer->name }}</td>
                                     @endif
                                     <td class="px-6 py-4 whitespace-nowrap">{{ $event->attendees->count() }}</td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
                                         <a href="{{ route('events.show', $event) }}" class="text-blue-600 hover:text-blue-900 mr-2">{{ __('View') }}</a>
-                                        @if(auth()->user()->id == $event->host_id)
+                                        @if(auth()->user()->id == $event->organizer_id)
                                             <a href="{{ route('events.edit', $event) }}" class="text-green-600 hover:text-green-900 mr-2">{{ __('Edit') }}</a>
                                             <form action="{{ route('events.destroy', $event) }}" method="POST" class="inline">
                                                 @csrf

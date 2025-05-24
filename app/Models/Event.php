@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Storage;
 class Event extends Model
 {
     protected $fillable = [
-        'host_id',
+        'organizer_id',
         'name',
         'date',
         'start_time',
@@ -27,9 +27,9 @@ class Event extends Model
         'date' => 'date',
     ];
 
-    public function host()
+    public function organizer()
     {
-        return $this->belongsTo(User::class, 'host_id');
+        return $this->belongsTo(User::class, 'organizer_id');
     }
 
     public function attendees()

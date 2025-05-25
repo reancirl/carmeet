@@ -47,4 +47,23 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+    
+    /**
+     * Get the car profiles for the user.
+     */
+    public function carProfiles()
+    {
+        return $this->hasMany(CarProfile::class);
+    }
+    
+    /**
+     * Check if user has the specified role.
+     * 
+     * @param string $role
+     * @return bool
+     */
+    public function hasRole(string $role): bool
+    {
+        return $this->role === $role;
+    }
 }

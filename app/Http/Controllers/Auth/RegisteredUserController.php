@@ -47,9 +47,7 @@ class RegisteredUserController extends Controller
 
         Auth::login($user);
 
-        if ($user->role == 'attendee') {
-            return redirect('/');
-        } elseif ($user->role == 'registrant') {
+        if ($user->role == 'attendee' || $user->role == 'registrant') {
             return redirect('/');
         }
         return redirect(route('events.index', absolute: false));

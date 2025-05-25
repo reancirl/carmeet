@@ -28,7 +28,7 @@
                 <nav class="flex items-center justify-end gap-4">
                     @auth
                         <a
-                            href="{{ auth()->user()->role === 'attendee' || auth()->user()->role === 'registrant' ? url('/profile') : url('/events') }}"
+                            href="{{ auth()->user()->role === 'attendee' ? url('/profile') : (auth()->user()->role === 'registrant' ? url('/car-profiles') : url('/events')) }}"
                             class="inline-block px-5 py-1.5 dark:text-[#EDEDEC] text-[#1b1b18] border border-transparent hover:border-[#19140035] dark:hover:border-[#3E3E3A] rounded-sm text-sm leading-normal"
                         >
                             Home

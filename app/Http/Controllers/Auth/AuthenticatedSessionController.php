@@ -28,7 +28,7 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
-        if (auth()->user()->role == 'attendee') {
+        if (auth()->user()->role == 'attendee' || auth()->user()->role == 'registrant') {
             return redirect('/');
         }
         return redirect()->intended(route('events.index', absolute: false));

@@ -17,6 +17,19 @@
                             {{ __('Events') }}
                         </x-nav-link>
                     @endif
+                    
+                    @if(auth()->user()->role == 'registrant')
+                        <x-nav-link :href="route('car-profiles.index')" :active="request()->routeIs('car-profiles.*')">
+                            {{ __('My Garage') }}
+                        </x-nav-link>
+                    @endif
+
+                    <!-- add browse events not visible from organizer and admin route / -->
+                    @if(auth()->user()->role != 'organizer' && auth()->user()->role != 'admin')
+                        <x-nav-link :href="route('public.events.index')" :active="request()->routeIs('public.events.index')">
+                            {{ __('Browse Events') }}
+                        </x-nav-link>
+                    @endif
                 </div>
             </div>
 
@@ -72,6 +85,18 @@
             @if(auth()->user()->role != 'attendee' && auth()->user()->role != 'registrant')
                 <x-responsive-nav-link :href="route('events.index')" :active="request()->routeIs('events.index')">
                     {{ __('Events') }}
+                </x-responsive-nav-link>
+            @endif
+            
+            @if(auth()->user()->role == 'registrant')
+                <x-responsive-nav-link :href="route('car-profiles.index')" :active="request()->routeIs('car-profiles.*')">
+                    {{ __('My Garage') }}
+                </x-responsive-nav-link>
+            @endif
+
+            @if(auth()->user()->role != 'organizer' && auth()->user()->role != 'admin')
+                <x-responsive-nav-link :href="route('public.events.index')" :active="request()->routeIs('public.events.index')">
+                    {{ __('Browse Events') }}
                 </x-responsive-nav-link>
             @endif
         </div>

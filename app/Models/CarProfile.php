@@ -41,4 +41,12 @@ class CarProfile extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    /**
+     * Get the event registrations for this car profile.
+     */
+    public function registrations()
+    {
+        return $this->hasMany(CarEventRegistration::class);
+    }
 }

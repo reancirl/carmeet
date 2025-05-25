@@ -44,4 +44,12 @@ class Event extends Model
         }
         return null;
     }
+    
+    /**
+     * Get the registrations for the event.
+     */
+    public function registrations()
+    {
+        return $this->hasMany(CarEventRegistration::class);
+    }
 }

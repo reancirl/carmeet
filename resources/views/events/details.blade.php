@@ -29,26 +29,25 @@
                                 {{-- Event Title --}}
                                 <h2 class="text-3xl font-bold mb-3">{{ $event->name }}</h2>
                                 
-                                {{-- Host/Organizer --}}
                                 <div class="flex items-center gap-3 mb-3">
-                                    @if(isset($event->host) && $event->host)
-                                        @if($event->host->image_url)
-                                            <img src="{{ url('storage/' . $event->host->image_url) }}" alt="{{ $event->host->name }}" class="w-10 h-10 object-cover rounded-full">
+                                    @if(isset($event->organizer) && $event->organizer)
+                                        @if($event->organizer->image_url)
+                                            <img src="{{ url('storage/' . $event->organizer->image_url) }}" alt="{{ $event->organizer->name }}" class="w-10 h-10 object-cover rounded-full">
                                         @else
                                             <div class="w-10 h-10 bg-indigo-100 dark:bg-indigo-800 rounded-full flex items-center justify-center">
-                                                <span class="text-indigo-700 dark:text-indigo-300 font-semibold">{{ isset($event->host->name) ? substr($event->host->name, 0, 1) : '?' }}</span>
+                                                <span class="text-indigo-700 dark:text-indigo-300 font-semibold">{{ isset($event->organizer->name) ? substr($event->organizer->name, 0, 1) : '?' }}</span>
                                             </div>
                                         @endif
                                         <div>
-                                            <p class="text-gray-500 dark:text-gray-400 text-sm">Hosted by</p>
-                                            <p class="font-medium">{{ $event->host->name }}</p>
+                                            <p class="text-gray-500 dark:text-gray-400 text-sm">Organized by</p>
+                                            <p class="font-medium">{{ $event->organizer->name }}</p>
                                         </div>
                                     @else
                                         <div class="w-10 h-10 bg-indigo-100 dark:bg-indigo-800 rounded-full flex items-center justify-center">
                                             <span class="text-indigo-700 dark:text-indigo-300 font-semibold">?</span>
                                         </div>
                                         <div>
-                                            <p class="text-gray-500 dark:text-gray-400 text-sm">Host information</p>
+                                            <p class="text-gray-500 dark:text-gray-400 text-sm">organizer information</p>
                                             <p class="font-medium">Not available</p>
                                         </div>
                                     @endif

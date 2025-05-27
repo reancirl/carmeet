@@ -19,6 +19,10 @@
                     @endif
                     
                     @if(auth()->user()->role == 'registrant')
+                        <x-nav-link :href="route('event-registrations.index')" :active="request()->routeIs('event-registrations.*')">
+                            {{ __('Dashboard') }}
+                        </x-nav-link>
+                        
                         <x-nav-link :href="route('car-profiles.index')" :active="request()->routeIs('car-profiles.*')">
                             {{ __('My Garage') }}
                         </x-nav-link>
@@ -89,6 +93,10 @@
             @endif
             
             @if(auth()->user()->role == 'registrant')
+                <x-responsive-nav-link :href="route('event-registrations.index')" :active="request()->routeIs('event-registrations.*')">
+                    {{ __('Dashboard') }}
+                </x-responsive-nav-link>
+                
                 <x-responsive-nav-link :href="route('car-profiles.index')" :active="request()->routeIs('car-profiles.*')">
                     {{ __('My Garage') }}
                 </x-responsive-nav-link>

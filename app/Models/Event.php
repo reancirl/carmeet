@@ -52,4 +52,12 @@ class Event extends Model
     {
         return $this->hasMany(CarEventRegistration::class);
     }
+
+    /**
+     * Get the files associated with the event.
+     */
+    public function files()
+    {
+        return $this->hasMany(EventFile::class);
+    }
 }

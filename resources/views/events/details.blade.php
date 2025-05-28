@@ -68,14 +68,33 @@
                                 
                                 {{-- Register Button --}}
                                 @auth
-                                    <div class="mt-4">
-                                        <a href="{{ route('event-registrations.create', $event) }}" class="inline-flex justify-center items-center px-4 py-2 bg-indigo-600 border border-transparent rounded-md font-semibold text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" />
-                                            </svg>
-                                            Register for this Event
-                                        </a>
-                                    </div>
+                                    @php
+                                        // Check if user has any car profiles registered for this event
+                                        $userCarProfileIds = Auth::user()->carProfiles()->pluck('id');
+                                        $hasRegistered = App\Models\CarEventRegistration::whereIn('car_profile_id', $userCarProfileIds)
+                                            ->where('event_id', $event->id)
+                                            ->exists();
+                                    @endphp
+                                    
+                                    @if(!$hasRegistered)
+                                        <div class="mt-4">
+                                            <a href="{{ route('event-registrations.create', $event) }}" class="inline-flex justify-center items-center px-4 py-2 bg-indigo-600 border border-transparent rounded-md font-semibold text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" />
+                                                </svg>
+                                                Register for this Event
+                                            </a>
+                                        </div>
+                                    @else
+                                        <div class="mt-4">
+                                            <a href="{{ route('event-registrations.index') }}" class="inline-flex justify-center items-center px-4 py-2 bg-green-600 border border-transparent rounded-md font-semibold text-white hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">
+                                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                                                </svg>
+                                                Already Registered - View Registration
+                                            </a>
+                                        </div>
+                                    @endif
                                 @else
                                     <div class="mt-4">
                                         <a href="{{ route('login') }}" class="inline-flex justify-center items-center px-4 py-2 bg-indigo-600 border border-transparent rounded-md font-semibold text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">

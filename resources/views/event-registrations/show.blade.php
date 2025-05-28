@@ -33,7 +33,7 @@
                                 </p>
                             </div>
                             <div class="mt-4">
-                                <a href="{{ route('events.details', $registration->event) }}" class="text-indigo-600 hover:text-indigo-900 text-sm font-medium">
+                                <a href="{{ route('public.events.show', $registration->event) }}" class="text-indigo-600 hover:text-indigo-900 text-sm font-medium" target="_blank">
                                     View Event Details
                                 </a>
                             </div>

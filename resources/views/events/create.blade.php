@@ -183,20 +183,23 @@
                                 @enderror
                             </div>
                             
+                            {{-- State --}}
                             <div>
                                 <label for="state" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
                                     {{ __('State') }}
                                 </label>
-                                <input
-                                    type="text"
+                                <select
                                     name="state"
                                     id="state"
-                                    value="{{ old('state') }}"
                                     class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-300
                                            focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 shadow-sm
                                            @error('state') border-red-500 @enderror"
                                     required
                                 >
+                                    @foreach(config('states') as $abbr => $stateName)
+                                        <option value="{{ $abbr }}" {{ old('state') == $abbr ? 'selected' : '' }}>{{ $stateName }}</option>
+                                    @endforeach
+                                </select>
                                 @error('state')
                                     <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
                                 @enderror

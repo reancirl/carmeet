@@ -32,7 +32,22 @@
                                 @foreach($events as $event)
                                 <tr>
                                     <td class="px-6 py-4 whitespace-nowrap">{{ $event->name }}</td>
-                                    <td class="px-6 py-4 whitespace-nowrap">{{ date('m/d/Y (D), ', strtotime($event->date)) }} {{ date('g:i A', strtotime($event->start_time)) }} - {{ date('g:i A', strtotime($event->end_time)) }}</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        @if($event->is_multi_day)
+                                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-purple-100 text-purple-800 mr-2">
+                                                Multi-day
+                                            </span>
+                                            <div>
+                                                @foreach($event->days as $day)
+                                                    <div class="text-sm">
+                                                        {{ date('m/d/Y (D)', strtotime($day->date)) }}: {{ date('g:i A', strtotime($day->start_time)) }} - {{ date('g:i A', strtotime($day->end_time)) }}
+                                                    </div>
+                                                @endforeach
+                                            </div>
+                                        @else
+                                            {{ date('m/d/Y (D)', strtotime($event->date)) }}, {{ date('g:i A', strtotime($event->start_time)) }} - {{ date('g:i A', strtotime($event->end_time)) }}
+                                        @endif
+                                    </td>
                                     @if(auth()->user()->role == 'admin')
                                         <td class="px-6 py-4 whitespace-nowrap">{{ $event->organizer->name }}</td>
                                     @endif

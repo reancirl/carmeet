@@ -44,65 +44,101 @@
                                 @enderror
                             </div>
 
-                            {{-- Date --}}
-                            <div>
-                                <label for="date" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
-                                    {{ __('Date') }}
-                                </label>
-                                <input
-                                    type="date"
-                                    name="date"
-                                    id="date"
-                                    value="{{ old('date') }}"
-                                    class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-300
-                                           focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 shadow-sm
-                                           @error('date') border-red-500 @enderror"
-                                    required
-                                >
-                                @error('date')
+                            {{-- Multi-day Event Checkbox --}}
+                            <div class="md:col-span-2">
+                                <div class="flex items-center">
+                                    <input
+                                        type="checkbox"
+                                        name="is_multi_day"
+                                        id="is_multi_day"
+                                        value="1"
+                                        {{ old('is_multi_day') ? 'checked' : '' }}
+                                        class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
+                                    >
+                                    <label for="is_multi_day" class="ml-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
+                                        {{ __('This is a multiple day event') }}
+                                    </label>
+                                </div>
+                                @error('is_multi_day')
                                     <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
                                 @enderror
                             </div>
 
-                            {{-- Start Time --}}
-                            <div>
-                                <label for="start_time" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
-                                    {{ __('Start Time') }}
-                                </label>
-                                <input
-                                    type="time"
-                                    name="start_time"
-                                    id="start_time"
-                                    value="{{ old('start_time') }}"
-                                    class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-300
-                                           focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 shadow-sm
-                                           @error('start_time') border-red-500 @enderror"
-                                    required
-                                >
-                                @error('start_time')
-                                    <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
-                                @enderror
+                            {{-- Single Day Event Fields --}}
+                            <div id="single-day-fields" class="md:col-span-2 grid grid-cols-1 md:grid-cols-3 gap-6">
+                                {{-- Date --}}
+                                <div>
+                                    <label for="date" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                                        {{ __('Date') }}
+                                    </label>
+                                    <input
+                                        type="date"
+                                        name="date"
+                                        id="date"
+                                        value="{{ old('date') }}"
+                                        class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-300
+                                            focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 shadow-sm
+                                            @error('date') border-red-500 @enderror"
+                                    >
+                                    @error('date')
+                                        <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
+                                    @enderror
+                                </div>
+
+                                {{-- Start Time --}}
+                                <div>
+                                    <label for="start_time" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                                        {{ __('Start Time') }}
+                                    </label>
+                                    <input
+                                        type="time"
+                                        name="start_time"
+                                        id="start_time"
+                                        value="{{ old('start_time') }}"
+                                        class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-300
+                                            focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 shadow-sm
+                                            @error('start_time') border-red-500 @enderror"
+                                    >
+                                    @error('start_time')
+                                        <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
+                                    @enderror
+                                </div>
+
+                                {{-- End Time --}}
+                                <div>
+                                    <label for="end_time" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                                        {{ __('End Time') }}
+                                    </label>
+                                    <input
+                                        type="time"
+                                        name="end_time"
+                                        id="end_time"
+                                        value="{{ old('end_time') }}"
+                                        class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-300
+                                            focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 shadow-sm
+                                            @error('end_time') border-red-500 @enderror"
+                                    >
+                                    @error('end_time')
+                                        <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
+                                    @enderror
+                                </div>
                             </div>
 
-                            {{-- End Time --}}
-                            <div>
-                                <label for="end_time" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
-                                    {{ __('End Time') }}
-                                </label>
-                                <input
-                                    type="time"
-                                    name="end_time"
-                                    id="end_time"
-                                    value="{{ old('end_time') }}"
-
-                                    class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-300
-                                           focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 shadow-sm
-                                           @error('end_time') border-red-500 @enderror"
-                                    required
-                                >
-                                @error('end_time')
-                                    <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
-                                @enderror
+                            {{-- Multi-day Event Fields --}}
+                            <div id="multi-day-fields" class="md:col-span-2" style="display: none;">
+                                <div class="flex justify-between items-center mb-4">
+                                    <h3 class="text-lg font-medium text-gray-900 dark:text-gray-100">Event Days</h3>
+                                    <button
+                                        type="button"
+                                        id="add-day-btn"
+                                        class="inline-flex items-center px-3 py-1 border border-transparent text-sm leading-4 font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                                    >
+                                        Add Day
+                                    </button>
+                                </div>
+                                <div id="event-days-container" class="space-y-4">
+                                    <!-- Event days will be added here -->
+                                </div>
                             </div>
 
                             {{-- Description --}}
@@ -267,6 +303,7 @@
     </div>
 
     <script>
+        // Image preview functionality
         document.getElementById('image').addEventListener('change', function(event) {
             const file = event.target.files[0];
             if (file) {
@@ -278,6 +315,83 @@
                 }
                 reader.readAsDataURL(file);
             }
+        });
+
+        // Multi-day event functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const isMultiDayCheckbox = document.getElementById('is_multi_day');
+            const singleDayFields = document.getElementById('single-day-fields');
+            const multiDayFields = document.getElementById('multi-day-fields');
+            const addDayBtn = document.getElementById('add-day-btn');
+            const eventDaysContainer = document.getElementById('event-days-container');
+            let dayCounter = 0;
+
+            // Function to toggle between single-day and multi-day fields
+            function toggleEventFields() {
+                if (isMultiDayCheckbox.checked) {
+                    singleDayFields.style.display = 'none';
+                    multiDayFields.style.display = 'block';
+                    // If no days exist, add one by default
+                    if (eventDaysContainer.children.length === 0) {
+                        addEventDay();
+                    }
+                } else {
+                    singleDayFields.style.display = 'grid';
+                    multiDayFields.style.display = 'none';
+                }
+            }
+
+            // Function to add a new event day
+            function addEventDay() {
+                dayCounter++;
+                const dayElement = document.createElement('div');
+                dayElement.className = 'event-day bg-gray-50 dark:bg-gray-700 p-4 rounded-lg';
+                dayElement.dataset.dayId = dayCounter;
+
+                dayElement.innerHTML = `
+                    <div class="flex justify-between items-center mb-3">
+                        <h4 class="text-md font-medium">Day #${dayCounter}</h4>
+                        <button type="button" class="remove-day-btn text-red-600 hover:text-red-800">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd" />
+                            </svg>
+                        </button>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Date</label>
+                            <input type="date" name="event_days[${dayCounter-1}][date]" class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 shadow-sm" required>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Start Time</label>
+                            <input type="time" name="event_days[${dayCounter-1}][start_time]" class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 shadow-sm" required>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">End Time</label>
+                            <input type="time" name="event_days[${dayCounter-1}][end_time]" class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 shadow-sm" required>
+                        </div>
+                    </div>
+                `;
+
+                eventDaysContainer.appendChild(dayElement);
+
+                // Add event listener to the remove button
+                const removeBtn = dayElement.querySelector('.remove-day-btn');
+                removeBtn.addEventListener('click', function() {
+                    if (eventDaysContainer.children.length > 1) { // Ensure at least one day remains
+                        dayElement.remove();
+                    } else {
+                        alert('At least one day is required for a multi-day event.');
+                    }
+                });
+            }
+
+            // Toggle fields based on initial checkbox state
+            toggleEventFields();
+
+            // Add event listeners
+            isMultiDayCheckbox.addEventListener('change', toggleEventFields);
+            addDayBtn.addEventListener('click', addEventDay);
         });
     </script>
 </x-app-layout>

@@ -53,14 +53,27 @@
                                 <h2 class="text-xl font-semibold mb-2">{{ __('Event Details') }}</h2>
                                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                     <div>
-                                        <p class="text-gray-600 dark:text-gray-400">{{ __('Date') }}</p>
-                                        <p class="font-medium">{{ $event->date->format('m/d/Y (D)') }}</p>
-                                    </div>
-                                    <div>
-                                        <p class="text-gray-600 dark:text-gray-400">{{ __('Time') }}</p>
-                                        <p class="font-medium">
-                                            {{ \Carbon\Carbon::parse($event->start_time)->format('g:ia') }} - {{ \Carbon\Carbon::parse($event->end_time)->format('g:ia') }}
-                                        </p>
+                                        <p class="text-gray-600 dark:text-gray-400">{{ __('Date & Time') }}</p>
+                                        @if($event->is_multi_day)
+                                            <div class="mt-1">
+                                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-200">
+                                                    {{ __('Multi-day Event') }}
+                                                </span>
+                                            </div>
+                                            <div class="space-y-1 mt-2">
+                                                @foreach($event->days as $day)
+                                                    <p class="font-medium">
+                                                        {{ \Carbon\Carbon::parse($day->date)->format('m/d/Y (D)') }}: 
+                                                        {{ \Carbon\Carbon::parse($day->start_time)->format('g:ia') }} - {{ \Carbon\Carbon::parse($day->end_time)->format('g:ia') }}
+                                                    </p>
+                                                @endforeach
+                                            </div>
+                                        @else
+                                            <p class="font-medium">{{ $event->date->format('m/d/Y (D)') }}</p>
+                                            <p class="font-medium">
+                                                {{ \Carbon\Carbon::parse($event->start_time)->format('g:ia') }} - {{ \Carbon\Carbon::parse($event->end_time)->format('g:ia') }}
+                                            </p>
+                                        @endif
                                     </div>
                                     <div>
                                         <p class="text-gray-600 dark:text-gray-400">{{ __('Location') }}</p>

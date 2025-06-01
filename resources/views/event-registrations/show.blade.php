@@ -18,11 +18,29 @@
                         @if($registration->event)
                             <div class="space-y-2">
                                 <p><span class="text-gray-500">Event Name:</span> {{ $registration->event->name }}</p>
-                                <p><span class="text-gray-500">Date:</span> {{ $registration->event->date ? $registration->event->date->format('F d, Y') : 'N/A' }}</p>
-                                <p><span class="text-gray-500">Time:</span> 
-                                    {{ $registration->event->start_time ? date('g:i A', strtotime($registration->event->start_time)) : '' }} - 
-                                    {{ $registration->event->end_time ? date('g:i A', strtotime($registration->event->end_time)) : '' }}
-                                </p>
+                                @if($registration->event->is_multi_day)
+                                    <p>
+                                        <span class="text-gray-500">Event Type:</span>
+                                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-purple-100 text-purple-800">
+                                            Multi-day Event
+                                        </span>
+                                    </p>
+                                    <div class="pl-4 border-l-2 border-purple-200 mt-2 mb-2">
+                                        @foreach($registration->event->days as $day)
+                                            <p class="mb-1">
+                                                <span class="text-gray-500">Day {{ $loop->iteration }}:</span> 
+                                                {{ \Carbon\Carbon::parse($day->date)->format('F d, Y') }}, 
+                                                {{ date('g:i A', strtotime($day->start_time)) }} - {{ date('g:i A', strtotime($day->end_time)) }}
+                                            </p>
+                                        @endforeach
+                                    </div>
+                                @else
+                                    <p><span class="text-gray-500">Date:</span> {{ $registration->event->date ? $registration->event->date->format('F d, Y') : 'N/A' }}</p>
+                                    <p><span class="text-gray-500">Time:</span> 
+                                        {{ $registration->event->start_time ? date('g:i A', strtotime($registration->event->start_time)) : '' }} - 
+                                        {{ $registration->event->end_time ? date('g:i A', strtotime($registration->event->end_time)) : '' }}
+                                    </p>
+                                @endif
                                 <p><span class="text-gray-500">Location:</span> 
                                     @if($registration->event->location_name)
                                         {{ $registration->event->location_name }}, 

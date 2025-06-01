@@ -28,20 +28,46 @@
                                             <div class="col-span-2">
                                                 <h2 class="text-xl font-bold text-gray-800 dark:text-gray-200 mb-2">{{ $registration->event->name ?? 'N/A' }}</h2>
                                         
-                                        <div class="flex items-center text-gray-600 dark:text-gray-400 text-sm mb-1">
-                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                                            </svg>
-                                            {{ $registration->event->date ? $registration->event->date->format('F d, Y') : 'N/A' }}
-                                        </div>
-                                        
-                                        <div class="flex items-center text-gray-600 dark:text-gray-400 text-sm mb-1">
-                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                            </svg>
-                                            {{ $registration->event->start_time ? date('g:i A', strtotime($registration->event->start_time)) : '' }} - 
-                                            {{ $registration->event->end_time ? date('g:i A', strtotime($registration->event->end_time)) : '' }}
-                                        </div>
+                                        @if($registration->event->is_multi_day)
+                                            <div class="flex items-center text-gray-600 dark:text-gray-400 text-sm mb-1">
+                                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                                </svg>
+                                                <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-purple-100 text-purple-800">
+                                                    Multi-day Event
+                                                </span>
+                                            </div>
+                                            
+                                            @foreach($registration->event->days->take(2) as $day)
+                                                <div class="flex items-center text-gray-600 dark:text-gray-400 text-sm mb-1 ml-5">
+                                                    <div class="flex-shrink-0 w-4 mr-1"></div><!-- Spacing to align with icon above -->
+                                                    {{ \Carbon\Carbon::parse($day->date)->format('F d, Y') }}: 
+                                                    {{ date('g:i A', strtotime($day->start_time)) }} - {{ date('g:i A', strtotime($day->end_time)) }}
+                                                </div>
+                                            @endforeach
+                                            
+                                            @if($registration->event->days->count() > 2)
+                                                <div class="flex items-center text-gray-600 dark:text-gray-400 text-sm mb-1 ml-5 italic">
+                                                    <div class="flex-shrink-0 w-4 mr-1"></div><!-- Spacing to align with icon above -->
+                                                    + {{ $registration->event->days->count() - 2 }} more days...
+                                                </div>
+                                            @endif
+                                        @else
+                                            <div class="flex items-center text-gray-600 dark:text-gray-400 text-sm mb-1">
+                                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                                </svg>
+                                                {{ $registration->event->date ? $registration->event->date->format('F d, Y') : 'N/A' }}
+                                            </div>
+                                            
+                                            <div class="flex items-center text-gray-600 dark:text-gray-400 text-sm mb-1">
+                                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                                </svg>
+                                                {{ $registration->event->start_time ? date('g:i A', strtotime($registration->event->start_time)) : '' }} - 
+                                                {{ $registration->event->end_time ? date('g:i A', strtotime($registration->event->end_time)) : '' }}
+                                            </div>
+                                        @endif
                                         
                                         <div class="flex items-center text-gray-600 dark:text-gray-400 text-sm">
                                             <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">

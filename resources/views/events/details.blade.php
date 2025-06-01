@@ -23,7 +23,22 @@
                             <div class="md:flex-1">
                                 {{-- Date at top --}}
                                 <div class="text-indigo-600 dark:text-indigo-400 font-medium mb-2">
-                                    {{ \Carbon\Carbon::parse($event->date)->format('d M Y') }} • {{ \Carbon\Carbon::parse($event->start_time)->format('g:ia') }} - {{ \Carbon\Carbon::parse($event->end_time)->format('g:ia') }}
+                                    @if($event->is_multi_day)
+                                        <div class="flex items-center">
+                                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-200 mr-2">
+                                                {{ __('Multi-day Event') }}
+                                            </span>
+                                        </div>
+                                        <div class="space-y-1 mt-1">
+                                            @foreach($event->days as $day)
+                                                <p>
+                                                    {{ \Carbon\Carbon::parse($day->date)->format('d M Y') }} • {{ \Carbon\Carbon::parse($day->start_time)->format('g:ia') }} - {{ \Carbon\Carbon::parse($day->end_time)->format('g:ia') }}
+                                                </p>
+                                            @endforeach
+                                        </div>
+                                    @else
+                                        {{ \Carbon\Carbon::parse($event->date)->format('d M Y') }} • {{ \Carbon\Carbon::parse($event->start_time)->format('g:ia') }} - {{ \Carbon\Carbon::parse($event->end_time)->format('g:ia') }}
+                                    @endif
                                 </div>
                                 
                                 {{-- Event Title --}}

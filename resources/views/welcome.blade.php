@@ -42,9 +42,29 @@
                     </p>
 
                     <p class="text-sm text-[#62605b] dark:text-[#a1a09a]">
-                        <time>
-                            {{ date('m/d/Y (D), ', strtotime($event->date)) }} {{ date('g:i A', strtotime($event->start_time)) }} - {{ date('g:i A', strtotime($event->end_time)) }}
-                        </time><br>
+                        @if($event->is_multi_day)
+                            <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-purple-100 text-purple-800 mb-1">
+                                Multi-day Event
+                            </span>
+                            <br>
+                            @foreach($event->days as $index => $day)
+                                @if($index < 2)
+                                    <time>
+                                        {{ date('m/d/Y (D)', strtotime($day->date)) }}: {{ date('g:i A', strtotime($day->start_time)) }} - {{ date('g:i A', strtotime($day->end_time)) }}
+                                    </time>
+                                    <br>
+                                @elseif($index == 2 && $event->days->count() > 3)
+                                    <span class="text-xs italic">+ {{ $event->days->count() - 2 }} more days</span>
+                                    <br>
+                                    @break
+                                @endif
+                            @endforeach
+                        @else
+                            <time>
+                                {{ date('m/d/Y (D)', strtotime($event->date)) }}, {{ date('g:i A', strtotime($event->start_time)) }} - {{ date('g:i A', strtotime($event->end_time)) }}
+                            </time>
+                            <br>
+                        @endif
                         {{ $event->location_name }} - {{ $event->street }}, {{ $event->city }}, {{ $event->state }}, {{ $event->zip_code }}
                     </p>
 

@@ -14,6 +14,7 @@ class Event extends Model
         'date',
         'start_time',
         'end_time',
+        'is_multi_day',
         'description',
         'street',
         'city',
@@ -27,6 +28,7 @@ class Event extends Model
         'date'       => 'date',
         'start_time' => 'datetime:H:i',
         'end_time'   => 'datetime:H:i',
+        'is_multi_day' => 'boolean',
     ];
 
     public function organizer()
@@ -61,5 +63,13 @@ class Event extends Model
     public function files()
     {
         return $this->hasMany(EventFile::class);
+    }
+    
+    /**
+     * Get the days for a multi-day event.
+     */
+    public function days()
+    {
+        return $this->hasMany(EventDay::class);
     }
 }

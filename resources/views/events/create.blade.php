@@ -87,15 +87,14 @@
                             {{-- End Time --}}
                             <div>
                                 <label for="end_time" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
-                                    {{ __('End Time') }} <span class="text-xs text-gray-500">(Between 6:00 PM - 10:00 PM)</span>
+                                    {{ __('End Time') }}
                                 </label>
                                 <input
                                     type="time"
                                     name="end_time"
                                     id="end_time"
                                     value="{{ old('end_time') }}"
-                                    min="18:00"
-                                    max="22:00"
+
                                     class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-300
                                            focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 shadow-sm
                                            @error('end_time') border-red-500 @enderror"

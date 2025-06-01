@@ -20,7 +20,7 @@ class StoreEventRequest extends FormRequest
             'name'          => 'required|string|max:255',
             'date'          => 'required|date',
             'start_time'    => 'required|date_format:H:i',
-            'end_time'      => 'required|date_format:H:i|after_or_equal:18:00|before_or_equal:22:00',
+            'end_time'      => 'required|date_format:H:i',
             'description'   => 'required|string',
             'street'        => 'required|string|max:255',
             'city'          => 'required|string|max:255',

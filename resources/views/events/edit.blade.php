@@ -121,7 +121,6 @@
                                         class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-300
                                             focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 shadow-sm
                                             @error('end_time') border-red-500 @enderror"
-                                        min="18:00" max="22:00"
                                     >
                                     @error('end_time')
                                         <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
@@ -357,7 +356,6 @@
                                 name="event_days[${index}][start_time]"
                                 value="${startTime}"
                                 class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 shadow-sm"
-                                min="18:00" max="22:00"
                                 required
                             >
                         </div>
@@ -368,9 +366,9 @@
                                 name="event_days[${index}][end_time]"
                                 value="${endTime}"
                                 class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 shadow-sm"
-                                min="18:00" max="22:00"
                                 required
                             >
+                        </div>
                         </div>
                     </div>
                 </div>
@@ -387,15 +385,19 @@
             
             // Load existing event days if this is a multi-day event
             @if($event->is_multi_day && $event->days->count() > 0)
-                const existingDays = @json($event->days);
+                const existingDays = [
+                    @foreach($event->days as $index => $day)
+                        {
+                            id: {{ $day->id }},
+                            date: '{{ $day->date->format('Y-m-d') }}',
+                            start_time: '{{ $day->start_time->format('H:i') }}',
+                            end_time: '{{ $day->end_time->format('H:i') }}'
+                        }@if(!$loop->last),@endif
+                    @endforeach
+                ];
+                
                 existingDays.forEach((day, index) => {
-                    const formattedDay = {
-                        id: day.id,
-                        date: day.date,
-                        start_time: day.start_time.substring(0, 5),
-                        end_time: day.end_time.substring(0, 5)
-                    };
-                    eventDaysContainer.insertAdjacentHTML('beforeend', createEventDayTemplate(index, formattedDay));
+                    eventDaysContainer.insertAdjacentHTML('beforeend', createEventDayTemplate(index, day));
                 });
             @endif
             

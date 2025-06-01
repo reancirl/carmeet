@@ -60,9 +60,6 @@ class CarEventRegistrationController extends Controller
             'payment_note' => $validated['payment_note']
         ]);
         
-        return response()->json([
-            'success' => true,
-            'message' => 'Payment information updated successfully.'
-        ]);
+        return redirect()->back()->with('success', 'Payment information updated successfully.');
     }
 }

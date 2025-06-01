@@ -8,6 +8,7 @@ use App\Http\Controllers\PublicEventController;
 use App\Http\Controllers\CarProfileController;
 use App\Http\Controllers\EventRegistrationController;
 use App\Http\Controllers\EventFileController;
+use App\Http\Controllers\CarEventRegistrationController;
 
 Route::get('/', [PublicEventController::class, 'index'])->name('public.events.index');
 Route::get('/event-details/{event}', [PublicEventController::class, 'show'])->name('public.events.show');
@@ -29,6 +30,13 @@ Route::middleware('auth')->group(function () {
     // Event Files Routes
     Route::post('/events/{event}/upload-documents', [EventFileController::class, 'uploadEventDocuments'])->name('events.upload-documents');
     Route::delete('/event-files/{eventFile}', [EventFileController::class, 'destroy'])->name('event-files.destroy');
+    
+    // Car Event Registration Management Routes
+    Route::get('/registrations/{registration}/details', [CarEventRegistrationController::class, 'getDetails'])->name('registrations.details');
+    Route::post('/registrations/{registration}/status', [CarEventRegistrationController::class, 'updateStatus'])->name('registrations.update-status');
+    Route::patch('/registrations/{registration}/status', [CarEventRegistrationController::class, 'updateStatus'])->name('registrations.update-status-form');
+    Route::post('/registrations/{registration}/payment', [CarEventRegistrationController::class, 'updatePayment'])->name('registrations.update-payment');
+    Route::patch('/registrations/{registration}/payment', [CarEventRegistrationController::class, 'updatePayment'])->name('registrations.update-payment-form');
 });
 
 require __DIR__.'/auth.php';

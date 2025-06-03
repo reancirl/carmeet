@@ -1,6 +1,14 @@
 <x-public-layout :title="$event->name">
     <div class="flex-grow w-full lg:max-w-10xl mx-auto px-6 lg:px-8 py-8 space-y-8">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <div class="mb-4">
+                <a href="{{ url()->previous() }}" class="inline-flex items-center text-indigo-600 dark:text-indigo-400 hover:text-indigo-800 dark:hover:text-indigo-300 transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                    </svg>
+                    {{ __('Go Back') }}
+                </a>
+            </div>
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900 dark:text-gray-100">
                     <div class="mb-8">
@@ -144,8 +152,18 @@
                         </div>
                     </div>
 
+                    {{-- Event Description --}}
+                    @if($event->description)
+                        <div class="mt-8 pt-6 border-t border-gray-200 dark:border-gray-700">
+                            <h3 class="text-xl font-semibold mb-4">{{ __('Event Description') }}</h3>
+                            <div class="prose dark:prose-invert max-w-none">
+                                {!! nl2br(e($event->description)) !!}
+                            </div>
+                        </div>
+                    @endif
+
                     {{-- Event Files Section --}}
-                    @php
+                    <!-- @php
                         // Get files based on user authentication and visibility
                         $publicFiles = $event->files->where('visibility', 'public');
                         $approvedOnlyFiles = $event->files->where('visibility', 'approved_only');
@@ -169,7 +187,7 @@
                             @endif
                         </div>
                     </div>
-                    @endif
+                    @endif -->
                 </div>
             </div>
         </div>

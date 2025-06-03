@@ -6,7 +6,7 @@
                     <div class="mb-8">
                         <div class="flex flex-col md:flex-row gap-6">
                             <div class="md:w-1/3 lg:w-2/5">
-                                @if($event->image_url)
+                                @if ($event->image_url)
                                     <img
                                         src="{{ $event->image_url }}"
                                         alt="{{ $event->name }}"
@@ -18,19 +18,18 @@
                                     </div>
                                 @endif
                             </div>
-                                    
-                            {{-- Event Details (Right) --}}
+
                             <div class="md:flex-1">
                                 {{-- Date at top --}}
                                 <div class="text-indigo-600 dark:text-indigo-400 font-medium mb-2">
-                                    @if($event->is_multi_day)
+                                    @if ($event->is_multi_day)
                                         <div class="flex items-center">
                                             <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-200 mr-2">
                                                 {{ __('Multi-day Event') }}
                                             </span>
                                         </div>
                                         <div class="space-y-1 mt-1">
-                                            @foreach($event->days as $day)
+                                            @foreach ($event->days as $day)
                                                 <p>
                                                     {{ \Carbon\Carbon::parse($day->date)->format('d M Y') }} • {{ \Carbon\Carbon::parse($day->start_time)->format('g:ia') }} - {{ \Carbon\Carbon::parse($day->end_time)->format('g:ia') }}
                                                 </p>
@@ -40,13 +39,13 @@
                                         {{ \Carbon\Carbon::parse($event->date)->format('d M Y') }} • {{ \Carbon\Carbon::parse($event->start_time)->format('g:ia') }} - {{ \Carbon\Carbon::parse($event->end_time)->format('g:ia') }}
                                     @endif
                                 </div>
-                                
+
                                 {{-- Event Title --}}
                                 <h2 class="text-3xl font-bold mb-3">{{ $event->name }}</h2>
-                                
+
                                 <div class="flex items-center gap-3 mb-3">
-                                    @if(isset($event->organizer) && $event->organizer)
-                                        @if($event->organizer->image_url)
+                                    @if (isset($event->organizer) && $event->organizer)
+                                        @if ($event->organizer->image_url)
                                             <img src="{{ url('storage/' . $event->organizer->image_url) }}" alt="{{ $event->organizer->name }}" class="w-10 h-10 object-cover rounded-full">
                                         @else
                                             <div class="w-10 h-10 bg-indigo-100 dark:bg-indigo-800 rounded-full flex items-center justify-center">
@@ -67,7 +66,7 @@
                                         </div>
                                     @endif
                                 </div>
-                                
+
                                 {{-- Location --}}
                                 <div class="flex items-start mb-4">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-500 mr-2 mt-0.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -80,7 +79,28 @@
                                         <p class="text-gray-500 dark:text-gray-400">{{ $event->city }}, {{ $event->state }} {{ $event->zip_code }}</p>
                                     </div>
                                 </div>
-                                
+
+                                <div class="flex flex-wrap gap-2">
+                                    <!-- Registrants Badge -->
+                                    <div
+                                        class="flex items-center space-x-2 px-3 py-1.5 bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200 rounded-lg shadow-sm hover:shadow-md transition-shadow"
+                                        aria-label="{{ $event->registrations->count() }} car registrants"
+                                    >
+                                        <span class="text-sm font-medium">
+                                            Car Registrants ({{ $event->registrations->count() }})
+                                        </span>
+                                    </div>
+
+                                    <div
+                                        class="flex items-center space-x-2 px-3 py-1.5 bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200 rounded-lg shadow-sm hover:shadow-md transition-shadow"
+                                        aria-label="{{ $event->attendees->count() }} attendees"
+                                    >
+                                        <span class="text-sm font-medium">
+                                            Attendees ({{ $event->attendees->count() }})
+                                        </span>
+                                    </div>
+                                </div>
+
                                 {{-- Register Button --}}
                                 @auth
                                     @php
@@ -90,8 +110,8 @@
                                             ->where('event_id', $event->id)
                                             ->exists();
                                     @endphp
-                                    
-                                    @if(!$hasRegistered)
+
+                                    @if (!$hasRegistered && $event->organizer_id !== Auth::user()->id)
                                         <div class="mt-4">
                                             <a href="{{ route('event-registrations.create', $event) }}" class="inline-flex justify-center items-center px-4 py-2 bg-indigo-600 border border-transparent rounded-md font-semibold text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -100,7 +120,7 @@
                                                 Register for this Event
                                             </a>
                                         </div>
-                                    @else
+                                    @elseif ($event->organizer_id !== Auth::user()->id)
                                         <div class="mt-4">
                                             <a href="{{ route('event-registrations.index') }}" class="inline-flex justify-center items-center px-4 py-2 bg-green-600 border border-transparent rounded-md font-semibold text-white hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">
                                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -118,24 +138,9 @@
                                             </svg>
                                             Login to RSVP
                                         </a>
-                                    </div>
+                                    </div>  
                                 @endauth
                             </div>
-                        </div>
-                            
-                        {{-- Description --}}
-                        <div class="mt-8">
-                            <h3 class="text-xl font-semibold mb-3">Description</h3>
-                            <p class="text-gray-700 dark:text-gray-400">{{ $event->description }}</p>
-                        </div>
-
-                        <div class="mt-6 flex justify-end">
-                            <a
-                                href="{{ route('public.events.index') }}"
-                                class="text-indigo-600 hover:text-indigo-800 dark:text-indigo-400 dark:hover:text-indigo-200 font-medium"
-                            >
-                                &larr; Back
-                            </a>
                         </div>
                     </div>
                 </div>

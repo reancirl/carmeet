@@ -64,24 +64,29 @@
                     <h2 class="text-xl font-semibold mb-2">{{ __('Organizer') }}</h2>
                     <p class="font-medium">{{ $event->organizer->name }}</p>
                 </div>
+                
+                <div>
+                    <h2 class="text-xl font-semibold mb-2">{{ __('Car Registratrants') }}</h2>
+                    <p class="font-medium">{{ $event->registrations->count() }}</p>
+                </div>
+                <div>
+                    <h2 class="text-xl font-semibold mb-2">{{ __('Attendees') }}</h2>
+                    <p class="font-medium">{{ $event->attendees->count() }}</p>
+                </div>
 
-                @if($event->attendees->count() > 0)
-                    <div>
-                        <h2 class="text-xl font-semibold mb-2">
-                            {{ __('Attendees') }} ({{ $event->attendees->count() }})
-                        </h2>
-                        <div class="space-y-2">
-                            @foreach($event->attendees as $attendee)
-                                <div class="flex items-center">
-                                    <span class="inline-flex items-center justify-center h-8 w-8 rounded-full bg-gray-200 dark:bg-gray-700 mr-3">
-                                        <span class="text-sm font-medium text-gray-600 dark:text-gray-300">
-                                            {{ substr($attendee->name, 0, 1) }}
-                                        </span>
-                                    </span>
-                                    <span class="text-gray-700 dark:text-gray-300">{{ $attendee->name }}</span>
-                                </div>
-                            @endforeach
-                        </div>
+                @if(auth()->user()->is($event->organizer))
+                    <div class="flex items-center space-x-4">
+                        <a href="{{ route('events.edit', $event->id) }}" class="inline-flex items-center px-4 py-2 border border-transparent text-base leading-6 font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-500 focus:outline-none focus:border-indigo-700 focus:shadow-outline-indigo active:bg-indigo-700 transition duration-150 ease-in-out">
+                            {{ __('Edit') }}
+                        </a>
+
+                        <form action="{{ route('events.destroy', $event->id) }}" method="POST">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="inline-flex items-center px-4 py-2 border border-transparent text-base leading-6 font-medium rounded-md text-white bg-red-600 hover:bg-red-500 focus:outline-none focus:border-red-700 focus:shadow-outline-red active:bg-red-700 transition duration-150 ease-in-out">
+                                {{ __('Delete') }}
+                            </button>
+                        </form>
                     </div>
                 @endif
             </div>

@@ -24,6 +24,7 @@
                                     @if(auth()->user()->role == 'admin')
                                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">{{ __('Organizer') }}</th>
                                     @endif
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">{{ __('Car Registrants') }}</th>
                                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">{{ __('Attendees') }}</th>
                                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">{{ __('Actions') }}</th>
                                 </tr>
@@ -51,6 +52,7 @@
                                     @if(auth()->user()->role == 'admin')
                                         <td class="px-6 py-4 whitespace-nowrap">{{ $event->organizer->name }}</td>
                                     @endif
+                                    <td class="px-6 py-4 whitespace-nowrap">{{ $event->registrations->count() }}</td>
                                     <td class="px-6 py-4 whitespace-nowrap">{{ $event->attendees->count() }}</td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
                                         <a href="{{ route('events.show', $event) }}" class="text-blue-600 hover:text-blue-900 mr-2">{{ __('View') }}</a>

@@ -179,45 +179,46 @@
             const tabs = document.querySelectorAll('[role="tab"]');
             const tabPanels = document.querySelectorAll('[role="tabpanel"]');
             
-            // Activate the first tab by default if no tab is active
-            const activeTab = document.querySelector('[role="tab"][aria-selected="true"]');
-            if (!activeTab && tabs.length > 0) {
-                tabs[0].setAttribute('aria-selected', 'true');
-                const panelId = tabs[0].getAttribute('data-tabs-target').substring(1);
-                document.getElementById(panelId).classList.remove('hidden');
-            }
-            
-            // Function to activate a specific tab
+            // Function to activate a tab by ID
             function activateTab(tabId) {
-                // Find the tab with the matching data-tabs-target
-                const targetTab = document.querySelector(`[data-tabs-target="#${tabId}"]`);
+                // Hide all tab panels and deactivate all tabs
+                tabPanels.forEach(panel => panel.classList.add('hidden'));
+                tabs.forEach(tab => {
+                    tab.setAttribute('aria-selected', 'false');
+                    tab.classList.remove('border-blue-600', 'dark:text-white');
+                    tab.classList.add('border-transparent', 'hover:text-gray-600', 'hover:border-gray-300');
+                });
                 
-                if (targetTab && !targetTab.hasAttribute('disabled')) {
-                    // Deactivate all tabs
-                    tabs.forEach(t => {
-                        if (!t.hasAttribute('disabled')) {
-                            t.classList.remove('border-blue-600', 'active');
-                            t.classList.add('border-transparent');
-                            t.setAttribute('aria-selected', 'false');
-                        }
-                    });
+                // Show the selected tab panel and activate the tab
+                const selectedTab = document.querySelector(`[data-tabs-target="#${tabId}"]`);
+                const selectedPanel = document.getElementById(tabId);
+                
+                if (selectedTab && selectedPanel) {
+                    selectedTab.setAttribute('aria-selected', 'true');
+                    selectedTab.classList.add('border-blue-600', 'dark:text-white');
+                    selectedTab.classList.remove('border-transparent', 'hover:text-gray-600', 'hover:border-gray-300');
+                    selectedPanel.classList.remove('hidden');
                     
-                    // Hide all tab panels
-                    tabPanels.forEach(panel => {
-                        panel.classList.add('hidden');
-                    });
-                    
-                    // Activate target tab
-                    targetTab.classList.remove('border-transparent');
-                    targetTab.classList.add('border-blue-600', 'active');
-                    targetTab.setAttribute('aria-selected', 'true');
-                    
-                    // Show corresponding panel
-                    document.getElementById(tabId).classList.remove('hidden');
+                    // Update URL with the tab ID as hash
+                    history.pushState(null, null, `#${tabId}`);
                 }
             }
             
-            // Add click event listeners to tabs
+            // Check for URL hash on page load
+            const hash = window.location.hash.substring(1);
+            if (hash && ['details', 'upload-center', 'registrants'].includes(hash)) {
+                activateTab(hash);
+            } else {
+                // Activate the first tab by default if no valid hash is present
+                const activeTab = document.querySelector('[role="tab"][aria-selected="true"]');
+                if (!activeTab && tabs.length > 0) {
+                    tabs[0].setAttribute('aria-selected', 'true');
+                    const panelId = tabs[0].getAttribute('data-tabs-target').substring(1);
+                    document.getElementById(panelId).classList.remove('hidden');
+                }
+            }
+            
+            // Tab click handler
             tabs.forEach(tab => {
                 if (!tab.hasAttribute('disabled')) {
                     tab.addEventListener('click', () => {

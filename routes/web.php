@@ -32,11 +32,11 @@ Route::middleware('auth')->group(function () {
     Route::delete('/event-files/{eventFile}', [EventFileController::class, 'destroy'])->name('event-files.destroy');
     
     // Car Event Registration Management Routes
-    Route::get('/registrations/{registration}/details', [CarEventRegistrationController::class, 'getDetails'])->name('registrations.details');
-    Route::post('/registrations/{registration}/status', [CarEventRegistrationController::class, 'updateStatus'])->name('registrations.update-status');
-    Route::patch('/registrations/{registration}/status', [CarEventRegistrationController::class, 'updateStatus'])->name('registrations.update-status-form');
-    Route::post('/registrations/{registration}/payment', [CarEventRegistrationController::class, 'updatePayment'])->name('registrations.update-payment');
-    Route::patch('/registrations/{registration}/payment', [CarEventRegistrationController::class, 'updatePayment'])->name('registrations.update-payment-form');
+    Route::get('/car-registrants/{registration}/details', [CarEventRegistrationController::class, 'show'])->name('car-registrants.details');
+    Route::get('/car-registrants/{registration}/edit-status', [CarEventRegistrationController::class, 'editStatus'])->name('car-registrants.edit-status');
+    Route::patch('/car-registrants/{registration}/status', [CarEventRegistrationController::class, 'updateStatus'])->name('car-registrants.update-status');
+    Route::get('/car-registrants/{registration}/edit-payment', [CarEventRegistrationController::class, 'editPayment'])->name('car-registrants.edit-payment');
+    Route::patch('/car-registrants/{registration}/payment', [CarEventRegistrationController::class, 'updatePayment'])->name('car-registrants.update-payment');
 });
 
 require __DIR__.'/auth.php';

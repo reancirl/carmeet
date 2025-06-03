@@ -8,18 +8,28 @@ use Illuminate\Http\Request;
 class CarEventRegistrationController extends Controller
 {
     /**
-     * Get the detailed information about a registration for the modal view
+     * Show the registration details
      */
-    public function getDetails(CarEventRegistration $registration)
+    public function show(CarEventRegistration $registration)
     {
         // Authorization check - only allow organizers or admins
         $this->authorize('view', $registration->event);
         
-        // Return the data needed for the modal
-        return response()->json([
-            'registration' => $registration,
-            'car' => $registration->carProfile,
-            'user' => $registration->carProfile->user
+        return view('car-registrants.details', [
+            'registration' => $registration->load(['carProfile.user', 'event'])
+        ]);
+    }
+    
+    /**
+     * Show the form to edit the registration status
+     */
+    public function editStatus(CarEventRegistration $registration)
+    {
+        // Authorization check - only allow organizers or admins
+        $this->authorize('update', $registration->event);
+        
+        return view('car-registrants.edit-status', [
+            'registration' => $registration->load(['carProfile.user', 'event'])
         ]);
     }
     
@@ -39,7 +49,22 @@ class CarEventRegistrationController extends Controller
             'status' => $validated['status']
         ]);
         
-        return redirect()->back()->with('success', 'Registration status updated successfully.');
+        return redirect()
+            ->route('car-registrants.details', $registration)
+            ->with('success', 'Registration status updated successfully.');
+    }
+    
+    /**
+     * Show the form to edit the payment information
+     */
+    public function editPayment(CarEventRegistration $registration)
+    {
+        // Authorization check - only allow organizers or admins
+        $this->authorize('update', $registration->event);
+        
+        return view('car-registrants.edit-payment', [
+            'registration' => $registration->load(['carProfile.user', 'event'])
+        ]);
     }
     
     /**
@@ -57,9 +82,11 @@ class CarEventRegistrationController extends Controller
         
         $registration->update([
             'is_paid' => $validated['is_paid'],
-            'payment_note' => $validated['payment_note']
+            'payment_note' => $validated['payment_note'] ?? null
         ]);
         
-        return redirect()->back()->with('success', 'Payment information updated successfully.');
+        return redirect()
+            ->route('car-registrants.details', $registration)
+            ->with('success', 'Payment information updated successfully.');
     }
 }

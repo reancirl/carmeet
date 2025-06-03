@@ -46,7 +46,9 @@
                             @forelse($event->registrations as $registration)
                                 <tr>
                                     <td class="px-6 py-4 whitespace-nowrap">
-                                        <div class="text-sm font-medium text-gray-900 dark:text-gray-200">{{ $registration->carProfile->user->name }}</div>
+                                        <div class="text-sm font-medium text-gray-900 dark:text-gray-200">
+                                            {{ $registration->carProfile->user->name }}
+                                        </div>
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap">
                                         <div class="text-sm text-gray-900 dark:text-gray-200">
@@ -54,30 +56,37 @@
                                         </div>
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap">
-                                        <form method="POST" action="{{ route('registrations.update-status-form', $registration) }}" class="status-form">
-                                            @csrf
-                                            @method('PATCH')
-                                            <select name="status" class="status-select form-select rounded-md shadow-sm border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-blue-500 dark:focus:border-blue-600 focus:ring-blue-500 dark:focus:ring-blue-600 text-sm" data-registration-id="{{ $registration->id }}">
-                                                <option value="pending" {{ $registration->status == 'pending' ? 'selected' : '' }}>{{ __('Pending') }}</option>
-                                                <option value="approved" {{ $registration->status == 'approved' ? 'selected' : '' }}>{{ __('Approved') }}</option>
-                                                <option value="denied" {{ $registration->status == 'denied' ? 'selected' : '' }}>{{ __('Denied') }}</option>
-                                                <option value="waitlist" {{ $registration->status == 'waitlist' ? 'selected' : '' }}>{{ __('Waitlist') }}</option>
-                                            </select>
-                                        </form>
+                                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full 
+                                            {{ $registration->status === 'approved' ? 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200' : '' }}
+                                            {{ $registration->status === 'denied' ? 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200' : '' }}
+                                            {{ $registration->status === 'pending' ? 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200' : '' }}
+                                            {{ $registration->status === 'waitlist' ? 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200' : '' }}">
+                                            {{ ucfirst($registration->status) }}
+                                        </span>
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap">
-                                        <form method="POST" action="{{ route('registrations.update-payment-form', $registration) }}" class="payment-form flex items-center space-x-2">
-                                            @csrf
-                                            @method('PATCH')
-                                            <div class="flex items-center">
-                                                <input type="checkbox" name="is_paid" id="paid-{{ $registration->id }}" class="paid-checkbox rounded border-gray-300 text-blue-600 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50 dark:border-gray-700 dark:bg-gray-900" {{ $registration->is_paid ? 'checked' : '' }} data-registration-id="{{ $registration->id }}">
-                                                <label for="paid-{{ $registration->id }}" class="ml-2 text-sm text-gray-700 dark:text-gray-300">{{ __('Paid') }}</label>
+                                        <div class="flex items-center">
+                                            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full 
+                                                {{ $registration->is_paid ? 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200' : 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200' }}">
+                                                {{ $registration->is_paid ? 'Paid' : 'Unpaid' }}
+                                            </span>
+                                        </div>
+                                        @if($registration->payment_note)
+                                            <div class="text-xs text-gray-500 dark:text-gray-400 mt-1 truncate max-w-[150px]" title="{{ $registration->payment_note }}">
+                                                {{ $registration->payment_note }}
                                             </div>
-                                        </form>
-                                        <div class="text-xs text-gray-500 dark:text-gray-400 mt-1 truncate max-w-[150px]" title="{{ $registration->payment_note }}">{{ $registration->payment_note }}</div>
+                                        @endif
                                     </td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                                        <button class="text-blue-600 dark:text-blue-500 hover:underline view-details" data-registration-id="{{ $registration->id }}">{{ __('View Details') }}</button>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium space-x-2">
+                                        <a href="{{ route('car-registrants.details', $registration) }}" class="text-blue-600 dark:text-blue-500 hover:underline">
+                                            {{ __('View Details') }}
+                                        </a>
+                                        <!-- <a href="{{ route('car-registrants.edit-status', $registration) }}" class="text-yellow-600 dark:text-yellow-500 hover:underline">
+                                            {{ __('Update Status') }}
+                                        </a>
+                                        <a href="{{ route('car-registrants.edit-payment', $registration) }}" class="text-green-600 dark:text-green-500 hover:underline">
+                                            {{ __('Update Payment') }}
+                                        </a> -->
                                     </td>
                                 </tr>
                             @empty
@@ -92,49 +101,5 @@
                 </div>
             </div>
         @endif
-    </div>
-</div>
-</div>
-
-<!-- Registration Review Modal -->
-<div id="registration-modal" class="fixed inset-0 bg-gray-900 bg-opacity-75 flex items-center justify-center z-50 hidden">
-    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-xl max-w-4xl w-full max-h-[90vh] overflow-y-auto">
-        <div class="p-6 space-y-6">
-            <div class="flex justify-between items-center">
-                <h3 class="text-xl font-semibold text-gray-900 dark:text-white" id="modal-title">{{ __('Car Registration Details') }}</h3>
-                <button type="button" class="text-gray-400 hover:text-gray-500 focus:outline-none" id="close-modal">
-                    <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-                    </svg>
-                </button>
-            </div>
-            
-            <div id="modal-content" class="space-y-6">
-                <!-- Content will be loaded via JavaScript -->
-            </div>
-            
-            <div class="mt-6 border-t border-gray-200 dark:border-gray-700 pt-4 space-y-4">
-                <h4 class="font-medium text-gray-900 dark:text-white">{{ __('Actions') }}</h4>
-                <div class="flex flex-wrap gap-2">
-                    <button type="button" id="approve-btn" class="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2">{{ __('Approve') }}</button>
-                    <button type="button" id="deny-btn" class="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2">{{ __('Deny') }}</button>
-                    <button type="button" id="waitlist-btn" class="px-4 py-2 bg-yellow-600 text-white rounded hover:bg-yellow-700 focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-offset-2">{{ __('Waitlist') }}</button>
-                </div>
-                
-                <div class="mt-4">
-                    <div class="flex items-center">
-                        <input type="checkbox" id="modal-paid" class="rounded border-gray-300 text-blue-600 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50 dark:border-gray-700 dark:bg-gray-900">
-                        <label for="modal-paid" class="ml-2 text-sm text-gray-700 dark:text-gray-300">{{ __('Mark as Paid') }}</label>
-                    </div>
-                    
-                    <div class="mt-3">
-                        <label for="payment-note" class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{ __('Payment Note') }}</label>
-                        <textarea id="payment-note" rows="2" class="mt-1 block w-full rounded-md shadow-sm border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-blue-500 dark:focus:border-blue-600 focus:ring-blue-500 dark:focus:ring-blue-600"></textarea>
-                    </div>
-                    
-                    <button type="button" id="save-payment" class="mt-3 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">{{ __('Save Payment Info') }}</button>
-                </div>
-            </div>
-        </div>
     </div>
 </div>

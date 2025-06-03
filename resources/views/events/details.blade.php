@@ -143,6 +143,33 @@
                             </div>
                         </div>
                     </div>
+
+                    {{-- Event Files Section --}}
+                    @php
+                        // Get files based on user authentication and visibility
+                        $publicFiles = $event->files->where('visibility', 'public');
+                        $approvedOnlyFiles = $event->files->where('visibility', 'approved_only');
+                        $showApprovedOnly = auth()->check() && 
+                            (auth()->user()->id === $event->organizer_id || 
+                             $event->registrations()->where('user_id', auth()->id())->where('status', 'approved')->exists());
+                    @endphp
+
+                    @if($publicFiles->isNotEmpty() || ($showApprovedOnly && $approvedOnlyFiles->isNotEmpty()))
+                    <div class="mt-12">
+                        <h3 class="text-xl font-semibold mb-4">Event Files</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                            @foreach($publicFiles as $file)
+                                @include('events.components.file-card', ['file' => $file])
+                            @endforeach
+                            
+                            @if($showApprovedOnly)
+                                @foreach($approvedOnlyFiles as $file)
+                                    @include('events.components.file-card', ['file' => $file, 'isApprovedOnly' => true])
+                                @endforeach
+                            @endif
+                        </div>
+                    </div>
+                    @endif
                 </div>
             </div>
         </div>

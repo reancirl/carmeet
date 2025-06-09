@@ -23,6 +23,11 @@ return new class extends Migration
             $table->string('plate')->nullable();
             $table->text('description')->nullable();
             $table->json('image_urls')->nullable();
+            $table->string('facebook')->nullable();
+            $table->string('instagram')->nullable();
+            $table->string('tiktok')->nullable();
+            $table->string('twitter')->nullable();
+             $table->string('mod_tags')->nullable();
             $table->timestamps();
         });
     }

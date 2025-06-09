@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('car_profile_id')->constrained()->onDelete('cascade');
             $table->foreignId('event_id')->constrained()->onDelete('cascade');
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->enum('status', ['pending', 'approved', 'waitlisted', 'denied'])->default('pending');
             $table->string('crew_name')->nullable();
             $table->string('class')->nullable();

@@ -72,4 +72,9 @@ class Event extends Model
     {
         return $this->hasMany(EventDay::class);
     }
+     // Get raw EventAttendee records
+    public function attendeeRegistrations()
+    {
+        return $this->hasMany(EventAttendee::class);
+    }
 }

@@ -38,11 +38,12 @@ class CarEventRegistrationController extends Controller
      */
     public function updateStatus(Request $request, CarEventRegistration $registration)
     {
+        
         // Authorization check - only allow organizers or admins
         $this->authorize('update', $registration->event);
         
         $validated = $request->validate([
-            'status' => 'required|string|in:pending,approved,denied,waitlist',
+            'status' => 'required|string|in:pending,approved,denied,waitlisted',
         ]);
         
         $registration->update([

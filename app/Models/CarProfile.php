@@ -11,18 +11,24 @@ class CarProfile extends Model
      *
      * @var array<int, string>
      */
-    protected $fillable = [
-        'user_id',
-        'make',
-        'model',
-        'year',
-        'trim',
-        'color',
-        'mods',
-        'plate',
-        'description',
-        'image_urls',
-    ];
+        protected $fillable = [
+            'user_id',
+            'make',
+            'model',
+            'year',
+            'trim',
+            'color',
+            'mods',
+            'plate',
+            'description',
+            'facebook',
+            'instagram',
+            'tiktok',
+            'twitter',
+            'mod_tags',
+            'image_urls',
+        ];
+
 
     /**
      * The attributes that should be cast.
@@ -31,6 +37,7 @@ class CarProfile extends Model
      */
     protected $casts = [
         'image_urls' => 'array',
+         'mod_tags' => 'array',
         'year' => 'integer',
     ];
 

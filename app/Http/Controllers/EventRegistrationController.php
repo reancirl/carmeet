@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Event;
 use App\Models\CarProfile;
+use App\Models\EventAttendee;
 use App\Models\CarEventRegistration;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -26,7 +27,31 @@ class EventRegistrationController extends Controller
         
         return view('event-registrations.create', compact('event', 'carProfiles'));
     }
-    
+    public function attendeeCreate(Event $event){
+        return view('event-registrations.attendeeCreate', compact('event'));
+    }
+    public function attendeeStore(Event $event)
+    {
+        $user = Auth::user();
+
+        // ✅ Correct check: if user is already registered for this event
+        $alreadyRegistered = EventAttendee::where('event_id', $event->id)
+            ->where('attendee_id', $user->id)
+            ->exists();
+
+        if ($alreadyRegistered) {
+            return back()->with('warning', 'You are already registered for this event.');
+        }
+
+        // ✅ Insert registration
+        EventAttendee::create([
+            'event_id' => $event->id,
+            'attendee_id' => $user->id,
+        ]);
+
+        return redirect()->route('public.events.show', $event)
+            ->with('success', 'You are now registered as an attendee.');
+    }
     /**
      * Store a new event registration.
      */
@@ -66,21 +91,33 @@ class EventRegistrationController extends Controller
      */
     public function index()
     {
+        
         // Get car profiles for the current user
         $carProfiles = CarProfile::where('user_id', Auth::id())->pluck('id');
-        
         // Get all registrations for these car profiles
         $registrations = CarEventRegistration::whereIn('car_profile_id', $carProfiles)
             ->with(['event', 'carProfile'])
             ->latest()
             ->paginate(10);
-            
-        return view('event-registrations.index', compact('registrations'));
+        // Get all event IDs the user attended
+        $attendedEventIds = EventAttendee::with('event')
+            ->where('attendee_id', Auth::id())
+            ->latest()
+            ->paginate(10);
+        return view('event-registrations.index', compact('registrations', 'attendedEventIds'));
     }
     
     /**
      * Show details of a specific registration.
      */
+    public function showAttend(Event $registration)
+    {
+        // Check if the registration belongs to the current user
+        // if ($registration->id !== Auth::id()) {
+        //     abort(403, 'Unauthorized action.');
+        // }
+        return view('event-registrations.show-attend', compact('registration'));
+    }
     public function show(CarEventRegistration $registration)
     {
         // Check if the registration belongs to the current user

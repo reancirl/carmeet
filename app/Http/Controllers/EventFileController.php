@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Validator;
 
 class EventFileController extends Controller
 {
@@ -19,35 +20,31 @@ class EventFileController extends Controller
         // (A) First, validate exactly one file + its metadata.
         //     We expect arrays (documents[], file_names[], descriptions[]),
         //     but we will only process index 0 of each.
-        $validated = $request->validate([
-            'documents'      => 'required|array|min:1',
-            'documents.0'    => 'required|file|mimes:pdf,doc,docx,jpg,jpeg,png|max:20480',
-            'file_names'     => 'required|array|min:1',
-            'file_names.0'   => 'required|string|max:255',
-            'descriptions'   => 'required|array|min:1',
-            'descriptions.0' => 'required|string|max:255',
-            'visibility'     => ['required', Rule::in(['public', 'approved_only'])],
-        ], [
-            'documents.required'      => 'Please select a file to upload.',
-            'documents.0.mimes'       => 'Only PDF, Word, and image files are allowed.',
-            'file_names.0.required'   => 'Please enter a display name for the file.',
-            'descriptions.0.required' => 'Please enter a description for the file.',
-        ]);
+           $validator = Validator::make($request->all(), [
+                'documents'      => 'required|array|min:1',
+                'documents.0'    => 'required|file|mimes:pdf,doc,docx,jpg,jpeg,png|max:20480',
+                'file_names'     => 'required|array|min:1',
+                'file_names.0'   => 'required|string|max:255',
+                'descriptions'   => 'required|array|min:1',
+                'descriptions.0' => 'required|string|max:255',
+                'visibility'     => ['required', Rule::in(['public', 'approved_only'])],
+            ], [
+                'documents.required'      => 'Please select a file to upload.',
+                'documents.0.required'    => 'The first file is required.',
+                'documents.0.mimes'       => 'Allowed file types: PDF, Word (doc, docx), JPG, JPEG, PNG.',
+                'documents.0.max'         => 'Maximum file size allowed is 20 MB.',
+                'file_names.0.required'   => 'Please provide a display name for the file.',
+                'descriptions.0.required' => 'Please provide a description for the file.',
+                'documents.0' => 'required|file|mimes:pdf,doc,docx,jpg,jpeg,png|max:20480', // 20MB max
+            ]);
 
-        // (B) Extra “sanity” check: make sure we really do have at least one file & one name & one description.
-        $fileArrayCount        = count($request->file('documents'));
-        $fileNameArrayCount    = count($request->input('file_names', []));
-        $descriptionArrayCount = count($request->input('descriptions', []));
+            if ($validator->fails()) {
+                return redirect()->route('events.show', $event)
+                                ->withErrors($validator)
+                                ->withInput()
+                                ->with('active_tab', 'upload-center');
+            }   
 
-        if ($fileArrayCount < 1
-            || $fileNameArrayCount < 1
-            || $descriptionArrayCount < 1
-        ) {
-            return back()
-                ->with('error', 'Please upload exactly one file and its metadata.')
-                ->withInput()
-                ->with('active_tab', 'upload-center');
-        }
 
         // (C) Grab only the first elements of each array:
         $document    = $request->file('documents')[0];

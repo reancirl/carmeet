@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\StoreEventRequest;
 use App\Http\Requests\UpdateEventRequest;
 use App\Services\EventImageService;
+use App\Models\User;
 
 class EventController extends Controller
 {
@@ -22,17 +23,19 @@ class EventController extends Controller
     }
 
     public function index()
-    {
-        if (auth()->user()->role === 'admin') {
-            $events = Event::with('organizer')->get();
-        } else {
-            $events = Event::with('organizer')
-                           ->where('organizer_id', auth()->id())
-                           ->get();
-        }
-
-        return view('events.index', compact('events'));
+{
+    if (auth()->user()->role === 'admin') {
+        $events = Event::with(['organizer', 'registrations', 'attendees', 'days'])->get();
+        $users = User::all();// ✅ Add this for the admin user list
+    } else {
+        $events = Event::with(['organizer', 'registrations', 'attendees', 'days'])
+                       ->where('organizer_id', auth()->id())
+                       ->get();
+        $users = collect(); // ✅ Empty collection for non-admins
     }
+
+    return view('events.index', compact('events', 'users'));
+}
 
     public function create()
     {

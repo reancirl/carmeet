@@ -25,7 +25,13 @@ Route::middleware('auth')->group(function () {
     Route::post('/events/{event}/register', [EventRegistrationController::class, 'store'])->name('event-registrations.store');
     Route::get('/event-registrations', [EventRegistrationController::class, 'index'])->name('event-registrations.index');
     Route::get('/event-registrations/{registration}', [EventRegistrationController::class, 'show'])->name('event-registrations.show');
+    Route::get('/event-registrations/attend/{registration}', [EventRegistrationController::class, 'showAttend'])->name('event-registrations.attend.show');
     Route::get('/event-registrations/{registration}/confirmation', [EventRegistrationController::class, 'confirmation'])->name('event-registrations.confirmation');
+
+    Route::post('/events/{event}/attendee-register', [EventRegistrationController::class, 'attendeeStore'])
+    ->name('event-attendee-registrations.store');
+    Route::get('/events/attendee/{event}/register', [EventRegistrationController::class, 'attendeeCreate'])
+    ->name('event-attendee-registrations.create'); // use this name to match the button
 
     // Event Files Routes
     Route::post('/events/{event}/upload-documents', [EventFileController::class, 'uploadEventDocuments'])->name('events.upload-documents');

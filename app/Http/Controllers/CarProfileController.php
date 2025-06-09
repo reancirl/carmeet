@@ -44,6 +44,7 @@ class CarProfileController extends Controller
      */
     public function store(Request $request)
     {
+        
         $validated = $request->validate([
             'make' => 'required|string|max:255',
             'model' => 'required|string|max:255',
@@ -53,7 +54,13 @@ class CarProfileController extends Controller
             'mods' => 'nullable|string',
             'plate' => 'nullable|string|max:20',
             'description' => 'nullable|string',
+            'facebook' => 'required|string|max:255',
+            'instagram' => 'required|string|max:255',
+            'tiktok' => 'nullable|string|max:255',
+            'twitter' => 'nullable|string|max:255',
+            'mod_tags' => 'nullable|string|max:255',
             'images.*' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+
         ]);
         
         $imageUrls = [];
@@ -74,6 +81,11 @@ class CarProfileController extends Controller
             'mods' => $validated['mods'] ?? null,
             'plate' => $validated['plate'] ?? null,
             'description' => $validated['description'] ?? null,
+            'facebook' => $validated['facebook'],
+            'instagram' => $validated['instagram'],
+            'tiktok' => $validated['tiktok'] ?? null,
+            'twitter' => $validated['x'] ?? null,
+            'mod_tags' => $validated['mod_tags'] ?? null,
             'image_urls' => $imageUrls,
         ]);
         
@@ -117,7 +129,7 @@ class CarProfileController extends Controller
     public function update(Request $request, string $id)
     {
         $carProfile = CarProfile::findOrFail($id);
-        
+       
         // Check if the car profile belongs to the authenticated user
         if ($carProfile->user_id !== Auth::id()) {
             abort(403, 'Unauthorized action.');
@@ -132,6 +144,11 @@ class CarProfileController extends Controller
             'mods' => 'nullable|string',
             'plate' => 'nullable|string|max:20',
             'description' => 'nullable|string',
+             'facebook' => 'required|string|max:255',
+            'instagram' => 'required|string|max:255',
+            'tiktok' => 'nullable|string|max:255',
+            'twitter' => 'nullable|string|max:255',
+            'mod_tags' => 'nullable|string|max:255',
             'images.*' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'remove_images' => 'nullable|array',
         ]);
@@ -169,6 +186,11 @@ class CarProfileController extends Controller
             'mods' => $validated['mods'] ?? null,
             'plate' => $validated['plate'] ?? null,
             'description' => $validated['description'] ?? null,
+            'facebook' => $validated['facebook'],
+            'instagram' => $validated['instagram'],
+            'tiktok' => $validated['tiktok'] ?? null,
+            'twitter' => $validated['x'] ?? null,
+            'mod_tags' => $validated['mod_tags'] ?? null,
             'image_urls' => $imageUrls,
         ]);
         

@@ -263,7 +263,7 @@
                             {{-- Image --}}
                             <div class="md:col-span-2">
                                 <label for="image" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
-                                    {{ __('Event Image') }} <span class="text-xs text-gray-500">(Max 5MB)</span>
+                                    {{ __('Event Image') }}  <span class="text-xs text-gray-500"> (- JPG, JPEG, PNG. Max size: 5MB.)</span>
                                 </label>
                                 <div id="image-preview-container" class="mt-2">
                                     <img

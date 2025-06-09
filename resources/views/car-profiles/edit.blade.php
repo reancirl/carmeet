@@ -182,6 +182,112 @@
                                 <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
                             @enderror
                         </div>
+                        <!-- Social Media Links Section -->
+                    <div class="md:col-span-2">
+                        <h3 class="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-2">
+                            {{ __('Social Media Links') }}
+                        </h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <!-- Facebook -->
+                            <div>
+                                <label for="facebook" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                                    {{ __('Facebook') }}
+                                </label>
+                                <input
+                                    type="url"
+                                    name="facebook"
+                                    id="facebook"
+                                     value="{{ old('facebook', $carProfile->facebook) }}"
+                                    required
+                                    class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-300
+                                        focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 shadow-sm
+                                        @error('facebook') border-red-500 @enderror"
+                                >
+                                @error('facebook')
+                                    <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
+                                @enderror
+                            </div>
+
+                            <!-- Instagram -->
+                            <div>
+                                <label for="instagram" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                                    {{ __('Instagram') }}
+                                </label>
+                                <input
+                                    type="url"
+                                    name="instagram"
+                                    id="instagram"
+                                    value="{{ old('instagram', $carProfile->instagram) }}"
+                                    required
+                                    class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-300
+                                        focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 shadow-sm
+                                        @error('instagram') border-red-500 @enderror"
+                                >
+                                @error('instagram')
+                                    <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
+                                @enderror
+                            </div>
+
+                            <!-- TikTok -->
+                            <div>
+                                <label for="tiktok" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                                    {{ __('TikTok (Optional)') }}
+                                </label>
+                                <input
+                                    type="url"
+                                    name="tiktok"
+                                    id="tiktok"
+                                    value="{{ old('tiktok', $carProfile->tiktok) }}"
+                                    class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-300
+                                        focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 shadow-sm
+                                        @error('tiktok') border-red-500 @enderror"
+                                >
+                                @error('tiktok')
+                                    <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
+                                @enderror
+                            </div>
+
+                            <!-- X -->
+                            <div>
+                                <label for="x" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                                    {{ __('Twitter (Optional) ') }}
+                                </label>
+                                <input
+                                    type="url"
+                                    name="x"
+                                    id="x"
+                                    value="{{ old('twitter', $carProfile->twitter) }}"
+                                    class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-300
+                                        focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 shadow-sm
+                                        @error('x') border-red-500 @enderror"
+                                >
+                                @error('x')
+                                    <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
+                                @enderror
+                            </div>
+                        </div>
+                    </div>
+                        <!-- Mod Tags with hint -->
+                <div class="md:col-span-2">
+                    <label for="mod_tags" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                        {{ __('Mod Tags (Optional)') }}
+                    </label>
+                    <input
+                        type="text"
+                        name="mod_tags"
+                        id="mod_tags"
+                        value="{{ old('mod_tags', $carProfile->mod_tags) }}"
+                        placeholder="e.g. air suspension, widebody, wrap"
+                        class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-300
+                            focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 shadow-sm
+                            @error('mod_tags') border-red-500 @enderror"
+                    >
+                    <p class="text-xs text-gray-400 mt-1">Separate multiple tags with commas</p>
+                    @error('mod_tags')
+                        <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
+                    @enderror
+                </div>
+
 
                         <!-- Existing Images -->
                         @if(!empty($carProfile->image_urls) && count($carProfile->image_urls) > 0)

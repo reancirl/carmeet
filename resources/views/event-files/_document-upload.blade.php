@@ -17,7 +17,7 @@
             <div class="mb-4">
                 <label for="documents" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
                     {{ __('Upload Documents') }}
-                    <span class="text-xs text-gray-500">(PDF, Word, Images - Max 10MB per file)</span>
+                    <span class="text-xs text-gray-500">(PDF, Word (doc, docx), JPG, JPEG, PNG. Max size: 20MB.)</span>
                 </label>
 
                 <div class="text-sm text-gray-600 dark:text-gray-400 mb-2">
@@ -322,4 +322,14 @@
         }
         return true;
     }
+</script>
+<script>
+document.getElementById('documents').addEventListener('change', function(e) {
+    const file = e.target.files[0];
+    const maxSizeMB = 20;
+    if (file && file.size > maxSizeMB * 1024 * 1024) {
+        alert('File too large. Maximum allowed is ' + maxSizeMB + 'MB.');
+        e.target.value = ''; // Clear the input
+    }
+});
 </script>

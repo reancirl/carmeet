@@ -41,7 +41,7 @@
         <div class="flex items-start space-x-4">
             @if($isImage)
                 <div class="flex-shrink-0 w-16 h-16 bg-gray-200 dark:bg-gray-600 rounded-md overflow-hidden">
-                    <img src="{{ $file->file_url }}" alt="{{ $file->description ?? 'Event image' }}" class="w-full h-full object-cover">
+                    <img src="{{ Storage::url($file->file_url) }}" alt="{{ $file->description ?? 'Event image' }}" class="w-full h-full object-cover">
                 </div>
             @else
                 <div class="flex-shrink-0 w-16 h-16 flex items-center justify-center bg-white dark:bg-gray-600 rounded-md">
@@ -73,13 +73,19 @@
                 </div>
             </div>
         </div>
-        <div class="mt-3 flex justify-end">
-            <a href="{{ $file->file_url }}" 
+        <div class="mt-3 flex justify-end space-x-2">
+            <a href="{{ Storage::url($file->file_url) }}" 
+               target="_blank" 
+               rel="noopener noreferrer"
+               class="inline-flex items-center px-3 py-1.5 border border-gray-300 dark:border-gray-600 text-xs font-medium rounded-md shadow-sm text-gray-700 dark:text-gray-200 bg-white dark:bg-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                <i class="fas fa-eye mr-1"></i> {{ __('View') }}
+            </a>
+            <a href="{{ Storage::url($file->file_url) }}" 
                target="_blank" 
                rel="noopener noreferrer"
                class="inline-flex items-center px-3 py-1.5 border border-transparent text-xs font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                download>
-                <i class="fas fa-download mr-1"></i> Download
+                <i class="fas fa-download mr-1"></i> {{ __('Download') }}
             </a>
         </div>
     </div>

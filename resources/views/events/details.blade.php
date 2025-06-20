@@ -207,7 +207,7 @@
                     @endif
 
                     {{-- Event Files Section --}}
-                    <!-- @php
+                    @php
                         // Get files based on user authentication and visibility
                         $publicFiles = $event->files->where('visibility', 'public');
                         $approvedOnlyFiles = $event->files->where('visibility', 'approved_only');
@@ -218,24 +218,47 @@
                                 ->where('status', 'approved')
                                 ->exists()
                         );
+                        
+                        // Check if we have any files to show
+                        $hasPublicFiles = $publicFiles->isNotEmpty();
+                        $hasApprovedFiles = $showApprovedOnly && $approvedOnlyFiles->isNotEmpty();
                     @endphp
 
-                    @if($publicFiles->isNotEmpty() || ($showApprovedOnly && $approvedOnlyFiles->isNotEmpty()))
-                    <div class="mt-12">
-                        <h3 class="text-xl font-semibold mb-4">Event Files</h3>
-                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                            @foreach($publicFiles as $file)
-                                @include('events.components.file-card', ['file' => $file])
-                            @endforeach
-                            
-                            @if($showApprovedOnly)
-                                @foreach($approvedOnlyFiles as $file)
-                                    @include('events.components.file-card', ['file' => $file, 'isApprovedOnly' => true])
-                                @endforeach
+                    @if($hasPublicFiles || $hasApprovedFiles)
+                    <div class="mt-12 pt-6 border-t border-gray-200 dark:border-gray-700">
+                        <h3 class="text-xl font-semibold mb-6">{{ __('Event Files') }}</h3>
+                        
+                        @if($hasPublicFiles)
+                            @if($hasPublicFiles && $hasApprovedFiles)
+                                <h4 class="text-md font-medium mb-3 text-gray-700 dark:text-gray-300">{{ __('Public Files') }}</h4>
                             @endif
-                        </div>
+                            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+                                @foreach($publicFiles as $file)
+                                    @include('events.components.file-card', ['file' => $file])
+                                @endforeach
+                            </div>
+                        @endif
+                        
+                        @if($hasApprovedFiles)
+                            <div class="mt-6">
+                                <div class="flex items-center mb-3">
+                                    <h4 class="text-md font-medium text-gray-700 dark:text-gray-300">
+                                        {{ __('Approved Participants Only') }}
+                                    </h4>
+                                    <span class="ml-2 inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-200">
+                                        <i class="fas fa-lock mr-1"></i>
+                                        {{ __('Restricted Access') }}
+                                    </span>
+                                </div>
+                                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                                    @foreach($approvedOnlyFiles as $file)
+                                        @include('events.components.file-card', ['file' => $file, 'isApprovedOnly' => true])
+                                    @endforeach
+                                </div>
+                            </div>
+                        @endif
                     </div>
-                    @endif -->
+                    @endif
                 </div>
             </div>
         </div>

@@ -145,6 +145,16 @@
                                                        class="text-blue-600 dark:text-blue-400 text-xs hover:underline">
                                                         {{ __('View') }}
                                                     </a>
+
+                                                    <form action="{{ route('event-files.toggle-visibility', $file) }}" method="POST" class="inline">
+                                                        @csrf
+                                                        @method('PATCH')
+                                                        <button type="submit" 
+                                                                class="text-blue-600 dark:text-blue-400 text-xs hover:underline focus:outline-none"
+                                                                title="{{ $file->visibility === 'approved_only' ? 'Make visible to everyone' : 'Restrict to approved only' }}">
+                                                            {{ $file->visibility === 'approved_only' ? __('Make Public') : __('Restrict Access') }}
+                                                        </button>
+                                                    </form>
                                                     
                                                     @if($event->organizer_id === auth()->id())
                                                         <form action="{{ route('event-files.destroy', $file) }}" method="POST">

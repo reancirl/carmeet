@@ -303,6 +303,17 @@
     </div>
 
     <script>
+        // Handle form submission
+        document.querySelector('form').addEventListener('submit', function(e) {
+            // Only validate visible fields
+            const hiddenFields = document.querySelectorAll('#multi-day-fields [required]');
+            if (!document.getElementById('is_multi_day').checked) {
+                // If not multi-day, remove required from all multi-day fields
+                hiddenFields.forEach(field => field.removeAttribute('required'));
+            }
+            // The form will now validate only the visible required fields
+        });
+
         // Image preview functionality
         document.getElementById('image').addEventListener('change', function(event) {
             const file = event.target.files[0];
@@ -390,7 +401,15 @@
             toggleEventFields();
 
             // Add event listeners
-            isMultiDayCheckbox.addEventListener('change', toggleEventFields);
+            isMultiDayCheckbox.addEventListener('change', function() {
+                toggleEventFields();
+                // Ensure required attributes are set correctly when toggling
+                const multiDayFields = document.querySelectorAll('#multi-day-fields [required]');
+                multiDayFields.forEach(field => {
+                    field.required = isMultiDayCheckbox.checked;
+                });
+            });
+            
             addDayBtn.addEventListener('click', addEventDay);
         });
     </script>

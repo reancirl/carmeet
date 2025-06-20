@@ -63,6 +63,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         // Event Files Routes
         Route::post('/events/{event}/upload-documents', [EventFileController::class, 'uploadEventDocuments'])->name('events.upload-documents');
         Route::delete('/event-files/{eventFile}', [EventFileController::class, 'destroy'])->name('event-files.destroy');
+        Route::patch('/event-files/{eventFile}/toggle-visibility', [EventFileController::class, 'toggleVisibility'])->name('event-files.toggle-visibility');
         
         // Car Event Registration Management Routes
         Route::get('/car-registrants/{registration}/details', [CarEventRegistrationController::class, 'show'])->name('car-registrants.details');

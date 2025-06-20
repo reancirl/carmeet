@@ -128,6 +128,29 @@ class EventFileController extends Controller
     }
 
     /**
+     * Toggle the visibility of an event file between 'public' and 'approved_only'.
+     *
+     * @param  \App\Models\EventFile  $eventFile
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function toggleVisibility(EventFile $eventFile)
+    {
+        // Check if the current user is the event organizer
+        if (auth()->id() !== $eventFile->event->organizer_id) {
+            return back()->with('error', 'You do not have permission to modify this file.');
+        }
+
+        // Toggle the visibility
+        $eventFile->update([
+            'visibility' => $eventFile->visibility === 'approved_only' ? 'public' : 'approved_only'
+        ]);
+
+        return back()
+            ->with('success', 'File visibility updated successfully.')
+            ->with('active_tab', 'upload-center');
+    }
+
+    /**
      * Remove spaces / special characters from a filename.
      */
     private function sanitizeFilename(string $filename): string

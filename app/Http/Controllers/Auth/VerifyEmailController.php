@@ -22,6 +22,10 @@ class VerifyEmailController extends Controller
             event(new Verified($request->user()));
         }
 
+        if($request->user()->role == 'attendee') {
+            return redirect()->intended(route('profile.edit'));
+        }
+
         return redirect()->intended(route('events.index', absolute: false).'?verified=1');
     }
 }

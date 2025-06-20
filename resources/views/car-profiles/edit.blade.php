@@ -191,14 +191,13 @@
                             <!-- Facebook -->
                             <div>
                                 <label for="facebook" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
-                                    {{ __('Facebook') }}
+                                    {{ __('Facebook (Optional)') }}
                                 </label>
                                 <input
-                                    type="url"
+                                    type="text"
                                     name="facebook"
                                     id="facebook"
                                      value="{{ old('facebook', $carProfile->facebook) }}"
-                                    required
                                     class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-300
                                         focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 shadow-sm
                                         @error('facebook') border-red-500 @enderror"
@@ -211,14 +210,13 @@
                             <!-- Instagram -->
                             <div>
                                 <label for="instagram" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
-                                    {{ __('Instagram') }}
+                                    {{ __('Instagram (Optional)') }}
                                 </label>
                                 <input
-                                    type="url"
+                                    type="text"
                                     name="instagram"
                                     id="instagram"
                                     value="{{ old('instagram', $carProfile->instagram) }}"
-                                    required
                                     class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-300
                                         focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 shadow-sm
                                         @error('instagram') border-red-500 @enderror"
@@ -234,7 +232,7 @@
                                     {{ __('TikTok (Optional)') }}
                                 </label>
                                 <input
-                                    type="url"
+                                    type="text"
                                     name="tiktok"
                                     id="tiktok"
                                     value="{{ old('tiktok', $carProfile->tiktok) }}"
@@ -253,7 +251,7 @@
                                     {{ __('Twitter (Optional) ') }}
                                 </label>
                                 <input
-                                    type="url"
+                                    type="text"
                                     name="x"
                                     id="x"
                                     value="{{ old('twitter', $carProfile->twitter) }}"

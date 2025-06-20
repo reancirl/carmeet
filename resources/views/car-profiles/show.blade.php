@@ -88,9 +88,70 @@
                             @endif
 
                             @if ($carProfile->description)
-                                <div class="bg-gray-50 dark:bg-gray-700 rounded-lg p-6 shadow-sm">
+                                <div class="bg-gray-50 dark:bg-gray-700 rounded-lg p-6 shadow-sm mb-6">
                                     <h4 class="font-medium text-gray-700 dark:text-gray-300 mb-3">Description</h4>
                                     <div class="text-gray-800 dark:text-gray-200 whitespace-pre-line">{{ $carProfile->description }}</div>
+                                </div>
+                            @endif
+
+                            @if ($carProfile->mod_tags)
+                                <div class="bg-gray-50 dark:bg-gray-700 rounded-lg p-6 shadow-sm mb-6">
+                                    <h4 class="font-medium text-gray-700 dark:text-gray-300 mb-3">Mod Tags</h4>
+                                    <div class="flex flex-wrap gap-2">
+                                        @foreach(explode(',', $carProfile->mod_tags) as $tag)
+                                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-indigo-100 text-indigo-800 dark:bg-indigo-900 dark:text-indigo-200">
+                                                {{ trim($tag) }}
+                                            </span>
+                                        @endforeach
+                                    </div>
+                                </div>
+                            @endif
+
+                            @if ($carProfile->facebook || $carProfile->instagram || $carProfile->youtube || $carProfile->tiktok || $carProfile->website)
+                                <div class="bg-gray-50 dark:bg-gray-700 rounded-lg p-6 shadow-sm">
+                                    <h4 class="font-medium text-gray-700 dark:text-gray-300 mb-3">Social Media</h4>
+                                    <div class="space-y-2">
+                                        @if($carProfile->facebook)
+                                            <div class="flex items-center">
+                                                <span class="text-gray-600 dark:text-gray-400 w-24">Facebook:</span>
+                                                <a href="{{ $carProfile->facebook }}" target="_blank" class="text-blue-600 hover:underline dark:text-blue-400">
+                                                    {{ parse_url($carProfile->facebook, PHP_URL_HOST) }}{{ parse_url($carProfile->facebook, PHP_URL_PATH) }}
+                                                </a>
+                                            </div>
+                                        @endif
+                                        @if($carProfile->instagram)
+                                            <div class="flex items-center">
+                                                <span class="text-gray-600 dark:text-gray-400 w-24">Instagram:</span>
+                                                <a href="{{ $carProfile->instagram }}" target="_blank" class="text-pink-600 hover:underline dark:text-pink-400">
+                                                    {{ parse_url($carProfile->instagram, PHP_URL_HOST) }}{{ parse_url($carProfile->instagram, PHP_URL_PATH) }}
+                                                </a>
+                                            </div>
+                                        @endif
+                                        @if($carProfile->youtube)
+                                            <div class="flex items-center">
+                                                <span class="text-gray-600 dark:text-gray-400 w-24">YouTube:</span>
+                                                <a href="{{ $carProfile->youtube }}" target="_blank" class="text-red-600 hover:underline dark:text-red-400">
+                                                    {{ parse_url($carProfile->youtube, PHP_URL_HOST) }}{{ parse_url($carProfile->youtube, PHP_URL_PATH) }}
+                                                </a>
+                                            </div>
+                                        @endif
+                                        @if($carProfile->tiktok)
+                                            <div class="flex items-center">
+                                                <span class="text-gray-600 dark:text-gray-400 w-24">TikTok:</span>
+                                                <a href="{{ $carProfile->tiktok }}" target="_blank" class="text-gray-800 hover:underline dark:text-gray-200">
+                                                    {{ parse_url($carProfile->tiktok, PHP_URL_HOST) }}{{ parse_url($carProfile->tiktok, PHP_URL_PATH) }}
+                                                </a>
+                                            </div>
+                                        @endif
+                                        @if($carProfile->website)
+                                            <div class="flex items-center">
+                                                <span class="text-gray-600 dark:text-gray-400 w-24">Website:</span>
+                                                <a href="{{ $carProfile->website }}" target="_blank" class="text-indigo-600 hover:underline dark:text-indigo-400">
+                                                    {{ parse_url($carProfile->website, PHP_URL_HOST) }}{{ parse_url($carProfile->website, PHP_URL_PATH) }}
+                                                </a>
+                                            </div>
+                                        @endif
+                                    </div>
                                 </div>
                             @endif
                         </div>

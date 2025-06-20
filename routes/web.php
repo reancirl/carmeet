@@ -13,7 +13,7 @@ use App\Http\Controllers\CarEventRegistrationController;
 Route::get('/', [PublicEventController::class, 'index'])->name('public.events.index');
 Route::get('/event-details/{event}', [PublicEventController::class, 'show'])->name('public.events.show');
 
-Route::middleware('auth')->group(function () {
+Route::middleware('auth', 'verified')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');

@@ -17,8 +17,9 @@ class DatabaseSeeder extends Seeder
         // Create admin user
         User::factory()->create([
             'name' => 'CrateOS Admin',
-            'email' => 'admin@crateos.com',
-            'password' => Hash::make('carmee@crateOS2025'),
+            'email' => 'admin@crateonscene.com',
+            'password' => Hash::make('crateonscene'),
+            'email_verified_at' => now(),
             'role' => 'admin'
         ]);
     }

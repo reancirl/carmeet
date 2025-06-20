@@ -22,6 +22,11 @@
                             Car Registrants
                         </button>
                     </li>
+                    <li role="presentation">
+                        <button class="inline-block p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:text-white" id="attendees-tab" data-tabs-target="#attendees" type="button" role="tab" aria-controls="attendees" aria-selected="false">
+                            Attendees
+                        </button>
+                    </li>
                 </ul>
             </div>
         </div>
@@ -179,6 +184,11 @@
                 <!-- Car Registrants Tab Content -->
                 <div class="hidden" id="registrants" role="tabpanel" aria-labelledby="registrants-tab">
                     @include('events.components.car-registrants', ['event' => $event])
+                </div>
+                
+                <!-- Attendees Tab Content -->
+                <div class="hidden" id="attendees" role="tabpanel" aria-labelledby="attendees-tab">
+                    @include('events.components.event-attendees', ['event' => $event])
                 </div>
             </div>
         </div>

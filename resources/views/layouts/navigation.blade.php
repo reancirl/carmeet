@@ -34,6 +34,12 @@
                             {{ __('Browse Events') }}
                         </x-nav-link>
                     @endif
+                    
+                    @if(auth()->user()->role === 'admin')
+                        <x-nav-link :href="route('admin.users.index')" :active="request()->routeIs('admin.users.*')">
+                            {{ __('Users') }}
+                        </x-nav-link>
+                    @endif
                 </div>
             </div>
 
@@ -105,6 +111,12 @@
             @if(auth()->user()->role != 'organizer' && auth()->user()->role != 'admin')
                 <x-responsive-nav-link :href="route('public.events.index')" :active="request()->routeIs('public.events.index')">
                     {{ __('Browse Events') }}
+                </x-responsive-nav-link>
+            @endif
+
+            @if(auth()->user()->role == 'admin')
+                <x-responsive-nav-link :href="route('admin.users.index')" :active="request()->routeIs('admin.users.*')">
+                    {{ __('Users') }}
                 </x-responsive-nav-link>
             @endif
         </div>

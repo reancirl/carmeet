@@ -26,15 +26,13 @@ class EventController extends Controller
 {
     if (auth()->user()->role === 'admin') {
         $events = Event::with(['organizer', 'registrations', 'attendees', 'days'])->get();
-        $users = User::all();// ✅ Add this for the admin user list
     } else {
         $events = Event::with(['organizer', 'registrations', 'attendees', 'days'])
                        ->where('organizer_id', auth()->id())
                        ->get();
-        $users = collect(); // ✅ Empty collection for non-admins
     }
-
-    return view('events.index', compact('events', 'users'));
+    
+    return view('events.index', compact('events'));
 }
 
     public function create()

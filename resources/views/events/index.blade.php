@@ -7,36 +7,6 @@
 
   <div class="py-12">
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-
-   @if(auth()->user()->role == 'admin')
-        <div class="mt-12">
-            <button
-            id="toggle-users-btn"
-            class="mb-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-            type="button"
-            >
-            Show Registered Users
-            </button>
-
-            <div id="users-list" class="hidden overflow-x-auto rounded-lg shadow-md">
-            <h2 class="text-xl font-bold text-gray-800 dark:text-white mb-4">🛠️ List of All Registered Users</h2>
-
-            <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-600">
-                <thead class="bg-gray-50 dark:bg-gray-700">
-                <tr>
-                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">{{ __('Name') }}</th>
-                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">{{ __('Email') }}</th>
-                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">{{ __('Role') }}</th>
-                </tr>
-                </thead>
-                <tbody class="bg-white dark:bg-gray-800 divide-y divide-gray-100 dark:divide-gray-700">
-
-                </tbody>
-            </table>
-            </div>
-        </div>
-    @endif
-
       @if(session('status') === 'pending-approval')
         <div class="bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-4 mb-6" role="alert">
           <p class="font-bold">Pending Approval</p>
@@ -108,19 +78,3 @@
     </div>
   </div>
 </x-app-layout>
-<script>
-  document.addEventListener('DOMContentLoaded', function () {
-    const btn = document.getElementById('toggle-users-btn');
-    const usersList = document.getElementById('users-list');
-
-    btn.addEventListener('click', () => {
-      if (usersList.classList.contains('hidden')) {
-        usersList.classList.remove('hidden');
-        btn.textContent = 'Hide Registered Users';
-      } else {
-        usersList.classList.add('hidden');
-        btn.textContent = 'Show Registered Users';
-      }
-    });
-  });
-</script>

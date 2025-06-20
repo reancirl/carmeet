@@ -10,10 +10,32 @@ use App\Http\Controllers\EventRegistrationController;
 use App\Http\Controllers\EventFileController;
 use App\Http\Controllers\CarEventRegistrationController;
 use App\Http\Middleware\CheckAdminApproval;
+use App\Http\Controllers\Admin\UserController as AdminUserController;
+use App\Http\Middleware\AdminMiddleware;
 
+// Register admin middleware
+Route::aliasMiddleware('admin', AdminMiddleware::class);
+
+// Public routes
 Route::get('/', [PublicEventController::class, 'index'])->name('public.events.index');
 Route::get('/event-details/{event}', [PublicEventController::class, 'show'])->name('public.events.show');
 
+// Admin routes - only accessible by admin users
+Route::middleware(['auth', 'verified', 'admin'])
+    ->prefix('admin')
+    ->name('admin.')
+    ->group(function () {
+        // User management
+        Route::resource('users', AdminUserController::class)->except(['show', 'create', 'store']);
+        
+        // Additional approval routes
+        Route::patch('/users/{user}/approve', [AdminUserController::class, 'approve'])
+            ->name('users.approve');
+        Route::patch('/users/{user}/reject', [AdminUserController::class, 'reject'])
+            ->name('users.reject');
+    });
+
+// Authenticated user routes
 Route::middleware(['auth', 'verified'])->group(function () {
     // Routes that only require authentication and email verification
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

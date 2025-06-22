@@ -27,36 +27,49 @@ class EventRegistrationController extends Controller
         
         return view('event-registrations.create', compact('event', 'carProfiles'));
     }
-    public function attendeeCreate(Event $event){
-        return view('event-registrations.attendeeCreate', compact('event'));
-    }
     public function attendeeStore(Event $event)
     {
         $user = Auth::user();
 
-        // ✅ Correct check: if user is already registered for this event
+        // Check if user is already registered for this event
         $alreadyRegistered = EventAttendee::where('event_id', $event->id)
             ->where('attendee_id', $user->id)
             ->exists();
 
         if ($alreadyRegistered) {
-            return back()->with('warning', 'You are already registered for this event.');
+            return redirect()->route('public.events.show', $event)
+                ->with('warning', 'You are already registered for this event.');
         }
 
-        // ✅ Insert registration
+        // Check if user is the event organizer
+        if ($event->organizer_id === $user->id) {
+            return redirect()->route('public.events.show', $event)
+                ->with('error', 'You are the organizer of this event and cannot register as an attendee.');
+        }
+
+        // Check if event is full
+        if ($event->max_attendees && $event->attendees()->count() >= $event->max_attendees) {
+            return redirect()->route('public.events.show', $event)
+                ->with('error', 'This event has reached its maximum capacity.');
+        }
+
+        // Insert registration
         EventAttendee::create([
             'event_id' => $event->id,
             'attendee_id' => $user->id,
+            'registered_at' => now(),
         ]);
 
         return redirect()->route('public.events.show', $event)
-            ->with('success', 'You are now registered as an attendee.');
+            ->with('success', 'You have been successfully registered as an attendee for this event!');
     }
     /**
      * Store a new event registration.
      */
     public function store(Request $request, Event $event)
     {
+        $user = Auth::user();
+
         $validated = $request->validate([
             'car_profile_id' => 'required|exists:car_profiles,id',
             'crew_name' => 'nullable|string|max:255',
@@ -70,6 +83,7 @@ class EventRegistrationController extends Controller
         
         // Add event_id to the validated data
         $validated['event_id'] = $event->id;
+        $validated['user_id'] = $user->id;  
         
         // Create the registration
         $registration = CarEventRegistration::create($validated);

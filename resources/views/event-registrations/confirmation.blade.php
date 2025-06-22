@@ -95,7 +95,7 @@
             
             @if($registration->status === 'approved')
                 <!-- QR Code for Entry -->
-                <div class="my-8 py-6 border-t border-b border-gray-200 dark:border-gray-700">
+                {{-- <div class="my-8 py-6 border-t border-b border-gray-200 dark:border-gray-700">
                     <h2 class="text-xl font-semibold text-gray-800 dark:text-gray-200 mb-4">Entry Pass</h2>
                     
                     <div class="flex flex-col md:flex-row items-center justify-center gap-8">
@@ -117,7 +117,7 @@
                             </a>
                         </div>
                     </div>
-                </div>
+                </div> --}}
                 
                 <!-- Event-day Instructions -->
                 <div class="mb-8 bg-blue-50 dark:bg-blue-900/30 p-4 rounded-lg text-left">
@@ -128,7 +128,7 @@
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                             </svg>
-                            <p><span class="font-medium">Arrival Time:</span> Please arrive between 7:00 AM - 8:30 AM for check-in</p>
+                            <p><span class="font-medium">Arrival Time:</span> Please arrive between an hour or 2 hours before the start time to check in</p>
                         </div>
                         
                         <div class="flex items-start">
@@ -136,21 +136,21 @@
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                             </svg>
-                            <p><span class="font-medium">Entrance Gate:</span> Please use the north entrance (Gate B) for car show participants</p>
+                            <p><span class="font-medium">Entrance Gate:</span></p>
                         </div>
                         
                         <div class="flex items-start">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                             </svg>
-                            <p><span class="font-medium">What to Bring:</span> Your digital or printed pass, ID, and registration confirmation</p>
+                            <p><span class="font-medium">What to Bring:</span></p>
                         </div>
                         
                         <div class="flex items-start">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
                             </svg>
-                            <p><span class="font-medium">Important:</span> No outside food or drinks allowed. Pets must be on leash at all times.</p>
+                            <p><span class="font-medium">Important:</span></p>
                         </div>
                     </div>
                 </div>

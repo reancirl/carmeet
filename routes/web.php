@@ -55,9 +55,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::resource('car-profiles', CarProfileController::class);
 
-    Route::post('/events/{event}/attendee-register', [EventRegistrationController::class, 'attendeeStore'])
-            ->name('event-attendee-registrations.store');
-    Route::get('/events/attendee/{event}/register', [EventRegistrationController::class, 'attendeeCreate'])
+    Route::get('/events/attendee/{event}/register', [EventRegistrationController::class, 'attendeeStore'])
             ->name('event-attendee-registrations.create');
             
     // Event Registration Routes

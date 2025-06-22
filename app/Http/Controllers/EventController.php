@@ -62,7 +62,8 @@ class EventController extends Controller
 
         $this->images->upload($event, $request->file('image'));
 
-        return to_route('events.index')
+        // redirect to the new created event
+        return to_route('events.show', $event)
                ->with('success', 'Event created successfully');
     }
 

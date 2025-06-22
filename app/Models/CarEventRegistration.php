@@ -20,6 +20,7 @@ class CarEventRegistration extends Model
         'notes_to_organizer',
         'is_paid',
         'payment_note',
+        'user_id',
     ];
 
     /**

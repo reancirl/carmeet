@@ -81,7 +81,6 @@
                                         class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-300
                                             focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 shadow-sm
                                             @error('date') border-red-500 @enderror"
-                                        min="18:00" max="22:00"
                                     >
                                     @error('date')
                                         <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
@@ -101,7 +100,6 @@
                                         class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-300
                                             focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 shadow-sm
                                             @error('start_time') border-red-500 @enderror"
-                                        min="18:00" max="22:00"
                                     >
                                     @error('start_time')
                                         <p class="text-red-600 text-sm mt-1">{{ $message }}</p>

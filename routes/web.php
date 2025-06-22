@@ -13,70 +13,112 @@ use App\Http\Middleware\CheckAdminApproval;
 use App\Http\Controllers\Admin\UserController as AdminUserController;
 use App\Http\Middleware\AdminMiddleware;
 
-// Register admin middleware
-Route::aliasMiddleware('admin', AdminMiddleware::class);
+/*
+|--------------------------------------------------------------------------
+| Public Routes
+|--------------------------------------------------------------------------
+*/
+Route::get('/', [PublicEventController::class, 'index'])
+    ->name('public.events.index');
+    
+Route::get('/event-details/{event}', [PublicEventController::class, 'show'])
+    ->name('public.events.show');
 
-// Public routes
-Route::get('/', [PublicEventController::class, 'index'])->name('public.events.index');
-Route::get('/event-details/{event}', [PublicEventController::class, 'show'])->name('public.events.show');
+/*
+|--------------------------------------------------------------------------
+| Authentication Routes (Included from auth.php)
+|--------------------------------------------------------------------------
+*/
+require __DIR__.'/auth.php';
 
-// Admin routes - only accessible by admin users
-Route::middleware(['auth', 'verified', 'admin'])
+/*
+|--------------------------------------------------------------------------
+| Authenticated User Routes
+|--------------------------------------------------------------------------
+*/
+Route::middleware(['auth'])->group(function () {
+    // Profile routes (only require authentication)
+    Route::prefix('profile')->name('profile.')->group(function () {
+        Route::get('/', [ProfileController::class, 'edit'])->name('edit');
+        Route::patch('/', [ProfileController::class, 'update'])->name('update');
+        Route::delete('/', [ProfileController::class, 'destroy'])->name('destroy');
+    });
+
+    // Email verified routes
+    Route::middleware(['verified'])->group(function () {
+        // Event registration routes
+        Route::prefix('event-registrations')->name('event-registrations.')->group(function () {
+            Route::get('/', [EventRegistrationController::class, 'index'])->name('index');
+            Route::get('/{registration}', [EventRegistrationController::class, 'show'])->name('show');
+            Route::get('/attend/{registration}', [EventRegistrationController::class, 'showAttend'])->name('attend.show');
+            Route::get('/{registration}/confirmation', [EventRegistrationController::class, 'confirmation'])->name('confirmation');
+            
+            // Event registration creation
+            Route::get('/events/{event}/register', [EventRegistrationController::class, 'create'])->name('create');
+            Route::post('/events/{event}/register', [EventRegistrationController::class, 'store'])->name('store');
+        });
+
+        // Car profiles
+        Route::resource('car-profiles', CarProfileController::class);
+
+        // Admin approved user routes
+        Route::middleware([CheckAdminApproval::class])->group(function () {
+            // Event management (except index/show which are public)
+            Route::resource('events', EventController::class)->except(['index', 'show']);
+
+            // Event files
+            Route::prefix('events/{event}')->group(function () {
+                Route::post('/upload-documents', [EventFileController::class, 'uploadEventDocuments'])
+                    ->name('events.upload-documents');
+            });
+
+            Route::prefix('event-files')->name('event-files.')->group(function () {
+                Route::delete('/{eventFile}', [EventFileController::class, 'destroy'])->name('destroy');
+                Route::patch('/{eventFile}/toggle-visibility', [EventFileController::class, 'toggleVisibility'])
+                    ->name('toggle-visibility');
+            });
+        });
+
+        // Public event routes (read-only)
+        Route::resource('events', EventController::class)->only(['index', 'show']);
+
+        // Car event registration management
+        Route::prefix('car-registrants/{registration}')->name('car-registrants.')->group(function () {
+            Route::get('/details', [CarEventRegistrationController::class, 'show'])->name('details');
+            
+            Route::prefix('status')->group(function () {
+                Route::get('/edit', [CarEventRegistrationController::class, 'editStatus'])->name('edit-status');
+                Route::patch('/', [CarEventRegistrationController::class, 'updateStatus'])->name('update-status');
+            });
+            
+            Route::prefix('payment')->group(function () {
+                Route::get('/edit', [CarEventRegistrationController::class, 'editPayment'])->name('edit-payment');
+                Route::patch('/', [CarEventRegistrationController::class, 'updatePayment'])->name('update-payment');
+            });
+        });
+
+        // Attendee registration
+        Route::get('/events/attendee/{event}/register', [EventRegistrationController::class, 'attendeeStore'])
+            ->name('event-attendee-registrations.create');
+    });
+});
+
+/*
+|--------------------------------------------------------------------------
+| Admin Routes
+|--------------------------------------------------------------------------
+*/
+Route::middleware(['auth', 'verified', AdminMiddleware::class])
     ->prefix('admin')
     ->name('admin.')
     ->group(function () {
         // User management
-        Route::resource('users', AdminUserController::class)->except(['show', 'create', 'store']);
+        Route::resource('users', AdminUserController::class)
+            ->except(['show', 'create', 'store']);
         
-        // Additional approval routes
+        // User approval routes
         Route::patch('/users/{user}/approve', [AdminUserController::class, 'approve'])
             ->name('users.approve');
         Route::patch('/users/{user}/reject', [AdminUserController::class, 'reject'])
             ->name('users.reject');
     });
-
-// Authenticated user routes
-Route::middleware(['auth', 'verified'])->group(function () {
-    // Routes that only require authentication and email verification
-    Route::get('/event-registrations', [EventRegistrationController::class, 'index'])->name('event-registrations.index');
-    Route::get('/event-registrations/{registration}', [EventRegistrationController::class, 'show'])->name('event-registrations.show');
-    Route::get('/event-registrations/attend/{registration}', [EventRegistrationController::class, 'showAttend'])->name('event-registrations.attend.show');
-    Route::get('/event-registrations/{registration}/confirmation', [EventRegistrationController::class, 'confirmation'])->name('event-registrations.confirmation');
-
-    // Routes that require admin approval
-    Route::middleware([CheckAdminApproval::class])->group(function () {
-        Route::resource('events', EventController::class)->except(['index', 'show']);
-
-        // Event Files Routes
-        Route::post('/events/{event}/upload-documents', [EventFileController::class, 'uploadEventDocuments'])->name('events.upload-documents');
-        Route::delete('/event-files/{eventFile}', [EventFileController::class, 'destroy'])->name('event-files.destroy');
-        Route::patch('/event-files/{eventFile}/toggle-visibility', [EventFileController::class, 'toggleVisibility'])->name('event-files.toggle-visibility');
-    });
-
-    Route::resource('car-profiles', CarProfileController::class);
-
-    Route::get('/events/attendee/{event}/register', [EventRegistrationController::class, 'attendeeStore'])
-            ->name('event-attendee-registrations.create');
-            
-    // Event Registration Routes
-    Route::get('/events/{event}/register', [EventRegistrationController::class, 'create'])->name('event-registrations.create');
-    Route::post('/events/{event}/register', [EventRegistrationController::class, 'store'])->name('event-registrations.store');
-
-    // Car Event Registration Management Routes
-    Route::get('/car-registrants/{registration}/details', [CarEventRegistrationController::class, 'show'])->name('car-registrants.details');
-    Route::get('/car-registrants/{registration}/edit-status', [CarEventRegistrationController::class, 'editStatus'])->name('car-registrants.edit-status');
-    Route::patch('/car-registrants/{registration}/status', [CarEventRegistrationController::class, 'updateStatus'])->name('car-registrants.update-status');
-    Route::get('/car-registrants/{registration}/edit-payment', [CarEventRegistrationController::class, 'editPayment'])->name('car-registrants.edit-payment');
-    Route::patch('/car-registrants/{registration}/payment', [CarEventRegistrationController::class, 'updatePayment'])->name('car-registrants.update-payment');
-
-    // Public event routes (don't require admin approval)
-    Route::resource('events', EventController::class)->only(['index', 'show']);
-});
-
-Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-});
-
-require __DIR__.'/auth.php';

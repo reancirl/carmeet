@@ -59,7 +59,7 @@ class CarProfileController extends Controller
             'tiktok' => 'nullable|string|max:255',
             'twitter' => 'nullable|string|max:255',
             'mod_tags' => 'nullable|string|max:255',
-            'images.*' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'images.*' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:5120',
 
         ]);
         
@@ -149,7 +149,7 @@ class CarProfileController extends Controller
             'tiktok' => 'nullable|string|max:255',
             'twitter' => 'nullable|string|max:255',
             'mod_tags' => 'nullable|string|max:255',
-            'images.*' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'images.*' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:5120',
             'remove_images' => 'nullable|array',
         ]);
         

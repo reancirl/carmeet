@@ -111,7 +111,7 @@ Route::middleware(['auth'])->group(function () {
 | Admin Routes
 |--------------------------------------------------------------------------
 */
-Route::middleware(['auth', 'verified', AdminMiddleware::class])
+Route::middleware(['auth','verified', AdminMiddleware::class])
     ->prefix('admin')
     ->name('admin.')
     ->group(function () {

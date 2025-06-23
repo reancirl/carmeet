@@ -112,7 +112,6 @@ Route::middleware(['auth'])->group(function () {
 |--------------------------------------------------------------------------
 */
 Route::middleware(['auth','verified', AdminMiddleware::class])
-    ->prefix('admin')
     ->name('admin.')
     ->group(function () {
         // User management

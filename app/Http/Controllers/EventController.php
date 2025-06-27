@@ -42,7 +42,23 @@ class EventController extends Controller
 
     public function store(StoreEventRequest $request)
     {
-        $data = $request->validated() + ['organizer_id' => auth()->id()];
+        $validated = $request->validated();
+        
+        // Generate slug if not provided
+        if (empty($validated['slug'])) {
+            $validated['slug'] = \Illuminate\Support\Str::slug($validated['name']);
+        } else {
+            $validated['slug'] = \Illuminate\Support\Str::slug($validated['slug']);
+        }
+        
+        // Ensure slug is unique
+        $originalSlug = $validated['slug'];
+        $count = 2;
+        while (Event::where('slug', $validated['slug'])->exists()) {
+            $validated['slug'] = $originalSlug . '-' . $count++;
+        }
+
+        $data = $validated + ['organizer_id' => auth()->id()];
         
         // Extract event_days data if it's a multi-day event
         $eventDays = null;
@@ -50,7 +66,8 @@ class EventController extends Controller
             $eventDays = $data['event_days'];
             unset($data['event_days']);
         }
-        
+
+        // Create the event
         $event = Event::create($data);
 
         // Save event days if it's a multi-day event
@@ -79,7 +96,27 @@ class EventController extends Controller
 
     public function update(UpdateEventRequest $request, Event $event)
     {
-        $data = $request->validated();
+        $validated = $request->validated();
+        
+        // Handle slug update
+        if (empty($validated['slug'])) {
+            $validated['slug'] = \Illuminate\Support\Str::slug($validated['name']);
+        } else {
+            $validated['slug'] = \Illuminate\Support\Str::slug($validated['slug']);
+        }
+        
+        // Ensure slug is unique, but not for the current event
+        if (strtolower($validated['slug']) !== strtolower($event->slug)) {
+            $originalSlug = $validated['slug'];
+            $count = 2;
+            while (Event::where('slug', $validated['slug'])
+                      ->where('id', '!=', $event->id)
+                      ->exists()) {
+                $validated['slug'] = $originalSlug . '-' . $count++;
+            }
+        }
+
+        $data = $validated;
         
         // Extract event_days data if it's a multi-day event
         $eventDays = null;
@@ -88,43 +125,30 @@ class EventController extends Controller
             unset($data['event_days']);
         }
 
-        $this->images->upload($event, $request->file('image'));
-
+        // Update the event
         $event->update($data);
 
-        // Handle multi-day event updates
+        // Update event days if it's a multi-day event
         if (!empty($data['is_multi_day']) && $eventDays) {
-            // Keep track of processed day IDs
-            $processedDayIds = [];
+            // Delete existing days
+            $event->days()->delete();
             
+            // Create new days
             foreach ($eventDays as $day) {
-                if (!empty($day['id'])) {
-                    // Update existing day
-                    $eventDay = $event->days()->find($day['id']);
-                    if ($eventDay) {
-                        $eventDay->update([
-                            'date' => $day['date'],
-                            'start_time' => $day['start_time'],
-                            'end_time' => $day['end_time']
-                        ]);
-                        $processedDayIds[] = $eventDay->id;
-                    }
-                } else {
-                    // Create new day
-                    $newDay = $event->days()->create([
-                        'date' => $day['date'],
-                        'start_time' => $day['start_time'],
-                        'end_time' => $day['end_time']
-                    ]);
-                    $processedDayIds[] = $newDay->id;
-                }
+                $event->days()->create([
+                    'date' => $day['date'],
+                    'start_time' => $day['start_time'],
+                    'end_time' => $day['end_time']
+                ]);
             }
-            
-            // Delete days that weren't updated
-            $event->days()->whereNotIn('id', $processedDayIds)->delete();
-        } else {
+        } elseif (empty($data['is_multi_day'])) {
             // If switching from multi-day to single-day, remove all days
             $event->days()->delete();
+        }
+        
+        // Handle image upload if a new image is provided
+        if ($request->hasFile('image')) {
+            $this->images->upload($event, $request->file('image'));
         }
 
         return redirect()

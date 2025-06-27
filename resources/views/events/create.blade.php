@@ -44,6 +44,25 @@
                                 @enderror
                             </div>
 
+                            {{-- Slug --}}
+                            <div>
+                                <label for="slug" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                                    {{ __('URL Slug') }} <span class="text-xs text-gray-500">(auto-generated, but can be customized)</span>
+                                </label>
+                                <input
+                                    type="text"
+                                    name="slug"
+                                    id="slug"
+                                    value="{{ old('slug') }}"
+                                    class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-300
+                                           focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 shadow-sm
+                                           @error('slug') border-red-500 @enderror"
+                                >
+                                @error('slug')
+                                    <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
+                                @enderror
+                            </div>
+
                             {{-- Multi-day Event Checkbox --}}
                             <div class="md:col-span-2">
                                 <div class="flex items-center">
@@ -303,6 +322,37 @@
     </div>
 
     <script>
+        // Auto-generate slug from event name
+        document.getElementById('name').addEventListener('input', function() {
+            const slugInput = document.getElementById('slug');
+            // Only update slug if it hasn't been manually modified
+            const currentSlug = slugify(this.value);
+            if (!slugInput.dataset.manuallyEdited) {
+                slugInput.value = currentSlug;
+            }
+        });
+        
+        // Track manual slug edits
+        document.getElementById('slug').addEventListener('input', function() {
+            const nameInput = document.getElementById('name');
+            const currentSlug = slugify(nameInput.value);
+            if (this.value !== currentSlug) {
+                this.dataset.manuallyEdited = 'true';
+            } else {
+                delete this.dataset.manuallyEdited;
+            }
+        });
+
+        // Helper function to create URL-friendly slugs
+        function slugify(text) {
+            return text.toString().toLowerCase()
+                .replace(/\s+/g, '-')        // Replace spaces with -
+                .replace(/[^\w\-]+/g, '')   // Remove all non-word chars
+                .replace(/\-\-+/g, '-')      // Replace multiple - with single -
+                .replace(/^-+/, '')          // Trim - from start of text
+                .replace(/-+$/, '');         // Trim - from end of text
+        }
+
         // Handle form submission
         document.querySelector('form').addEventListener('submit', function(e) {
             // Only validate visible fields

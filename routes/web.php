@@ -20,7 +20,7 @@ use App\Http\Middleware\AdminMiddleware;
 */
 Route::get('/', [PublicEventController::class, 'index'])->name('public.events.index');
 
-Route::get('/event-details/{event}', [PublicEventController::class, 'show'])->name('public.events.show');
+Route::get('/event-details/{event:slug}', [PublicEventController::class, 'show'])->name('public.events.show');
 
 /*
 |--------------------------------------------------------------------------
@@ -45,7 +45,7 @@ Route::middleware(['auth'])->group(function () {
         });
 
     // Attendee registration
-    Route::get('/events/attendee/{event}/register', [EventRegistrationController::class, 'attendeeStore'])->name('event-attendee-registrations.create');
+    Route::get('/events/attendee/{event:slug}/register', [EventRegistrationController::class, 'attendeeStore'])->name('event-attendee-registrations.create');
 
     // Email verified routes
     Route::middleware(['verified'])->group(function () {
@@ -59,8 +59,8 @@ Route::middleware(['auth'])->group(function () {
                 Route::get('/{registration}/confirmation', [EventRegistrationController::class, 'confirmation'])->name('confirmation');
 
                 // Event registration creation
-                Route::get('/events/{event}/register', [EventRegistrationController::class, 'create'])->name('create');
-                Route::post('/events/{event}/register', [EventRegistrationController::class, 'store'])->name('store');
+                Route::get('/events/{event:slug}/register', [EventRegistrationController::class, 'create'])->name('create');
+                Route::post('/events/{event:slug}/register', [EventRegistrationController::class, 'store'])->name('store');
             });
 
         // Car profiles
@@ -72,7 +72,7 @@ Route::middleware(['auth'])->group(function () {
             Route::resource('events', EventController::class)->except(['index', 'show']);
 
             // Event files
-            Route::prefix('events/{event}')->group(function () {
+            Route::prefix('events/{event:slug}')->group(function () {
                 Route::post('/upload-documents', [EventFileController::class, 'uploadEventDocuments'])->name('events.upload-documents');
             });
 
@@ -85,7 +85,7 @@ Route::middleware(['auth'])->group(function () {
         });
 
         // Public event routes (read-only)
-        Route::resource('events', EventController::class)->only(['index', 'show']);
+        Route::resource('events', EventController::class)->only(['index', 'show'])->parameters(['events' => 'event:slug']);
 
         // Car event registration management
         Route::prefix('car-registrants/{registration}')

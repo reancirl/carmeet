@@ -8,9 +8,20 @@ use Illuminate\Support\Facades\Storage;
 
 class Event extends Model
 {
+    /**
+     * Get the route key name for Laravel's route model binding.
+     *
+     * @return string
+     */
+    public function getRouteKeyName()
+    {
+        return 'slug';
+    }
+    
     protected $fillable = [
         'organizer_id',
         'name',
+        'slug',
         'date',
         'start_time',
         'end_time',
@@ -47,6 +58,17 @@ class Event extends Model
             return Storage::url($this->image);
         }
         return null;
+    }
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::saving(function ($event) {
+            if ($event->isDirty('name')) {
+                $event->slug = \Illuminate\Support\Str::slug($event->name);
+            }
+        });
     }
     
     /**

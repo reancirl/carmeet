@@ -20,6 +20,7 @@ class DatabaseSeeder extends Seeder
             'email' => 'admin@crateonscene.com',
             'password' => Hash::make('crateonscene'),
             'email_verified_at' => now(),
+            'is_admin_approved' => 1,
             'role' => 'admin'
         ]);
     }

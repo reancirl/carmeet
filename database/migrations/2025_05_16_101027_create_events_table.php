@@ -15,9 +15,9 @@ return new class extends Migration
             $table->id();
             $table->foreignId('organizer_id')->constrained('users');
             $table->string('name');
-            $table->date('date')->nullable(); // Main event date for single-day events
-            $table->time('start_time')->nullable(); // For single-day events
-            $table->time('end_time')->nullable(); // For single-day events
+            $table->date('date')->nullable();
+            $table->time('start_time')->nullable();
+            $table->time('end_time')->nullable();
             $table->boolean('is_multi_day')->default(false);
             $table->text('description');
             $table->string('street');

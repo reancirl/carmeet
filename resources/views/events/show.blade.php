@@ -18,8 +18,8 @@
                         </button>
                     </li>
                     <li role="presentation">
-                        <button class="inline-block p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:text-white" id="registrants-tab" data-tabs-target="#registrants" type="button" role="tab" aria-controls="registrants" aria-selected="false">
-                            Car Registrants
+                        <button class="inline-block p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:text-white" id="drivers-tab" data-tabs-target="#drivers" type="button" role="tab" aria-controls="drivers" aria-selected="false">
+                            Drivers
                         </button>
                     </li>
                     <li role="presentation">
@@ -181,9 +181,9 @@
                     </div>
                 </div>
                 
-                <!-- Car Registrants Tab Content -->
-                <div class="hidden" id="registrants" role="tabpanel" aria-labelledby="registrants-tab">
-                    @include('events.components.car-registrants', ['event' => $event])
+                <!-- Drivers Tab Content -->
+                <div class="hidden" id="drivers" role="tabpanel" aria-labelledby="drivers-tab">
+                    @include('events.components.drivers', ['event' => $event])
                 </div>
                 
                 <!-- Attendees Tab Content -->
@@ -226,7 +226,7 @@
             
             // Check for URL hash on page load
             const hash = window.location.hash.substring(1);
-            if (hash && ['details', 'upload-center', 'registrants'].includes(hash)) {
+            if (hash && ['details', 'upload-center', 'drivers'].includes(hash)) {
                 activateTab(hash);
             } else {
                 // Activate the first tab by default if no valid hash is present

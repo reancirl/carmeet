@@ -4,9 +4,9 @@
     <div class="p-6 text-gray-900 dark:text-gray-100">
         <div class="flex justify-between items-center mb-6">
             <div>
-                <h2 class="text-2xl font-bold text-gray-900 dark:text-white">Car Registrations</h2>
+                <h2 class="text-2xl font-bold text-gray-900 dark:text-white">Drivers</h2>
                 <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">
-                    Manage all car registrations for this event
+                    Manage all drivers for this event
                 </p>
             </div>
         </div>
@@ -61,7 +61,7 @@
                     <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
                         <thead class="bg-gray-50 dark:bg-gray-700">
                             <tr>
-                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">{{ __('Registrant') }}</th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">{{ __('Driver') }}</th>
                                 <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">{{ __('Car') }}</th>
                                 <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">{{ __('Status') }}</th>
                                 <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">{{ __('Payment') }}</th>
@@ -104,13 +104,13 @@
                                         @endif
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm font-medium space-x-2">
-                                        <a href="{{ route('car-registrants.details', $registration) }}" class="text-blue-600 dark:text-blue-500 hover:underline">
+                                        <a href="{{ route('drivers.details', $registration) }}" class="text-blue-600 dark:text-blue-500 hover:underline">
                                             {{ __('View Details') }}
                                         </a>
-                                        <!-- <a href="{{ route('car-registrants.edit-status', $registration) }}" class="text-yellow-600 dark:text-yellow-500 hover:underline">
+                                        <!-- <a href="{{ route('drivers.edit-status', $registration) }}" class="text-yellow-600 dark:text-yellow-500 hover:underline">
                                             {{ __('Update Status') }}
                                         </a>
-                                        <a href="{{ route('car-registrants.edit-payment', $registration) }}" class="text-green-600 dark:text-green-500 hover:underline">
+                                        <a href="{{ route('drivers.edit-payment', $registration) }}" class="text-green-600 dark:text-green-500 hover:underline">
                                             {{ __('Update Payment') }}
                                         </a> -->
                                     </td>

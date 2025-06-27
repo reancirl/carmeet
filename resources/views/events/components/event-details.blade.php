@@ -76,7 +76,7 @@
 
                 @if(auth()->user()->is($event->organizer))
                     <div class="flex items-center space-x-4">
-                        <a href="{{ route('events.edit', $event->id) }}" class="inline-flex items-center px-4 py-2 border border-transparent text-base leading-6 font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-500 focus:outline-none focus:border-indigo-700 focus:shadow-outline-indigo active:bg-indigo-700 transition duration-150 ease-in-out">
+                        <a href="{{ route('events.edit', $event->slug) }}" class="inline-flex items-center px-4 py-2 border border-transparent text-base leading-6 font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-500 focus:outline-none focus:border-indigo-700 focus:shadow-outline-indigo active:bg-indigo-700 transition duration-150 ease-in-out">
                             {{ __('Edit') }}
                         </a>
 

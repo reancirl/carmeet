@@ -15,7 +15,7 @@ class CarEventRegistrationController extends Controller
         // Authorization check - only allow organizers or admins
         $this->authorize('view', $registration->event);
         
-        return view('car-registrants.details', [
+        return view('drivers.details', [
             'registration' => $registration->load(['carProfile.user', 'event'])
         ]);
     }
@@ -28,7 +28,7 @@ class CarEventRegistrationController extends Controller
         // Authorization check - only allow organizers or admins
         $this->authorize('update', $registration->event);
         
-        return view('car-registrants.edit-status', [
+        return view('drivers.edit-status', [
             'registration' => $registration->load(['carProfile.user', 'event'])
         ]);
     }
@@ -51,7 +51,7 @@ class CarEventRegistrationController extends Controller
         ]);
         
         return redirect()
-            ->route('car-registrants.details', $registration)
+            ->route('drivers.details', $registration)
             ->with('success', 'Registration status updated successfully.');
     }
     
@@ -63,7 +63,7 @@ class CarEventRegistrationController extends Controller
         // Authorization check - only allow organizers or admins
         $this->authorize('update', $registration->event);
         
-        return view('car-registrants.edit-payment', [
+        return view('drivers.edit-payment', [
             'registration' => $registration->load(['carProfile.user', 'event'])
         ]);
     }
@@ -87,7 +87,7 @@ class CarEventRegistrationController extends Controller
         ]);
         
         return redirect()
-            ->route('car-registrants.details', $registration)
+            ->route('drivers.details', $registration)
             ->with('success', 'Payment information updated successfully.');
     }
 }

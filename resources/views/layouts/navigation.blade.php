@@ -12,13 +12,13 @@
 
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    @if(auth()->user()->role != 'attendee' && auth()->user()->role != 'registrant')
+                    @if(auth()->user()->role != 'attendee' && auth()->user()->role != 'driver')
                         <x-nav-link :href="route('events.index')" :active="request()->routeIs('events.index')" class="text-white">
                             {{ __('Events') }}
                         </x-nav-link>
                     @endif
                     
-                    @if(auth()->user()->role == 'registrant')
+                    @if(auth()->user()->role == 'driver')
                         <x-nav-link :href="route('event-registrations.index')" :active="request()->routeIs('event-registrations.*')" class="text-white">
                             {{ __('Dashboard') }}
                         </x-nav-link>
@@ -92,13 +92,13 @@
     <!-- Responsive Navigation Menu -->
     <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
         <div class="pt-2 pb-3 space-y-1">
-            @if(auth()->user()->role != 'attendee' && auth()->user()->role != 'registrant')
+            @if(auth()->user()->role != 'attendee' && auth()->user()->role != 'driver')
                 <x-responsive-nav-link :href="route('events.index')" :active="request()->routeIs('events.index')">
                     {{ __('Events') }}
                 </x-responsive-nav-link>
             @endif
             
-            @if(auth()->user()->role == 'registrant')
+            @if(auth()->user()->role == 'driver')
                 <x-responsive-nav-link :href="route('event-registrations.index')" :active="request()->routeIs('event-registrations.*')">
                     {{ __('Dashboard') }}
                 </x-responsive-nav-link>

@@ -27,7 +27,7 @@ class UserController extends Controller
         $query = User::query();
 
         // Filter by role
-        if ($request->has('role') && in_array($request->role, ['admin', 'organizer', 'attendee', 'registrant'])) {
+        if ($request->has('role') && in_array($request->role, ['admin', 'organizer', 'attendee', 'driver'])) {
             $query->where('role', $request->role);
         }
 
@@ -70,7 +70,7 @@ class UserController extends Controller
         $validated = $request->validate([
             'name' => ['required', 'string', 'max:255'],
             // 'email' => ['required', 'string', 'email', 'max:255', Rule::unique('users')->ignore($user->id)],
-            'role' => ['required', 'in:admin,organizer,attendee,registrant'],
+            'role' => ['required', 'in:admin,organizer,attendee,driver'],
             'is_admin_approved' => ['boolean'],
         ]);
 

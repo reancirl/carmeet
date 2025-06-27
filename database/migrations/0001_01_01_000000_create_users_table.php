@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->enum('role', ['admin', 'organizer', 'attendee', 'registrant'])->default('attendee');
+            $table->enum('role', ['admin', 'organizer', 'attendee', 'driver'])->default('attendee');
             $table->boolean('is_admin_approved')->default(false);
             $table->string('image_url')->nullable();
             $table->rememberToken();

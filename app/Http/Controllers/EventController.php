@@ -23,17 +23,17 @@ class EventController extends Controller
     }
 
     public function index()
-{
-    if (auth()->user()->role === 'admin') {
-        $events = Event::with(['organizer', 'registrations', 'attendees', 'days'])->get();
-    } else {
-        $events = Event::with(['organizer', 'registrations', 'attendees', 'days'])
-                       ->where('organizer_id', auth()->id())
-                       ->get();
+    {
+        if (auth()->user()->role === 'admin') {
+            $events = Event::with(['organizer', 'registrations', 'attendees', 'days'])->get();
+        } else {
+            $events = Event::with(['organizer', 'registrations', 'attendees', 'days'])
+                ->where('organizer_id', auth()->id())
+                ->get();
+        }
+
+        return view('events.index', compact('events'));
     }
-    
-    return view('events.index', compact('events'));
-}
 
     public function create()
     {
@@ -43,14 +43,14 @@ class EventController extends Controller
     public function store(StoreEventRequest $request)
     {
         $validated = $request->validated();
-        
+
         // Generate slug if not provided
         if (empty($validated['slug'])) {
             $validated['slug'] = \Illuminate\Support\Str::slug($validated['name']);
         } else {
             $validated['slug'] = \Illuminate\Support\Str::slug($validated['slug']);
         }
-        
+
         // Ensure slug is unique
         $originalSlug = $validated['slug'];
         $count = 2;
@@ -59,7 +59,7 @@ class EventController extends Controller
         }
 
         $data = $validated + ['organizer_id' => auth()->id()];
-        
+
         // Extract event_days data if it's a multi-day event
         $eventDays = null;
         if (!empty($data['is_multi_day']) && isset($data['event_days'])) {
@@ -80,8 +80,7 @@ class EventController extends Controller
         $this->images->upload($event, $request->file('image'));
 
         // redirect to the new created event
-        return to_route('events.show', $event)
-               ->with('success', 'Event created successfully');
+        return to_route('events.show', $event)->with('success', 'Event created successfully');
     }
 
     public function show(Event $event)
@@ -97,27 +96,25 @@ class EventController extends Controller
     public function update(UpdateEventRequest $request, Event $event)
     {
         $validated = $request->validated();
-        
+
         // Handle slug update
         if (empty($validated['slug'])) {
             $validated['slug'] = \Illuminate\Support\Str::slug($validated['name']);
         } else {
             $validated['slug'] = \Illuminate\Support\Str::slug($validated['slug']);
         }
-        
+
         // Ensure slug is unique, but not for the current event
         if (strtolower($validated['slug']) !== strtolower($event->slug)) {
             $originalSlug = $validated['slug'];
             $count = 2;
-            while (Event::where('slug', $validated['slug'])
-                      ->where('id', '!=', $event->id)
-                      ->exists()) {
+            while (Event::where('slug', $validated['slug'])->where('id', '!=', $event->id)->exists()) {
                 $validated['slug'] = $originalSlug . '-' . $count++;
             }
         }
 
         $data = $validated;
-        
+
         // Extract event_days data if it's a multi-day event
         $eventDays = null;
         if (!empty($data['is_multi_day']) && isset($data['event_days'])) {
@@ -132,28 +129,26 @@ class EventController extends Controller
         if (!empty($data['is_multi_day']) && $eventDays) {
             // Delete existing days
             $event->days()->delete();
-            
+
             // Create new days
             foreach ($eventDays as $day) {
                 $event->days()->create([
                     'date' => $day['date'],
                     'start_time' => $day['start_time'],
-                    'end_time' => $day['end_time']
+                    'end_time' => $day['end_time'],
                 ]);
             }
         } elseif (empty($data['is_multi_day'])) {
             // If switching from multi-day to single-day, remove all days
             $event->days()->delete();
         }
-        
+
         // Handle image upload if a new image is provided
         if ($request->hasFile('image')) {
             $this->images->upload($event, $request->file('image'));
         }
 
-        return redirect()
-            ->route('events.index')
-            ->with('success', 'Event updated successfully');
+        return redirect()->route('events.index')->with('success', 'Event updated successfully');
     }
 
     public function destroy(Event $event)
@@ -161,7 +156,6 @@ class EventController extends Controller
         $this->images->delete($event);
         $event->delete();
 
-        return to_route('events.index')
-               ->with('success', 'Event deleted successfully');
+        return to_route('events.index')->with('success', 'Event deleted successfully');
     }
 }

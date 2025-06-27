@@ -28,7 +28,7 @@
                                 <x-input-label for="role" :value="__('Role')" />
                                 <select id="role" name="role" class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600">
                                     <option value="">All Roles</option>
-                                    @foreach(['organizer', 'attendee', 'registrant'] as $role)
+                                    @foreach(['organizer', 'attendee', 'driver'] as $role)
                                         <option value="{{ $role }}" {{ request('role') === $role ? 'selected' : '' }}>{{ ucfirst($role) }}</option>
                                     @endforeach
                                 </select>
@@ -90,7 +90,7 @@
                                                 {{ 
                                                     $user->role === 'admin' ? 'bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-200' : 
                                                     ($user->role === 'organizer' ? 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200' :
-                                                    ($user->role === 'registrant' ? 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200' :
+                                                    ($user->role === 'driver' ? 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200' :
                                                     'bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-200'))
                                                 }}">
                                                 {{ ucfirst($user->role) }}

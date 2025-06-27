@@ -15,8 +15,8 @@ class CarProfileController extends Controller
     public function __construct()
     {
         $this->middleware(function ($request, $next) {
-            if (!Auth::user()->hasRole('registrant')) {
-                abort(403, 'Unauthorized action. Only registrants can access this page.');
+            if (!Auth::user()->hasRole('driver')) {
+                abort(403, 'Unauthorized action. Only drivers can access this page.');
             }
             return $next($request);
         });

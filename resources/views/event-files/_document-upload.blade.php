@@ -57,7 +57,7 @@
                     required
                 >
                     <option value="public">{{ __('Public - Visible to everyone') }}</option>
-                    <option value="approved_only">{{ __('Approved Only - Visible to approved registrants only') }}</option>
+                    <option value="approved_only">{{ __('Approved Only - Visible to approved drivers only') }}</option>
                 </select>
             </div>
 

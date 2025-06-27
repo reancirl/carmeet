@@ -30,7 +30,7 @@ class AuthenticatedSessionController extends Controller
 
         if (auth()->user()->role == 'attendee') {
             return redirect('/');
-        } elseif (auth()->user()->role == 'registrant') {
+        } elseif (auth()->user()->role == 'driver') {
             return redirect(route('event-registrations.index', absolute: false));
         }
         return redirect()->intended(route('events.index', absolute: false));

@@ -87,9 +87,9 @@ Route::middleware(['auth'])->group(function () {
         // Public event routes (read-only)
         Route::resource('events', EventController::class)->only(['index', 'show'])->parameters(['events' => 'event:slug']);
 
-        // Car event registration management
-        Route::prefix('car-registrants/{registration}')
-            ->name('car-registrants.')
+        // Driver management
+        Route::prefix('drivers/{registration}')
+            ->name('drivers.')
             ->group(function () {
                 Route::get('/details', [CarEventRegistrationController::class, 'show'])->name('details');
 

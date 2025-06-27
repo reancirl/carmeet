@@ -106,11 +106,11 @@
                                 </div>
 
                                 <div class="flex flex-wrap gap-2">
-                                    <!-- Registrants Badge -->
+                                    <!-- Drivers Badge -->
                                     <div class="flex items-center space-x-2 px-3 py-1.5 bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200 rounded-lg shadow-sm hover:shadow-md transition-shadow"
-                                        aria-label="{{ $event->registrations->count() }} car registrants">
+                                        aria-label="{{ $event->registrations->count() }} drivers">
                                         <span class="text-sm font-medium">
-                                            Car Registrants ({{ $event->registrations->count() }})
+                                            Drivers ({{ $event->registrations->count() }})
                                         </span>
                                     </div>
 
@@ -142,7 +142,7 @@
                                     @endphp
 
                                     @if (!$hasRegistered && $event->organizer_id !== Auth::user()->id)
-                                        @if (Auth::user()->role == 'registrant')
+                                        @if (Auth::user()->role == 'driver')
                                             @if (!$hasRegisteredattendee)
                                                 <div class="mt-4">
                                                     <a href="{{ route('event-registrations.create', $event) }}"

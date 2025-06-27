@@ -36,7 +36,8 @@ class UpdateEventSlugs extends Command
         $bar->start();
         
         foreach ($events as $event) {
-            $event->save(); // This will trigger the slug generation in the model
+            $event->slug = str()->slug($event->name);
+            $event->save();
             $bar->advance();
         }
         

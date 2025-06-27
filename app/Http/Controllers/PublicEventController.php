@@ -10,7 +10,7 @@ class PublicEventController extends Controller
     public function index(Request $request)
     {
         // fetch and categorize your events however you like...
-        $featuredEvent = Event::first();
+        return $featuredEvent = Event::first();
         $weekendEvents = Event::get();
         $nearbyEvents = Event::get();
         $upcomingEvents = Event::get();

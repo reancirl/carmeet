@@ -9,11 +9,13 @@ class PublicEventController extends Controller
 {
     public function index(Request $request)
     {
-        $events = Event::when($request->zip_code, fn($q, $zip) =>
-            $q->where('zip_code', $zip)
-        )->get();
+        // fetch and categorize your events however you like...
+        $featuredEvent = Event::first();
+        $weekendEvents = Event::get();
+        $nearbyEvents = Event::get();
+        $upcomingEvents = Event::get();
 
-        return view('welcome', compact('events'));
+        return view('welcome', compact('featuredEvent', 'weekendEvents', 'nearbyEvents', 'upcomingEvents'));
     }
 
     public function show(Event $event)

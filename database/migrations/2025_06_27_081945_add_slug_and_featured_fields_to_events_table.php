@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::table('events', function (Blueprint $table) {
             $table->string('slug')->unique()->nullable()->after('name');
+            $table->boolean('is_featured')->default(false)->after('slug');
         });
     }
 
@@ -23,6 +24,7 @@ return new class extends Migration
     {
         Schema::table('events', function (Blueprint $table) {
             $table->dropColumn('slug');
+            $table->dropColumn('is_featured');
         });
     }
 };

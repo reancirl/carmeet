@@ -73,10 +73,10 @@
                         View Details
                     </a>
 
-                    <p class="pt-4 text-xs sm:text-sm text-gray-300 uppercase">
+                    {{-- <p class="pt-4 text-xs sm:text-sm text-gray-300 uppercase">
                         NOTE: THIS IS THE PREMIER SPOTLIGHT OR MAINSTAGE<br>
                         THIS IS A CAROUSEL WITH UP TO MAX OF 10 EVENTS
-                    </p>
+                    </p> --}}
                 </div>
             </div>
         @endif

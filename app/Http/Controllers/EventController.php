@@ -96,7 +96,7 @@ class EventController extends Controller
     public function update(UpdateEventRequest $request, Event $event)
     {
         $validated = $request->validated();
-
+        
         // Handle slug update
         if (empty($validated['slug'])) {
             $validated['slug'] = \Illuminate\Support\Str::slug($validated['name']);
@@ -148,7 +148,7 @@ class EventController extends Controller
             $this->images->upload($event, $request->file('image'));
         }
 
-        return redirect()->route('events.index')->with('success', 'Event updated successfully');
+        return redirect()->back()->with('success', 'Event updated successfully');
     }
 
     public function destroy(Event $event)

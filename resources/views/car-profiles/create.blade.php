@@ -25,6 +25,23 @@
                         @csrf
 
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <!-- Year -->
+                            <div>
+                                <label for="year"
+                                    class="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                                    {{ __('Year') }}
+                                </label>
+                                <input type="number" name="year" id="year" value="{{ old('year') }}"
+                                    min="1900" max="{{ date('Y') + 1 }}"
+                                    class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-300
+                                           focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 shadow-sm
+                                           @error('year') border-red-500 @enderror"
+                                    required>
+                                @error('year')
+                                    <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
+                                @enderror
+                            </div>
+
                             <!-- Make -->
                             <div>
                                 <label for="make"
@@ -57,23 +74,6 @@
                                 @enderror
                             </div>
 
-                            <!-- Year -->
-                            <div>
-                                <label for="year"
-                                    class="block text-sm font-medium text-gray-700 dark:text-gray-300">
-                                    {{ __('Year') }}
-                                </label>
-                                <input type="number" name="year" id="year" value="{{ old('year') }}"
-                                    min="1900" max="{{ date('Y') + 1 }}"
-                                    class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-300
-                                           focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 shadow-sm
-                                           @error('year') border-red-500 @enderror"
-                                    required>
-                                @error('year')
-                                    <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
-                                @enderror
-                            </div>
-
                             <!-- Trim -->
                             <div>
                                 <label for="trim"
@@ -95,11 +95,10 @@
                                     class="block text-sm font-medium text-gray-700 dark:text-gray-300">
                                     {{ __('Color') }}
                                 </label>
-                                <input type="text" name="color" id="color" value="{{ old('color') }}"
+                                <input type="text" name="color" id="color" value="{{ old('color') }}" required
                                     class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-300
                                            focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 shadow-sm
-                                           @error('color') border-red-500 @enderror"
-                                    required>
+                                           @error('color') border-red-500 @enderror">
                                 @error('color')
                                     <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
                                 @enderror
@@ -109,9 +108,9 @@
                             <div>
                                 <label for="plate"
                                     class="block text-sm font-medium text-gray-700 dark:text-gray-300">
-                                    {{ __('Plate Number (Optional)') }}
+                                    {{ __('Plate Number') }}
                                 </label>
-                                <input type="text" name="plate" id="plate" value="{{ old('plate') }}"
+                                <input type="text" name="plate" id="plate" value="{{ old('plate') }}" required
                                     class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-300
                                            focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 shadow-sm
                                            @error('plate') border-red-500 @enderror">
@@ -124,9 +123,9 @@
                         <!-- Mods -->
                         <div class="md:col-span-2">
                             <label for="mods" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
-                                {{ __('Modifications (Optional)') }}
+                                {{ __('Modifications') }}
                             </label>
-                            <textarea id="mods" name="mods" rows="3"
+                            <textarea id="mods" name="mods" rows="3" required
                                 class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-300
                                        focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 shadow-sm
                                        @error('mods') border-red-500 @enderror">{{ old('mods') }}</textarea>
@@ -173,9 +172,9 @@
                                 <div>
                                     <label for="instagram"
                                         class="block text-sm font-medium text-gray-700 dark:text-gray-300">
-                                        {{ __('Instagram (Optional)') }}
+                                        {{ __('Instagram') }}
                                     </label>
-                                    <input type="text" name="instagram" id="instagram"
+                                    <input type="text" name="instagram" id="instagram" required
                                         value="{{ old('instagram') }}"
                                         class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-300
                                         focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 shadow-sm

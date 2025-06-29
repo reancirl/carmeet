@@ -28,6 +28,12 @@
                         </x-nav-link>
                     @endif
 
+                    @if(auth()->user()->role == 'attendee')
+                        <x-nav-link :href="route('event-registrations.index')" :active="request()->routeIs('event-registrations.*')" class="text-white">
+                            {{ __('My RSVPed Events') }}
+                        </x-nav-link>
+                    @endif
+
                     <!-- add browse events not visible from organizer and admin route / -->
                     @if(auth()->user()->role != 'organizer' && auth()->user()->role != 'admin')
                         <x-nav-link :href="route('public.events.index')" :active="request()->routeIs('public.events.index')" class="text-white">

@@ -37,7 +37,7 @@
             {{-- Auth Links --}}
             <div class="flex space-x-4">
                 @auth
-                    <a href="{{ auth()->user()->role === 'attendee' ? url('/profile') : (auth()->user()->role === 'drivers' ? url('/event-registrations') : url('/events')) }}"
+                    <a href="{{ auth()->user()->role === 'attendee' ? url('/event-registrations') : (auth()->user()->role === 'drivers' ? url('/event-registrations') : url('/events')) }}"
                         class="px-4 py-2 border rounded text-sm hover:bg-white/10">Home</a>
                 @else
                     <a href="{{ route('login') }}" class="px-4 py-2 border rounded text-sm hover:bg-white/10">Log In</a>

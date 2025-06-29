@@ -370,7 +370,7 @@
 
                                                 <!-- Actions -->
                                                 <div class="flex flex-col items-center justify-center space-y-3">
-                                                    <a href="{{ route('event-registrations.attend.show', $attendedEventId->event->id) }}"
+                                                    <a href="{{ route('event-registrations.attend.show', $attendedEventId->event->slug) }}"
                                                         class="w-full inline-flex justify-center items-center px-4 py-2 border border-transparent rounded-md font-medium text-white bg-indigo-600 hover:bg-indigo-700 dark:bg-indigo-500 dark:hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                                                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2"
                                                             fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -498,7 +498,7 @@
 
                                                 <!-- Actions -->
                                                 <div class="flex flex-col items-center justify-center space-y-3">
-                                                    <a href="{{ route('event-registrations.attend.show', $attendedEventId->event->id) }}"
+                                                    <a href="{{ route('event-registrations.attend.show', $attendedEventId->event->slug) }}"
                                                         class="w-full inline-flex justify-center items-center px-4 py-2 border border-transparent rounded-md font-medium text-white bg-indigo-600 hover:bg-indigo-700 dark:bg-indigo-500 dark:hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                                                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2"
                                                             fill="none" viewBox="0 0 24 24" stroke="currentColor">

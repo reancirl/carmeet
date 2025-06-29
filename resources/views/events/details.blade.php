@@ -159,7 +159,7 @@
                                                 <div class="mt-4">
                                                     <button type="button"
                                                         class="js-rsvp inline-flex justify-center items-center px-4 py-2 bg-indigo-600 border border-transparent rounded-md font-semibold text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                                                        data-event-id="{{ $event->id }}">
+                                                        data-event-slug="{{ $event->slug }}">
                                                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2"
                                                             fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                                             <path stroke-linecap="round" stroke-linejoin="round"
@@ -178,7 +178,7 @@
                                                             <path stroke-linecap="round" stroke-linejoin="round"
                                                                 stroke-width="2" d="M5 13l4 4L19 7" />
                                                         </svg>
-                                                        Already Registered - View Registration
+                                                        You’ve already registered your car for this event.
                                                     </a>
                                                 </div>
                                             @endif
@@ -187,7 +187,7 @@
                                                 <div class="mt-4">
                                                     <button type="button"
                                                         class="js-rsvp inline-flex justify-center items-center px-4 py-2 bg-indigo-600 border border-transparent rounded-md font-semibold text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                                                        data-event-id="{{ $event->id }}">
+                                                        data-event-slug="{{ $event->slug }}">
                                                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2"
                                                             fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                                             <path stroke-linecap="round" stroke-linejoin="round"
@@ -206,7 +206,7 @@
                                                             <path stroke-linecap="round" stroke-linejoin="round"
                                                                 stroke-width="2" d="M5 13l4 4L19 7" />
                                                         </svg>
-                                                        Already Registered - View Registration
+                                                        You’ve already RSVP’d to this event.
                                                     </a>
                                                 </div>
                                             @endif
@@ -330,8 +330,8 @@
                     }
 
                     // Redirect via GET
-                    const eventId = button.dataset.eventId;
-                    window.location.href = `/events/attendee/${eventId}/register`;
+                    const eventSlug = button.dataset.eventSlug;
+                    window.location.href = `/events/attendee/${eventSlug}/register`;
                 });
             });
         });

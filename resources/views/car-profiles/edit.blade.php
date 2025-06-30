@@ -230,9 +230,9 @@
                         <!-- Mod Tags with hint -->
                         <div class="md:col-span-2">
                             <label for="mod_tags" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
-                                {{ __('Mod Tags (Optional)') }}
+                                {{ __('Mod Tags') }}
                             </label>
-                            <input type="text" name="mod_tags" id="mod_tags"
+                            <input type="text" name="mod_tags" id="mod_tags" required
                                 value="{{ old('mod_tags', $carProfile->mod_tags) }}"
                                 placeholder="e.g. air suspension, widebody, wrap"
                                 class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-300

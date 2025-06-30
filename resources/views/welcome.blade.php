@@ -1,7 +1,7 @@
 <x-public-layout>
     {{-- Hero Spotlight Carousel --}}
-    <section id="heroCarousel" class="relative bg-center bg-cover h-96 md:h-[500px]"
-        style="background-image: url('{{ asset('images/herobackground.jpg') }}')">
+    <section id="heroCarousel" class="relative bg-bottom bg-cover h-96 md:h-[500px] pt-24"
+        style="background-image: url('{{ asset('images/hero-background.png') }}')">
 
         @if ($featuredEvent)
             <div
@@ -126,7 +126,7 @@
     @endphp
 
     {{-- Happening This Weekend --}}
-    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 py-12">
+    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 py-12 pt-32 sm:pt-16">
         <h2 class="text-2xl sm:text-3xl text-yellow-500 font-semibold mb-6">
             Happening This Weekend
         </h2>

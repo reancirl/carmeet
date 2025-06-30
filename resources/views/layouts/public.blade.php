@@ -21,7 +21,7 @@
 </head>
 
 <body class="bg-[#0a0a0a] text-white flex flex-col min-h-screen">
-    <header class="bg-black/90 sticky top-0 z-50">
+    <header class="absolute inset-x-0 top-0 z-50 bg-transparent">
         <div class="max-w-7xl mx-auto flex items-center px-6 py-4">
             {{-- Logo --}}
             <a href="{{ url('/') }}">
@@ -37,7 +37,7 @@
             {{-- Auth Links --}}
             <div class="flex space-x-4">
                 @auth
-                    <a href="{{ auth()->user()->role === 'attendee' ? url('/event-registrations') : (auth()->user()->role === 'drivers' ? url('/event-registrations') : url('/events')) }}"
+                    <a href="{{ auth()->user()->role === 'attendee' ? url('/event-registrations') : (auth()->user()->role === 'driver' ? url('/event-registrations') : url('/events')) }}"
                         class="px-4 py-2 border rounded text-sm hover:bg-white/10">Home</a>
                 @else
                     <a href="{{ route('login') }}" class="px-4 py-2 border rounded text-sm hover:bg-white/10">Log In</a>
@@ -54,7 +54,7 @@
         {{ $slot }}
     </main>
 
-    <footer class="text-gray-400 py-6" style="background-color: #1f2129">
+    <footer class="text-gray-400 py-6 bg-top bg-cover" style="background-image: url('{{ asset('images/hero-background-inverted.png') }}')">
         <div class="max-w-7xl mx-auto flex flex-wrap justify-center gap-6 text-sm">
             <a href="#" class="hover:underline">About CrateOS</a>
             <a href="#" class="hover:underline">How it Works</a>

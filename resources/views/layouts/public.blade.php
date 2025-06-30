@@ -25,7 +25,7 @@
         <div class="max-w-7xl mx-auto flex items-center px-6 py-4">
             {{-- Logo --}}
             <a href="{{ url('/') }}">
-                <img src="{{ asset('images/crateos_logo.png') }}" alt="CrateOS" class="h-20">
+                <img src="{{ asset('images/crateos_logo_transparent.png') }}" alt="CrateOS" class="h-20">
             </a>
 
             {{-- Centered Search --}}

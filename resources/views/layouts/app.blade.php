@@ -12,6 +12,7 @@
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
     <link rel="manifest" href="{{ asset('manifest.json') }}">
+    <link rel="icon" type="image/png" href="{{ asset('images/crateos_logo.png') }}">
     <meta name="theme-color" content="#4f46e5">
 
     <!-- Scripts -->

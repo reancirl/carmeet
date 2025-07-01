@@ -1,5 +1,5 @@
 <x-public-layout :title="$event->name">
-    <div class="flex-grow w-full lg:max-w-10xl mx-auto px-6 lg:px-8 py-8 space-y-8">
+    <div class="flex-grow w-full lg:max-w-10xl mx-auto px-6 lg:px-8 py-8 space-y-8 mt-20">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="mb-4">
                 <a href="{{ url()->previous() }}"

@@ -22,39 +22,91 @@
 
 <body class="bg-[#0a0a0a] text-white flex flex-col min-h-screen">
     <header class="absolute inset-x-0 top-0 z-50 bg-transparent">
-        <div class="max-w-7xl mx-auto flex items-center px-6 py-4">
-            {{-- Logo --}}
+        <div class="max-w-7xl mx-auto flex items-center justify-between px-6 py-4">
+            <!-- Logo -->
             <a href="{{ url('/') }}">
-                <img src="{{ asset('images/crateos_logo_transparent.png') }}" alt="CrateOS" class="h-20">
+                <img src="{{ asset('images/crateos_logo_transparent.png') }}" alt="CrateOS" class="h-12 sm:h-20">
             </a>
 
-            {{-- Centered Search --}}
-            <form action="{{ url('/') }}" method="GET" class="flex-1 mx-6">
-                <input type="text" name="q" value="{{ request('q') }}" placeholder="Search events"
+            <!-- Hamburger (mobile only) -->
+            <button id="menu-btn" class="sm:hidden focus:outline-none">
+                <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                </svg>
+            </button>
+
+            <!-- Nav & Search container -->
+            <div id="mobile-menu" class="hidden sm:flex sm:items-center sm:space-x-6 flex-1 sm:mx-6">
+                <!-- Search (hidden on xs) -->
+                <form action="{{ url('/') }}" method="GET" class="hidden sm:flex flex-1">
+                    <input type="text" name="q" value="{{ request('q') }}"
+                        placeholder="Search events by Zipcode"
+                        class="w-full px-4 py-2 rounded-md text-black focus:outline-none" />
+                </form>
+
+                <!-- Auth Links -->
+                <div class="flex flex-col space-y-2 sm:space-y-0 sm:flex-row sm:space-x-4">
+                    @auth
+                        <a href="{{ auth()->user()->role === 'attendee' ? url('/event-registrations') : (auth()->user()->role === 'driver' ? url('/event-registrations') : url('/events')) }}"
+                            class="px-4 py-2 border rounded text-sm hover:bg-white/10 text-center">
+                            Home
+                        </a>
+                    @else
+                        <a href="{{ route('login') }}"
+                            class="px-4 py-2 border rounded text-sm hover:bg-white/10 text-center">
+                            Log In
+                        </a>
+                        @if (Route::has('register'))
+                            <a href="{{ route('register') }}"
+                                class="px-4 py-2 bg-red-500 text-white rounded text-sm hover:opacity-90 text-center">
+                                Sign Up
+                            </a>
+                        @endif
+                    @endauth
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile menu panel -->
+        <div id="mobile-panel" class="hidden bg-[#0a0a0a] text-white">
+            <form action="{{ url('/') }}" method="GET" class="px-6 py-4">
+                <input type="text" name="q" value="{{ request('q') }}" placeholder="Search events by Zipcode"
                     class="w-full px-4 py-2 rounded-md text-black focus:outline-none" />
             </form>
-
-            {{-- Auth Links --}}
-            <div class="flex space-x-4">
+            <div class="flex flex-col px-6 pb-4 space-y-2">
                 @auth
                     <a href="{{ auth()->user()->role === 'attendee' ? url('/event-registrations') : (auth()->user()->role === 'driver' ? url('/event-registrations') : url('/events')) }}"
-                        class="px-4 py-2 border rounded text-sm hover:bg-white/10">Home</a>
+                        class="block px-4 py-2 border rounded text-sm hover:bg-white/10 text-center">
+                        Home
+                    </a>
                 @else
-                    <a href="{{ route('login') }}" class="px-4 py-2 border rounded text-sm hover:bg-white/10">Log In</a>
+                    <a href="{{ route('login') }}"
+                        class="block px-4 py-2 border rounded text-sm hover:bg-white/10 text-center">
+                        Log In
+                    </a>
                     @if (Route::has('register'))
                         <a href="{{ route('register') }}"
-                            class="px-4 py-2 bg-red-500 text-white rounded text-sm hover:opacity-90">Sign Up</a>
+                            class="block px-4 py-2 bg-red-500 text-white rounded text-sm hover:opacity-90 text-center">
+                            Sign Up
+                        </a>
                     @endif
                 @endauth
             </div>
         </div>
+
+        <script>
+            const btn = document.getElementById('menu-btn');
+            const panel = document.getElementById('mobile-panel');
+            btn.addEventListener('click', () => panel.classList.toggle('hidden'));
+        </script>
     </header>
 
     <main class="flex-grow">
         {{ $slot }}
     </main>
 
-    <footer class="text-gray-400 py-6 bg-top bg-cover" style="background-image: url('{{ asset('images/hero-background-inverted.png') }}')">
+    <footer class="text-gray-400 py-6 bg-top bg-cover"
+        style="background-image: url('{{ asset('images/hero-background-inverted.png') }}')">
         <div class="max-w-7xl mx-auto flex flex-wrap justify-center gap-6 text-sm">
             <a href="#" class="hover:underline">About CrateOS</a>
             <a href="#" class="hover:underline">How it Works</a>

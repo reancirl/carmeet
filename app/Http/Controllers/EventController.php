@@ -3,14 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\Event;
-use App\Rules\UsZipCode;
-use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\StoreEventRequest;
 use App\Http\Requests\UpdateEventRequest;
 use App\Services\EventImageService;
-use App\Models\User;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
+use Carbon\Carbon;
 
 class EventController extends Controller
 {
@@ -44,34 +42,39 @@ class EventController extends Controller
     {
         $validated = $request->validated();
 
-        // Generate slug if not provided
+        // Generate & dedupe slug
         if (empty($validated['slug'])) {
-            $validated['slug'] = \Illuminate\Support\Str::slug($validated['name']);
+            $validated['slug'] = Str::slug($validated['name']);
         } else {
-            $validated['slug'] = \Illuminate\Support\Str::slug($validated['slug']);
+            $validated['slug'] = Str::slug($validated['slug']);
+        }
+        $original = $validated['slug'];
+        for ($i = 2; Event::where('slug', $validated['slug'])->exists(); $i++) {
+            $validated['slug'] = "{$original}-{$i}";
         }
 
-        // Ensure slug is unique
-        $originalSlug = $validated['slug'];
-        $count = 2;
-        while (Event::where('slug', $validated['slug'])->exists()) {
-            $validated['slug'] = $originalSlug . '-' . $count++;
+        // 1) Only admins can feature
+        $validated['is_featured'] = auth()->user()->role === 'admin' && $request->has('is_featured');
+
+        // 2) Prevent past events from being featured
+        if ($validated['is_featured'] && Carbon::parse($validated['date'])->lt(Carbon::today())) {
+            return back()
+                ->withInput()
+                ->withErrors(['is_featured' => 'Only today’s or future events can be featured.']);
         }
 
-        $data = $validated + ['organizer_id' => auth()->id()];
-
-        // Extract event_days data if it's a multi-day event
+        // Prepare multi-day data
         $eventDays = null;
-        if (!empty($data['is_multi_day']) && isset($data['event_days'])) {
-            $eventDays = $data['event_days'];
-            unset($data['event_days']);
+        if (!empty($validated['is_multi_day']) && isset($validated['event_days'])) {
+            $eventDays = $validated['event_days'];
+            unset($validated['event_days']);
         }
 
-        // Create the event
-        $event = Event::create($data);
+        // Merge organizer & create
+        $validated['organizer_id'] = auth()->id();
+        $event = Event::create($validated);
 
-        // Save event days if it's a multi-day event
-        if (!empty($data['is_multi_day']) && $eventDays) {
+        if (!empty($validated['is_multi_day']) && $eventDays) {
             foreach ($eventDays as $day) {
                 $event->days()->create($day);
             }
@@ -79,7 +82,6 @@ class EventController extends Controller
 
         $this->images->upload($event, $request->file('image'));
 
-        // redirect to the new created event
         return to_route('events.show', $event)->with('success', 'Event created successfully');
     }
 
@@ -96,41 +98,42 @@ class EventController extends Controller
     public function update(UpdateEventRequest $request, Event $event)
     {
         $validated = $request->validated();
-        
-        // Handle slug update
-        if (empty($validated['slug'])) {
-            $validated['slug'] = \Illuminate\Support\Str::slug($validated['name']);
-        } else {
-            $validated['slug'] = \Illuminate\Support\Str::slug($validated['slug']);
-        }
 
-        // Ensure slug is unique, but not for the current event
-        if (strtolower($validated['slug']) !== strtolower($event->slug)) {
-            $originalSlug = $validated['slug'];
-            $count = 2;
-            while (Event::where('slug', $validated['slug'])->where('id', '!=', $event->id)->exists()) {
-                $validated['slug'] = $originalSlug . '-' . $count++;
+        // Slug regen & dedupe (excluding current)
+        if (empty($validated['slug'])) {
+            $validated['slug'] = Str::slug($validated['name']);
+        } else {
+            $validated['slug'] = Str::slug($validated['slug']);
+        }
+        if (strcasecmp($validated['slug'], $event->slug) !== 0) {
+            $original = $validated['slug'];
+            for ($i = 2; Event::where('slug', $validated['slug'])->where('id', '!=', $event->id)->exists(); $i++) {
+                $validated['slug'] = "{$original}-{$i}";
             }
         }
 
-        $data = $validated;
+        // 1) Only admins can feature
+        $validated['is_featured'] = auth()->user()->role === 'admin' && $request->has('is_featured');
 
-        // Extract event_days data if it's a multi-day event
+        // 2) Prevent past events from being featured
+        if ($validated['is_featured'] && Carbon::parse($validated['date'])->lt(Carbon::today())) {
+            return back()
+                ->withInput()
+                ->withErrors(['is_featured' => 'Only today’s or future events can be featured.']);
+        }
+        
+        // Multi-day extraction
         $eventDays = null;
-        if (!empty($data['is_multi_day']) && isset($data['event_days'])) {
-            $eventDays = $data['event_days'];
-            unset($data['event_days']);
+        if (!empty($validated['is_multi_day']) && isset($validated['event_days'])) {
+            $eventDays = $validated['event_days'];
+            unset($validated['event_days']);
         }
 
-        // Update the event
-        $event->update($data);
+        $event->update($validated);
 
-        // Update event days if it's a multi-day event
-        if (!empty($data['is_multi_day']) && $eventDays) {
-            // Delete existing days
+        // Sync days
+        if (!empty($validated['is_multi_day']) && $eventDays) {
             $event->days()->delete();
-
-            // Create new days
             foreach ($eventDays as $day) {
                 $event->days()->create([
                     'date' => $day['date'],
@@ -138,17 +141,15 @@ class EventController extends Controller
                     'end_time' => $day['end_time'],
                 ]);
             }
-        } elseif (empty($data['is_multi_day'])) {
-            // If switching from multi-day to single-day, remove all days
+        } elseif (empty($validated['is_multi_day'])) {
             $event->days()->delete();
         }
 
-        // Handle image upload if a new image is provided
         if ($request->hasFile('image')) {
             $this->images->upload($event, $request->file('image'));
         }
 
-        return redirect()->back()->with('success', 'Event updated successfully');
+        return back()->with('success', 'Event updated successfully');
     }
 
     public function destroy(Event $event)

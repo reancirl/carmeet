@@ -26,19 +26,15 @@
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                             {{-- Event Name --}}
                             <div>
-                                <label for="name" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                                <label for="name"
+                                    class="block text-sm font-medium text-gray-700 dark:text-gray-300">
                                     {{ __('Event Name') }}
                                 </label>
-                                <input
-                                    type="text"
-                                    name="name"
-                                    id="name"
-                                    value="{{ old('name') }}"
+                                <input type="text" name="name" id="name" value="{{ old('name') }}"
                                     class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-300
                                            focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 shadow-sm
                                            @error('name') border-red-500 @enderror"
-                                    required
-                                >
+                                    required>
                                 @error('name')
                                     <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
                                 @enderror
@@ -46,18 +42,15 @@
 
                             {{-- Slug --}}
                             <div>
-                                <label for="slug" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
-                                    {{ __('URL Slug') }} <span class="text-xs text-gray-500">(auto-generated, but can be customized)</span>
+                                <label for="slug"
+                                    class="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                                    {{ __('URL Slug') }} <span class="text-xs text-gray-500">(auto-generated, but can be
+                                        customized)</span>
                                 </label>
-                                <input
-                                    type="text"
-                                    name="slug"
-                                    id="slug"
-                                    value="{{ old('slug') }}"
+                                <input type="text" name="slug" id="slug" value="{{ old('slug') }}"
                                     class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-300
                                            focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 shadow-sm
-                                           @error('slug') border-red-500 @enderror"
-                                >
+                                           @error('slug') border-red-500 @enderror">
                                 @error('slug')
                                     <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
                                 @enderror
@@ -66,15 +59,11 @@
                             {{-- Multi-day Event Checkbox --}}
                             <div class="md:col-span-2">
                                 <div class="flex items-center">
-                                    <input
-                                        type="checkbox"
-                                        name="is_multi_day"
-                                        id="is_multi_day"
-                                        value="1"
+                                    <input type="checkbox" name="is_multi_day" id="is_multi_day" value="1"
                                         {{ old('is_multi_day') ? 'checked' : '' }}
-                                        class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
-                                    >
-                                    <label for="is_multi_day" class="ml-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
+                                        class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500">
+                                    <label for="is_multi_day"
+                                        class="ml-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
                                         {{ __('This is a multiple day event') }}
                                     </label>
                                 </div>
@@ -87,18 +76,14 @@
                             <div id="single-day-fields" class="md:col-span-2 grid grid-cols-1 md:grid-cols-3 gap-6">
                                 {{-- Date --}}
                                 <div>
-                                    <label for="date" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                                    <label for="date"
+                                        class="block text-sm font-medium text-gray-700 dark:text-gray-300">
                                         {{ __('Date') }}
                                     </label>
-                                    <input
-                                        type="date"
-                                        name="date"
-                                        id="date"
-                                        value="{{ old('date') }}"
+                                    <input type="date" name="date" id="date" value="{{ old('date') }}"
                                         class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-300
                                             focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 shadow-sm
-                                            @error('date') border-red-500 @enderror"
-                                    >
+                                            @error('date') border-red-500 @enderror">
                                     @error('date')
                                         <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
                                     @enderror
@@ -106,18 +91,15 @@
 
                                 {{-- Start Time --}}
                                 <div>
-                                    <label for="start_time" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                                    <label for="start_time"
+                                        class="block text-sm font-medium text-gray-700 dark:text-gray-300">
                                         {{ __('Start Time') }}
                                     </label>
-                                    <input
-                                        type="time"
-                                        name="start_time"
-                                        id="start_time"
+                                    <input type="time" name="start_time" id="start_time"
                                         value="{{ old('start_time') }}"
                                         class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-300
                                             focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 shadow-sm
-                                            @error('start_time') border-red-500 @enderror"
-                                    >
+                                            @error('start_time') border-red-500 @enderror">
                                     @error('start_time')
                                         <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
                                     @enderror
@@ -125,18 +107,14 @@
 
                                 {{-- End Time --}}
                                 <div>
-                                    <label for="end_time" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                                    <label for="end_time"
+                                        class="block text-sm font-medium text-gray-700 dark:text-gray-300">
                                         {{ __('End Time') }}
                                     </label>
-                                    <input
-                                        type="time"
-                                        name="end_time"
-                                        id="end_time"
-                                        value="{{ old('end_time') }}"
+                                    <input type="time" name="end_time" id="end_time" value="{{ old('end_time') }}"
                                         class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-300
                                             focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 shadow-sm
-                                            @error('end_time') border-red-500 @enderror"
-                                    >
+                                            @error('end_time') border-red-500 @enderror">
                                     @error('end_time')
                                         <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
                                     @enderror
@@ -147,11 +125,8 @@
                             <div id="multi-day-fields" class="md:col-span-2" style="display: none;">
                                 <div class="flex justify-between items-center mb-4">
                                     <h3 class="text-lg font-medium text-gray-900 dark:text-gray-100">Event Days</h3>
-                                    <button
-                                        type="button"
-                                        id="add-day-btn"
-                                        class="inline-flex items-center px-3 py-1 border border-transparent text-sm leading-4 font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                                    >
+                                    <button type="button" id="add-day-btn"
+                                        class="inline-flex items-center px-3 py-1 border border-transparent text-sm leading-4 font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                                         Add Day
                                     </button>
                                 </div>
@@ -162,18 +137,15 @@
 
                             {{-- Description --}}
                             <div class="md:col-span-2">
-                                <label for="description" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                                <label for="description"
+                                    class="block text-sm font-medium text-gray-700 dark:text-gray-300">
                                     {{ __('Description') }}
                                 </label>
-                                <textarea
-                                    name="description"
-                                    id="description"
-                                    rows="4"
+                                <textarea name="description" id="description" rows="4"
                                     class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-300
                                            focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 shadow-sm
                                            @error('description') border-red-500 @enderror"
-                                    required
-                                >{{ old('description') }}</textarea>
+                                    required>{{ old('description') }}</textarea>
                                 @error('description')
                                     <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
                                 @enderror
@@ -182,77 +154,65 @@
                             {{-- Location --}}
 
                             <div>
-                                <label for="location_name" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                                <label for="location_name"
+                                    class="block text-sm font-medium text-gray-700 dark:text-gray-300">
                                     {{ __('Location Name') }}
                                 </label>
-                                <input
-                                    type="text"
-                                    name="location_name"
-                                    id="location_name"
+                                <input type="text" name="location_name" id="location_name"
                                     value="{{ old('location_name') }}"
                                     class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-300
                                            focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 shadow-sm
                                            @error('location_name') border-red-500 @enderror"
-                                    required
-                                >
+                                    required>
                                 @error('location_name')
                                     <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
                                 @enderror
                             </div>
 
                             <div>
-                                <label for="street" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                                <label for="street"
+                                    class="block text-sm font-medium text-gray-700 dark:text-gray-300">
                                     {{ __('Street') }}
                                 </label>
-                                <input
-                                    type="text"
-                                    name="street"
-                                    id="street"
-                                    value="{{ old('street') }}"
+                                <input type="text" name="street" id="street" value="{{ old('street') }}"
                                     class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-300
                                            focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 shadow-sm
                                            @error('street') border-red-500 @enderror"
-                                    required
-                                >
+                                    required>
                                 @error('street')
                                     <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
                                 @enderror
                             </div>
 
                             <div>
-                                <label for="city" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                                <label for="city"
+                                    class="block text-sm font-medium text-gray-700 dark:text-gray-300">
                                     {{ __('City') }}
                                 </label>
-                                <input
-                                    type="text"
-                                    name="city"
-                                    id="city"
-                                    value="{{ old('city') }}"
+                                <input type="text" name="city" id="city" value="{{ old('city') }}"
                                     class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-300
                                            focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 shadow-sm
                                            @error('city') border-red-500 @enderror"
-                                    required
-                                >
+                                    required>
                                 @error('city')
                                     <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
                                 @enderror
                             </div>
-                            
+
                             {{-- State --}}
                             <div>
-                                <label for="state" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                                <label for="state"
+                                    class="block text-sm font-medium text-gray-700 dark:text-gray-300">
                                     {{ __('State') }}
                                 </label>
-                                <select
-                                    name="state"
-                                    id="state"
+                                <select name="state" id="state"
                                     class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-300
                                            focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 shadow-sm
                                            @error('state') border-red-500 @enderror"
-                                    required
-                                >
-                                    @foreach(config('states') as $abbr => $stateName)
-                                        <option value="{{ $abbr }}" {{ old('state') == $abbr ? 'selected' : '' }}>{{ $stateName }}</option>
+                                    required>
+                                    @foreach (config('states') as $abbr => $stateName)
+                                        <option value="{{ $abbr }}"
+                                            {{ old('state') == $abbr ? 'selected' : '' }}>{{ $stateName }}</option>
                                     @endforeach
                                 </select>
                                 @error('state')
@@ -261,46 +221,65 @@
                             </div>
 
                             <div>
-                                <label for="zip_code" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                                <label for="zip_code"
+                                    class="block text-sm font-medium text-gray-700 dark:text-gray-300">
                                     {{ __('Zip Code') }}
                                 </label>
-                                <input
-                                    type="text"
-                                    name="zip_code"
-                                    id="zip_code"
-                                    value="{{ old('zip_code') }}"
+                                <input type="text" name="zip_code" id="zip_code" value="{{ old('zip_code') }}"
                                     class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-300
                                            focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 shadow-sm
                                            @error('zip_code') border-red-500 @enderror"
-                                    required
-                                >
+                                    required>
                                 @error('zip_code')
                                     <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
                                 @enderror
                             </div>
 
+                            {{-- Featured? --}}
+                            @php
+                                // Determine the current “featured” state:
+                                $featured = old('is_featured', isset($event) ? $event->is_featured : false);
+                            @endphp
+
+                            {{-- Only show to admins --}}
+                            @if (auth()->user()->role === 'admin')
+                                <div x-data="{ featured: {{ $featured ? 'true' : 'false' }} }" class="flex items-center space-x-3">
+                                    <span class="text-sm font-medium text-gray-700 dark:text-gray-300">
+                                        {{ __('Feature this event?') }}
+                                    </span>
+
+                                    <!-- Toggle -->
+                                    <button type="button" @click="featured = !featured"
+                                        :class="featured ? 'bg-indigo-600' : 'bg-gray-200'"
+                                        class="relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none">
+                                        <span :class="featured ? 'translate-x-6' : 'translate-x-1'"
+                                            class="inline-block h-4 w-4 transform bg-white rounded-full transition-transform"></span>
+                                    </button>
+
+                                    <!-- Hidden input to carry the value -->
+                                    <input type="hidden" name="is_featured" :value="featured ? 1 : 0">
+                                </div>
+                                @error('is_featured')
+                                    <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
+                                @enderror
+                            @endif
+
                             {{-- Image --}}
                             <div class="md:col-span-2">
-                                <label for="image" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
-                                    {{ __('Event Image') }}  <span class="text-xs text-gray-500"> (- JPG, JPEG, PNG. Max size: 5MB.)</span>
+                                <label for="image"
+                                    class="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                                    {{ __('Event Image') }} <span class="text-xs text-gray-500"> (- JPG, JPEG, PNG.
+                                        Max size: 5MB.)</span>
                                 </label>
                                 <div id="image-preview-container" class="mt-2">
-                                    <img
-                                        id="image-preview"
-                                        class="w-72 h-72 object-cover rounded-lg hidden"
-                                        alt="Preview"
-                                    >
+                                    <img id="image-preview" class="w-72 h-72 object-cover rounded-lg hidden"
+                                        alt="Preview">
                                 </div>
-                                <input
-                                    type="file"
-                                    name="image"
-                                    id="image"
-                                    accept="image/*"
+                                <input type="file" name="image" id="image" accept="image/*"
                                     class="mt-1 block w-full text-sm text-gray-500
                                            file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold
                                            file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100
-                                           @error('image') border-red-500 @enderror"
-                                >
+                                           @error('image') border-red-500 @enderror">
                                 @error('image')
                                     <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
                                 @enderror
@@ -308,10 +287,8 @@
                         </div>
 
                         <div class="mt-6 flex justify-end">
-                            <button
-                                type="submit"
-                                class="bg-blue-600 dark:bg-blue-500 hover:bg-blue-700 dark:hover:bg-blue-600 text-white font-bold py-2 px-4 rounded"
-                            >
+                            <button type="submit"
+                                class="bg-blue-600 dark:bg-blue-500 hover:bg-blue-700 dark:hover:bg-blue-600 text-white font-bold py-2 px-4 rounded">
                                 {{ __('Create Event') }}
                             </button>
                         </div>
@@ -331,7 +308,7 @@
                 slugInput.value = currentSlug;
             }
         });
-        
+
         // Track manual slug edits
         document.getElementById('slug').addEventListener('input', function() {
             const nameInput = document.getElementById('name');
@@ -346,11 +323,11 @@
         // Helper function to create URL-friendly slugs
         function slugify(text) {
             return text.toString().toLowerCase()
-                .replace(/\s+/g, '-')        // Replace spaces with -
-                .replace(/[^\w\-]+/g, '')   // Remove all non-word chars
-                .replace(/\-\-+/g, '-')      // Replace multiple - with single -
-                .replace(/^-+/, '')          // Trim - from start of text
-                .replace(/-+$/, '');         // Trim - from end of text
+                .replace(/\s+/g, '-') // Replace spaces with -
+                .replace(/[^\w\-]+/g, '') // Remove all non-word chars
+                .replace(/\-\-+/g, '-') // Replace multiple - with single -
+                .replace(/^-+/, '') // Trim - from start of text
+                .replace(/-+$/, ''); // Trim - from end of text
         }
 
         // Handle form submission
@@ -459,7 +436,7 @@
                     field.required = isMultiDayCheckbox.checked;
                 });
             });
-            
+
             addDayBtn.addEventListener('click', addEventDay);
         });
     </script>

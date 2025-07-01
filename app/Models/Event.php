@@ -32,7 +32,8 @@ class Event extends Model
         'state',
         'zip_code',
         'location_name',
-        'image'
+        'image',
+        'is_featured',
     ];
 
     protected $casts = [

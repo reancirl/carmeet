@@ -26,6 +26,7 @@ class StoreEventRequest extends FormRequest
             'zip_code'      => ['required', new UsZipCode()],
             'location_name' => 'required|string|max:255',
             'image'         => 'nullable|image|mimes:jpeg,png,gif,webp',
+            'is_featured'   => 'sometimes|boolean',
         ];
 
         if (request('is_multi_day')) {

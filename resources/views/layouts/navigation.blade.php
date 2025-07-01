@@ -6,7 +6,7 @@
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
                     <a href="{{ url('/') }}">
-                        <img src="{{ asset('images/crateos_logo.png') }}" alt="Logo" class="h-10 w-auto">
+                        <img src="{{ asset('images/crateos_logo_transparent.png') }}" alt="Logo" class="h-10 w-auto">
                     </a>
                 </div>
 

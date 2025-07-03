@@ -33,4 +33,11 @@ class EventPolicy
         return $user->id === $event->organizer_id;
     }
 
+    /**
+     * Determine whether the user can manage event day instructions.
+     */
+    public function manageDayInstructions(User $user, Event $event): bool
+    {
+        return $user->id === $event->organizer_id || $user->role === 'admin';
+    }
 }

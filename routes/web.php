@@ -70,6 +70,14 @@ Route::middleware(['auth'])->group(function () {
         Route::middleware([CheckAdminApproval::class])->group(function () {
             // Event management (except index/show which are public)
             Route::resource('events', EventController::class)->except(['index', 'show']);
+            
+            // Event day instructions
+            Route::prefix('events/{event:slug}')->group(function () {
+                Route::get('/day-instructions/edit', [\App\Http\Controllers\EventDayInstructionController::class, 'edit'])
+                    ->name('events.day-instructions.edit');
+                Route::put('/day-instructions', [\App\Http\Controllers\EventDayInstructionController::class, 'update'])
+                    ->name('events.day-instructions.update');
+            });
 
             // Event files
             Route::prefix('events/{event:slug}')->group(function () {

@@ -100,4 +100,12 @@ class Event extends Model
     {
         return $this->hasMany(EventAttendee::class);
     }
+    
+    /**
+     * Get the event day instructions for the event.
+     */
+    public function dayInstructions()
+    {
+        return $this->hasOne(EventDayInstruction::class);
+    }
 }

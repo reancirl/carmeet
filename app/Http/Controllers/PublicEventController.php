@@ -45,4 +45,9 @@ class PublicEventController extends Controller
     {
         return view('events.details', compact('event'));
     }
+
+    public function privacyPolicy()
+    {
+        return view('privacy-policy');
+    }
 }

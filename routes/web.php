@@ -19,7 +19,7 @@ use App\Http\Middleware\AdminMiddleware;
 |--------------------------------------------------------------------------
 */
 Route::get('/', [PublicEventController::class, 'index'])->name('public.events.index');
-
+Route::get('/privacy-policy', [PublicEventController::class, 'privacyPolicy'])->name('public.privacy-policy');
 Route::get('/event-details/{event:slug}', [PublicEventController::class, 'show'])->name('public.events.show');
 
 /*

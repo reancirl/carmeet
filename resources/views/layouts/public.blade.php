@@ -135,8 +135,8 @@
             <a href="#" class="hover:underline">How it Works</a>
             <a href="#" class="hover:underline">Careers</a>
             <a href="#" class="hover:underline">Press/Media</a>
-            <a href="#" class="hover:underline">Terms of Use</a>
-            <a href="#" class="hover:underline">Privacy Policy</a>
+            <a href="/terms-and-conditions" class="hover:underline">Terms of Use</a>
+            <a href="/privacy-policy" class="hover:underline">Privacy Policy</a>
             <a href="#" class="hover:underline">Help / FAQ</a>
             <a href="#" class="hover:underline">Contact Us</a>
         </div>
@@ -150,6 +150,10 @@
 
             <a href="https://importcrate.com/" target="_blank" class="text-center text-xs text-gray-600 underline">
                 Shop Import Crate
+            </a>
+
+            <a href="https://www.instagram.com/crateonscene/" target="_blank" class="text-center text-xs text-gray-600 underline">
+                IG: @crateonscene
             </a>
 
             <p class="text-center text-xs text-gray-600">

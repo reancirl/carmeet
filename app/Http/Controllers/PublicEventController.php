@@ -67,4 +67,9 @@ class PublicEventController extends Controller
     {
         return view('privacy-policy');
     }
+
+    public function termsAndConditions()
+    {
+        return view('terms-and-conditions');
+    }
 }

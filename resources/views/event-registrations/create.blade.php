@@ -1,6 +1,6 @@
 <x-public-layout :title="'Register for ' . $event->name">
     <div class="flex-grow w-full lg:max-w-4xl mx-auto px-6 lg:px-8 py-8 space-y-8">
-        <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg mt-20">
+        <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg mt-2">
             <div class="p-6 text-gray-900 dark:text-gray-100">
                 <h1 class="text-2xl font-bold mb-6">Register for {{ $event->name }}</h1>
                 
@@ -51,7 +51,7 @@
                         </div>
                         
                         <!-- Class (Optional) -->
-                        <div>
+                        {{-- <div>
                             <label for="class" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
                                 {{ __('Class (Optional)') }}
                             </label>
@@ -70,7 +70,7 @@
                             @error('class')
                                 <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
                             @enderror
-                        </div>
+                        </div> --}}
                     
                         <!-- Crew Name (Optional) -->
                         <div>

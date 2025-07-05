@@ -116,12 +116,15 @@ class EventController extends Controller
         $validated['is_featured'] = auth()->user()->role === 'admin' && $request->has('is_featured');
 
         // 2) Prevent past events from being featured
-        if ($validated['is_featured'] && Carbon::parse($validated['date'])->lt(Carbon::today())) {
+        //    → only for single-day events (no multi-day)
+        if (empty($validated['is_multi_day']) && $validated['is_featured'] && Carbon::parse($validated['date'])->lt(Carbon::today())) {
             return back()
                 ->withInput()
-                ->withErrors(['is_featured' => 'Only today’s or future events can be featured.']);
+                ->withErrors([
+                    'is_featured' => 'Only today’s or future events can be featured.',
+                ]);
         }
-        
+
         // Multi-day extraction
         $eventDays = null;
         if (!empty($validated['is_multi_day']) && isset($validated['event_days'])) {

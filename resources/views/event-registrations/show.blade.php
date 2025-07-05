@@ -1,6 +1,6 @@
 <x-public-layout :title="'Registration Details'">
     <div class="flex-grow w-full lg:max-w-4xl mx-auto px-6 lg:px-8 py-8 space-y-8">
-        <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
+        <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg mt-20">
             <div class="p-6 text-gray-900 dark:text-gray-100">
             <div class="flex justify-between items-start mb-6">
                 <h1 class="text-2xl font-bold text-gray-800">Registration Details</h1>

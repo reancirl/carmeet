@@ -22,7 +22,29 @@
 </head>
 
 <body class="bg-[#0a0a0a] text-white flex flex-col min-h-screen">
-    <header class="absolute inset-x-0 top-0 z-50 bg-transparent">
+    <!-- Announcement Banner -->
+<div class="w-full bg-[#08062a] text-white">
+  <div class="max-w-7xl mx-auto px-6 py-3">
+    <div class="flex flex-col sm:flex-row sm:items-center sm:space-x-6">
+      <p class="flex-1 text-sm sm:text-base text-left mb-2 sm:mb-0">
+        You’re early! Listings will appear here as organizers join the rollout. This is where the new wave of meets and shows will live—organized like a lineup.
+      </p>
+      <button
+        type="button"
+        class="inline-block bg-white bg-opacity-20 hover:bg-opacity-30 rounded px-4 py-2 text-sm font-medium transition"
+        aria-label="Copy invite link for hosts"
+        onclick="
+          navigator.clipboard.writeText(window.location.href)
+            .then(() => alert('Link copied!'));
+        "
+      >
+        Know a host who should be here? Send them this link
+      </button>
+    </div>
+  </div>
+</div>
+    <header class="inset-x-0 top-0 z-50 bg-transparent">
+    {{-- <header class="absolute inset-x-0 top-0 z-50 bg-transparent"> --}}
         <div class="max-w-7xl mx-auto flex items-center justify-between px-6 py-4">
             <!-- Logo -->
             <a href="{{ url('/') }}">

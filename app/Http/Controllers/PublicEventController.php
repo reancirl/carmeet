@@ -13,32 +13,49 @@ class PublicEventController extends Controller
     {
         $today = Carbon::today();
 
-        // Featured (already correct)
-        $featuredEvents = Event::where('is_featured', true)
-            ->whereDate('date', '>=', $today)
-            ->orderBy('date')
-            ->get();
+        // Always eager-load days (we’ll filter them in the queries below)
+        $base = Event::with(['days']);
 
-        // 1) Weekend = Saturday (weekday 5) or Sunday (weekday 6), date ≥ today
-        $weekendEvents = Event::whereDate('date', '>=', $today)
-            ->whereRaw('WEEKDAY(`date`) >= ?', [5])
-            ->orderBy('date')
-            ->get();
+        //
+        // 1) Featured events: is_featured AND (single date ≥ today OR any day ≥ today)
+        //
+        $featuredEvents = (clone $base)
+            ->where('is_featured', true)
+            ->where(function ($q) use ($today) {
+                $q->whereDate('date', '>=', $today)->orWhereHas('days', fn($q2) => $q2->whereDate('date', '>=', $today));
+            })
+            ->get()
+            ->sortBy(fn(Event $e) => $e->is_multi_day && $e->days->isNotEmpty() ? $e->days->min('date') : $e->date);
 
-        // 2) Nearby (you can plug in your own geofencing here later)
-        $nearbyEvents = Event::get();
+        //
+        // 2) Weekend events: any occurrence on Sat/Sun AND date ≥ today
+        //
+        $weekendEvents = (clone $base)
+            ->where(function ($q) {
+                $q->whereRaw('WEEKDAY(`date`) >= ?', [5])->orWhereHas('days', fn($q2) => $q2->whereRaw('WEEKDAY(`date`) >= ?', [5]));
+            })
+            ->where(function ($q) use ($today) {
+                $q->whereDate('date', '>=', $today)->orWhereHas('days', fn($q2) => $q2->whereDate('date', '>=', $today));
+            })
+            ->get()
+            ->sortBy(fn(Event $e) => $e->is_multi_day && $e->days->isNotEmpty() ? $e->days->min('date') : $e->date);
 
-        // 3) Upcoming = all future (and today’s) events
-        $upcomingEvents = Event::whereDate('date', '>=', $today)
-            ->orderBy('date')
-            ->get();
+        //
+        // 3) Nearby events: all, but still load days for display
+        //
+        $nearbyEvents = (clone $base)->get();
 
-        return view('welcome', compact(
-            'featuredEvents',
-            'weekendEvents',
-            'nearbyEvents',
-            'upcomingEvents'
-        ));
+        //
+        // 4) Upcoming events: any occurrence ≥ today
+        //
+        $upcomingEvents = (clone $base)
+            ->where(function ($q) use ($today) {
+                $q->whereDate('date', '>=', $today)->orWhereHas('days', fn($q2) => $q2->whereDate('date', '>=', $today));
+            })
+            ->get()
+            ->sortBy(fn(Event $e) => $e->is_multi_day && $e->days->isNotEmpty() ? $e->days->min('date') : $e->date);
+
+        return view('welcome', compact('featuredEvents', 'weekendEvents', 'nearbyEvents', 'upcomingEvents'));
     }
 
     public function show(Event $event)

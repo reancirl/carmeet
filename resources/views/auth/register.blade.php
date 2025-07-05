@@ -86,6 +86,23 @@
             <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
         </div>
 
+        <!-- Privacy Policy Agreement -->
+        <div class="mt-4">
+            <label for="privacy" class="flex items-center">
+                <input id="privacy" type="checkbox" name=""
+                    class="rounded border-gray-300 text-indigo-600 shadow-sm focus:ring-indigo-500"
+                    {{ old('privacy') ? 'checked' : '' }} required>
+                <span class="ml-2 text-sm text-gray-600">
+                    I’ve read and agree to the
+                    <a href="{{ route('public.privacy-policy') }}" target="_blank"
+                        class="underline text-indigo-600 hover:text-indigo-900">
+                        Privacy Policy
+                    </a>.
+                </span>
+            </label>
+            <x-input-error :messages="$errors->get('privacy')" class="mt-2" />
+        </div>
+
         <div class="flex items-center justify-end mt-4">
             <a class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800" href="{{ route('login') }}">
                 {{ __('Already registered?') }}

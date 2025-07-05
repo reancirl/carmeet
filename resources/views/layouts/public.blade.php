@@ -72,7 +72,7 @@
                     @auth
                         <a href="{{ auth()->user()->role === 'attendee' ? url('/event-registrations') : (auth()->user()->role === 'driver' ? url('/event-registrations') : url('/events')) }}"
                             class="px-4 py-2 border rounded text-sm hover:bg-white/10 text-center">
-                            Home
+                            {{ auth()->user()->name }}
                         </a>
                     @else
                         <a href="{{ route('login') }}"

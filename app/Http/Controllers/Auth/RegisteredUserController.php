@@ -43,6 +43,11 @@ class RegisteredUserController extends Controller
             'role' => $request->role,
         ]);
 
+        if ($user->role == 'organizer') {
+            $user->is_admin_approved = true;
+            $user->save();
+        }
+
         event(new Registered($user));
 
         Auth::login($user);

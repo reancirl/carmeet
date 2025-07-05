@@ -106,11 +106,11 @@
                                 </div>
 
                                 <div class="flex flex-wrap gap-2">
-                                    <!-- Drivers Badge -->
+                                    <!-- Featured Cars Badge -->
                                     <div class="flex items-center space-x-2 px-3 py-1.5 bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200 rounded-lg shadow-sm hover:shadow-md transition-shadow"
-                                        aria-label="{{ $event->registrations->count() }} drivers">
+                                        aria-label="{{ $event->registrations->count() }} featured cars">
                                         <span class="text-sm font-medium">
-                                            Drivers ({{ $event->registrations->count() }})
+                                            Featured Cars ({{ $event->registrations->count() }})
                                         </span>
                                     </div>
 

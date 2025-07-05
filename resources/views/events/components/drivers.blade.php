@@ -4,9 +4,9 @@
     <div class="p-6 text-gray-900 dark:text-gray-100">
         <div class="flex justify-between items-center mb-6">
             <div>
-                <h2 class="text-2xl font-bold text-gray-900 dark:text-white">Drivers</h2>
+                <h2 class="text-2xl font-bold text-gray-900 dark:text-white">Featured Cars</h2>
                 <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">
-                    Manage all drivers for this event
+                    Manage all featured cars for this event
                 </p>
             </div>
         </div>
@@ -61,7 +61,7 @@
                     <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
                         <thead class="bg-gray-50 dark:bg-gray-700">
                             <tr>
-                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">{{ __('Driver') }}</th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">{{ __('Featured Car Owner') }}</th>
                                 <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">{{ __('Car') }}</th>
                                 <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">{{ __('Status') }}</th>
                                 <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">{{ __('Payment') }}</th>

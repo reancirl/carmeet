@@ -19,7 +19,7 @@
                     </li>
                     <li role="presentation">
                         <button class="inline-block p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:text-white" id="drivers-tab" data-tabs-target="#drivers" type="button" role="tab" aria-controls="drivers" aria-selected="false">
-                            Drivers
+                            Featured Cars
                         </button>
                     </li>
                     <li role="presentation">

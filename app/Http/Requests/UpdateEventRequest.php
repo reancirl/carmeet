@@ -25,7 +25,7 @@ class UpdateEventRequest extends FormRequest
             'state'         => 'required|string|max:255',
             'zip_code'      => ['required', new UsZipCode()],
             'location_name' => 'required|string|max:255',
-            'image'         => 'nullable|image|mimes:jpeg,png,gif,webp',
+            'image'         => 'nullable|image|mimes:jpeg,png,gif,webp|max:20480',
             'is_featured'   => 'sometimes|boolean',
         ];
 
